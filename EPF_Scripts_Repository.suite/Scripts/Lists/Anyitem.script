@@ -1,0 +1,24 @@
+﻿Put  any item of ["Chiot","Chatons","Lionceau","Lapereau"] into Global MaList
+Log Global MaList,return
+--Any Item is random
+--------------------
+--Getting to confirm that one item/letter or string is in it
+Set mylist to ["abcdefgh","345245"]
+log at least one item of mylist contains "4" // True
+log at least one item of mylist contains "z" // False
+--------------------------
+set myList to ["abc","xxx","cde", "xy"]
+put the index of the item containing "d" in myList --> 3
+put index of item containing "Z" in myList --> 0
+
+---------------------------
+put count({"a","b","c"})
+
+to count (myList)
+	return number of items of myList
+end count
+
+
+repeat 10 times
+	log random(20)
+end repeat

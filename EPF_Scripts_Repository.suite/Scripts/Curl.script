@@ -1,0 +1,27 @@
+﻿set link to "https://www.stlouisfed.org/publications/at-a-glance"
+put "cd" && "c:\Temp" && "&&" && "curl"&& lowercase(link) && "-O" into command
+put command  &" > " & ResourcePath("bulletinsreport.txt") & " 2>&1" into CommandExecute //the 2>&1 sends both the STDOUT and STDERR to the output file
+log CommandExecute
+shell "c:\windows\system32\cmd.exe", << /c ">>& CommandExecute &<<">>
+
+set myexcelDB to {file:ResourcePath("Headers.xlsx"), type:"Excel", writeable:"Yes"} 
+Put the number of records of myexcelDB into mynumberofrecords -- Gives me the number of records inside myexcelDB
+Set MyWebPage to file("C:\Temp\At-A-Glance")
+
+// Cycle through each Row of the excel document, using a repeat loop. 
+
+Set recordcount to 1
+Repeat until recordcount greater than mynumberofrecords
+	
+	Set CurrentRecord to the record of myexcelDB where "recnumber" = recordcount
+	Set MyPublicationRecord to <"class" then some characters then CurrentRecord.publication>
+	
+	Repeat with each line of MyWebPage
+		If it contains MyPublicationRecord then
+			set CurrentRecord.linenumber to repeatindex()
+			Exit repeat
+			
+		End If
+	End Repeat
+	Set recordcount = recordcount+1
+end repeat

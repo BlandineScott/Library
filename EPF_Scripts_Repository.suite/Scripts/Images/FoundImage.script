@@ -1,0 +1,18 @@
+﻿set wordsToFind to ("josephine","balance")
+log ImageFound(text:wordsToFind, waitFor:5, caseSensitive:"Yes")
+
+set wordsToFind to ("Josephine","Balance")
+log ImageFound(text:wordsToFind, waitFor:20,)
+
+------------------
+if ImageFound(ImageName:"OKButton") then // Checks whether the image is found.
+	click FoundImageLocation() // If ImageFound returns true, uses the FoundImageLocation function to click the stored location where the image was found by the ImageFound function.
+else
+	TypeText AltKey,F4 // If ImageFound returns false, executes a keystroke to close the application.
+end if
+------------------
+Repeat until ImageFound(ImageName:"NextButton",WaitFor:0) // This repeat loop iterates until the ImageFound function returns true.
+	Typetext PageDown // Sends a Page Down keyboard action to scroll down the page.
+	Wait 2 // Waits 2 seconds to allow the application to stop moving after the scrolling action.
+	if the repeatindex is greater than 5 then throw "Image Not Found:", "NextButton not found when scrolling." // This conditional statement checks to see whether the repeat loop has iterated more than 5 times, and if so, throws an exception to stop the execution.
+end repeat

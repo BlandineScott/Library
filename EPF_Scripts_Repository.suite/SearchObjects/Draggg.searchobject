@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		771,
+		242,
+		114,
+		23
+	],
+	"lastmodifieddate": 1686598641.0599999,
+	"createddate": 1686598641.0599999,
+	"name": "Draggg",
+	"lastfounddate": 1686598726.1760001,
+	"ocrcapturestring": "Puppy - Wikipedia",
+	"lastfoundlocation": [
+		771,
+		242,
+		114,
+		23
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 3389,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[57,11]",
+					"Tolerance": "_57",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown RDP"
+				},
+				"name": "Draggg.png",
+				"connectionname": "Demo_SUT",
+				"type": 1,
+				"connectionserverid": "ec2-3-21-207-38.us-east-2.compute.amazonaws.com",
+				"capturerect": [
+					771,
+					242,
+					114,
+					23
+				],
+				"connectiontype": "RDP",
+				"capturedocrtext": "Puppy - Wikipedia"
+			}
+	]
+}

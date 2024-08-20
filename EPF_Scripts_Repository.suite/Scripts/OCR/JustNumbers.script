@@ -1,0 +1,34 @@
+﻿//Log a number
+log 5 is a number /// this works
+
+//Log just the numbers
+put every occurrence of <digit> in "CH 1606 A 1789" into ListOfDigits
+repeat for each item of ListOfDigits
+	set StringOfDigits to StringOfDigits&it
+end repeat
+Log StringOfDigits
+
+Put "CH 1606 A" into MyString
+put ("0".."9") joined by empty into CharstoKeep
+put keepCharacters("CH 1606 A", CharstoKeep) into NumbersOnly
+Log NumbersOnly
+Log 1606
+--Documentation: https://docs.eggplantsoftware.com/ePF/SenseTalk/stk-text-data-manipulation.htm#sts=KeepCharacters%20Function
+
+set mystring to "CH 1606 A"
+delete every occurrence of <letter> in mystring
+delete every occurrence of space in mystring -- remove spaces if needed
+--OR use this for spaces delete every occurrence of <letter or " "> in mystring
+log mystring
+Log 1606
+
+put "0".."9" joined by empty into myNumerals
+put "CH 1606 A" into myString
+put keepCharacters(myString,myNumerals)
+
+set mystring to "CH 1606 A"
+delete every occurrence of <nondigit> in mystring
+log mystring
+Log "16 06"
+
+

@@ -1,0 +1,4 @@
+﻿//Add Document to ResourcePath directly
+Log resourcepath("name.text") -- Log	C:/Eggplant/Training/EPF_Scripts_Repository.suite/Resources/name.text
+Log file resourcepath("names.txt") -- logs the content of it
+Log file ("C:/Eggplant/Training/EPF_Scripts_Repository.suite/Resources/names.txt") -- logs the content of it

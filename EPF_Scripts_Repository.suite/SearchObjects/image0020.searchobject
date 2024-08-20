@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		1136,
+		566,
+		28,
+		28
+	],
+	"lastmodifieddate": 1709564496.934,
+	"createddate": 1709564496.934,
+	"name": "image0020",
+	"lastfounddate": 1716915120.8639998,
+	"ocrcapturestring": "Q.",
+	"lastfoundlocation": [
+		1137,
+		551,
+		28,
+		28
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 3389,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[0,5]",
+					"Tolerance": "_45",
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown RDP"
+				},
+				"name": "image0020.png",
+				"connectionname": "Demo_SUT",
+				"type": 1,
+				"connectionserverid": "ec2-3-21-207-38.us-east-2.compute.amazonaws.com",
+				"capturerect": [
+					1136,
+					566,
+					28,
+					28
+				],
+				"connectiontype": "RDP",
+				"capturedocrtext": "Q."
+			}
+	]
+}

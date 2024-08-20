@@ -1,0 +1,23 @@
+﻿
+----------------------------
+Put readtext(368,163,501,430)into test1
+log test1
+//log test1 joined by return //returns by line
+
+Put each line of test1 split by "\n" into test2
+Log test2 joined by return
+
+
+delete each item of test2 which is "is arpt - 1"
+Log Test2
+
+
+--\t means tab
+--replace every instance of tabkey in mylist with "" -- 
+
+---------------
+split MyPatientInfo by "-"
+
+-------------
+--Put things into a list.
+put every instance of "a" in "alabanama"

@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		1019,
+		787,
+		46,
+		20
+	],
+	"lastmodifieddate": 1670951492.684,
+	"createddate": 1670951492.684,
+	"name": "Dogs_Image",
+	"lastfounddate": 1670951669.727,
+	"ocrcapturestring": "Dogs",
+	"lastfoundlocation": [
+		1019,
+		787,
+		46,
+		20
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 3389,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[23,10]",
+					"Tolerance": "_55",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown RDP"
+				},
+				"name": "Dogs_Image.png",
+				"connectionname": "Blandine_RDP",
+				"type": 1,
+				"connectionserverid": "ec2-3-21-207-38.us-east-2.compute.amazonaws.com",
+				"capturerect": [
+					1019,
+					787,
+					46,
+					20
+				],
+				"connectiontype": "RDP",
+				"capturedocrtext": "Dogs"
+			}
+	]
+}

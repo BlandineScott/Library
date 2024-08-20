@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		418,
+		325,
+		254,
+		40
+	],
+	"lastmodifieddate": 1712932474.425,
+	"createddate": 1712932474.425,
+	"name": "Prenataldevelopment",
+	"lastfounddate": 1712940768.1110001,
+	"ocrcapturestring": "Prenatal development",
+	"lastfoundlocation": [
+		418,
+		325,
+		254,
+		40
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 3389,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[3,40]",
+					"Tolerance": "_73",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown RDP"
+				},
+				"name": "Prenataldevelopment.png",
+				"connectionname": "Demo_SUT",
+				"type": 1,
+				"connectionserverid": "ec2-3-21-207-38.us-east-2.compute.amazonaws.com",
+				"capturerect": [
+					418,
+					325,
+					254,
+					40
+				],
+				"connectiontype": "RDP",
+				"capturedocrtext": "Prenatal development"
+			}
+	]
+}

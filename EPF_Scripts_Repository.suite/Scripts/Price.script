@@ -1,0 +1,27 @@
+﻿put readText((595,358,630,386)) into price
+log price
+Put "100" into price
+if price does not contain "." then
+	// add in decimal
+	put "." before character -2 of price
+end if
+log price
+---------------------------
+
+Put random(00000,999999) into RowVariable
+Log RowVariable
+
+Set MyNum to "10000"
+
+If length of MyNum < 6 then
+	put 9 before character 1 of MyNum
+end if 
+Log MyNum
+
+-----------
+
+Put "31234" into mynumber
+Put "," before character -3 of mynumber
+
+log mynumber
+

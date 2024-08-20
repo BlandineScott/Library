@@ -1,0 +1,41 @@
+{
+	"lastmodifieddate": 1697636818.0599999,
+	"ocrcapturestring": "anosuopenerr",
+	"originalcapturelocation": [
+		100,
+		124,
+		140,
+		47
+	],
+	"createddate": 1697636818.0599999,
+	"testlocationdata": [
+		{
+				"connectionportnum": 3389,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Tolerance": "_66",
+					"HotSpot": "[70,23]",
+					"Scale": "    1",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown RDP"
+				},
+				"name": "HEB.png",
+				"connectionname": "Demo_SUT",
+				"type": 1,
+				"connectionserverid": "ec2-3-21-207-38.us-east-2.compute.amazonaws.com",
+				"capturerect": [
+					100,
+					124,
+					140,
+					47
+				],
+				"connectiontype": "RDP",
+				"capturedocrtext": "anosuopenerr"
+			}
+	],
+	"name": "HEB"
+}

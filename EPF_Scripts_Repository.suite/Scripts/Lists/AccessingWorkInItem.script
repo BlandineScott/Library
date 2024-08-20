@@ -1,0 +1,25 @@
+﻿//Accesing a word out of an item within a list
+set List1 to ["tall giraffe","small pony"," big lion","llittle mouse","smart elephant"]
+set List2 to ["dog","cat","pig","rat"]
+insert word 1 of item 1 of List1 into List2
+put List2
+
+
+//------------------
+Insert ["","Current URL","New URL","No Change","No Change "] into DeleteList 
+
+set MyExcelFile to ResourcePath("VA_Enhanced Domains.xlsx")
+set Worksheet_1 to MyExcelFile.Worksheet("Experience Cloud Sites") 
+put Worksheet_1.cellRange("D") into columnsBasic
+Log "All Fields are:"&&columnsBasic
+
+Log "Delete List is:"&&DeleteList 
+put the items of columnsBasic excluding those in DeleteList into Enhanced_Domains_New
+Log Enhanced_Domains_New
+
+--Put "Staging" into MyWordToFind
+Put item 1 of  each item of Enhanced_Domains_New into Enhanced_Domains_New2
+Log Enhanced_Domains_New2
+Put each item of Enhanced_Domains_New2 where each contains "Staging" into Final_Newlist
+Log Final_Newlist
+//log Staging_Enhanced_Domains

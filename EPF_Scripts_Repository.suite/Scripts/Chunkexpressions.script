@@ -1,0 +1,131 @@
+﻿
+Put imagerectangle("Icon_Photo_Profile")+(0,0,380,0) into PatientInfoBanner
+Put readtext (PatientInfoBanner) into MRNReadarea
+Put word 3 of MRNReadarea into MRN
+
+Put "-12437-8942-" into MRN
+Log MRN
+delete "-" from MRN
+Log MRN
+delete first character of MRN
+delete last character of MRN
+Log MRN
+
+Put imagerectangle("Icon_Photo_Profile")+(0,0,380,0) into PatientInfoBanner
+Put readtext (PatientInfoBanner) into MRN
+put "()" after the wordDelimiter
+put the wordDelimiter.archive
+Put word 3 of MRN into new
+Log new
+
+
+put "()" after the wordDelimiter
+Put item 3 of MRNReadarea into MRN
+Log MRN
+
+set the itemdelimiter to "()" -- global variable
+Log the itemdelimiter
+put the number of items in travels
+put item 2 delimited by "-" of travels
+
+
+put "()" after the wordDelimiter
+--put the wordDelimiter.archive
+Put each word of line 1 of text
+Put each word delimited by ".,a" of line 1 of text -- other example
+
+
+
+
+#Values: Any character or list of characters, which will serve as separators between words in a container
+set the wordDelimiter to "." // Changes the local word delimiter to period
+
+
+put "A man, a plan, a canal. Panama!" into palindrome
+put word 4 of palindrome //Returns 'plan,'
+set the wordDelimiter to ".,!?;:" & space & tab
+put word 4 of palindrome //Returns 'plan'
+set the wordDelimiter to ",."
+put word 4 of palindrome //Returns ' Panama!'
+------------------------
+set the defaultWordDelimiter to " " // Changes the word delimiter to space across all handlers
+-----------------------
+set LookupNumber to "102,311,421.000.631.521"
+set the DefaultWordDelimiter to comma&period
+set Row to the fifth word of LookupNumber
+log Row // Displays '631'
+------------------------
+Put imagerectangle("Icon_Photo_Profile")+(0,0,380,0) into PatientInfoBanner
+Put readtext (PatientInfoBanner) into MRN
+put "()" after the wordDelimiter
+put the wordDelimiter.archive
+Put word 3 of MRN into new
+Log new
+
+
+----------------------------------------
+
+Set poem to {{
+Could it be, Bud
+that in slow galvanized
+fingers beauty seeped
+into bop like Bird
+weed and Diz clowned
+}}
+
+
+
+Put line 3 of poem
+put characters 18 to 21 of line 3 of poem
+put the first 2 words of the last line of poem 
+put chars -6 to -4 of poem
+put the middle character of poem 
+
+Put "ba$se" into myword
+delete the third character of myword
+log myword
+-------------------
+Set travels to "home -> office -> coffee shop"
+set the itemdelimiter to "->" -- global variable
+Log the itemdelimiter
+put the number of items in travels
+put item 2 delimited by "-" of travels
+-------------
+set Text to {{
+one fish,two fish?,red fish, blue fish,
+black fish, blue fish, old fish, new fish.
+Some are sad, and some are glad,
+and some are very, very bad.
+Why are they sad and glad and bad?
+I do nto know, go ask your dad. 
+}}
+
+
+(*Put line 3 of text*)
+
+(*Put line 3 of morefish
+put the last line of morefish
+put the number of lines in fishy
+put words [11,5,15] of morefish
+put ".,?" after the wordDelimiter
+put each word of line 1 of morefish*)
+
+--put the wordDelimiter.archive
+--@" \t\n" --returns punctinalitiy built into worddelimiter
+put ".,?" after the wordDelimiter
+--put the wordDelimiter.archive
+Put each word of line 1 of text
+Put each word delimited by ".,a" of line 1 of text -- other example
+-------------------
+//also you can add values
+set tree to {{
+This tree is great
+But not tall
+it could be really
+but never w
+ill too bad
+}}
+
+put "six" into word 1 of line 2 of tree
+log tree
+Put "s" after word 2 of line 2 of tree

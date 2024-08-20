@@ -1,0 +1,13 @@
+﻿put the RemoteWorkInterval into defaultRWI -- stores the current Remote Work Interval value so that it can be restored later
+put the MouseDoubleClickDelay into clickTime -- gets the current time interval between clicks in a double-click
+set the RemoteWorkInterval to clickTime -- sets the Remote Work Interval to the double-click time
+
+// These 3 lines click the image once and then click twice more in the same location.
+
+Click "Price_1"
+Click -- quickly clicks in the current mouse location
+Click -- quickly clicks again in the same location to achieve a triple-click
+
+// The last line restores the timing between Eggplant Functional commands by resetting the RemoteWorkInterval global property to its original value.
+
+set the RemoteWorkInterval to defaultRWI

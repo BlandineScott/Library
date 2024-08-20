@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		370,
+		113,
+		279,
+		292
+	],
+	"lastmodifieddate": 1667424169.5019999,
+	"createddate": 1667424169.5019999,
+	"name": "Notepad",
+	"lastfounddate": 1667424170.5219998,
+	"ocrcapturestring": "Untitled - Notepad File Edit Format View Help INTL ARPT - Reserv. Number 16406711892 is arpt - 1 Reserv. Number 1973448707 INTL ARPT - Reserv. Number 1972231968",
+	"lastfoundlocation": [
+		370,
+		113,
+		279,
+		292
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 3389,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[139,146]",
+					"Tolerance": "_73",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown RDP"
+				},
+				"name": "Notepad.png",
+				"connectionname": "Blandine_RDP",
+				"type": 1,
+				"connectionserverid": "ec2-18-117-120-219.us-east-2.compute.amazonaws.com",
+				"capturerect": [
+					370,
+					113,
+					279,
+					292
+				],
+				"connectiontype": "RDP",
+				"capturedocrtext": "Untitled - Notepad File Edit Format View Help INTL ARPT - Reserv. Number 16406711892 is arpt - 1 Reserv. Number 1973448707 INTL ARPT - Reserv. Number 1972231968"
+			}
+	]
+}

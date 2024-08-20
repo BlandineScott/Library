@@ -1,0 +1,13 @@
+﻿// Chunk expressions give access to a portion of text
+
+set text to {{
+The more that you read, the more things you will know.
+The more that you learn, the more places you'll go.
+- Dr. Seuss
+}}
+
+put character 93 of text
+
+put character 4 of word 8 of the second line of text
+
+

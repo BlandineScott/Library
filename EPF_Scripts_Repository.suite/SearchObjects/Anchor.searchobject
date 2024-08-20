@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		1345,
+		158,
+		37,
+		20
+	],
+	"lastmodifieddate": 1662659995.6240001,
+	"createddate": 1662659995.6240001,
+	"name": "Anchor",
+	"lastfounddate": 1662660490.8340001,
+	"ocrcapturestring": "Read",
+	"lastfoundlocation": [
+		1244,
+		199,
+		37,
+		20
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 3389,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[18,10]",
+					"Tolerance": "_64",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown RDP"
+				},
+				"name": "Anchor.png",
+				"connectionname": "Blandine_RDP",
+				"type": 1,
+				"connectionserverid": "ec2-18-117-120-219.us-east-2.compute.amazonaws.com",
+				"capturerect": [
+					1345,
+					158,
+					37,
+					20
+				],
+				"connectiontype": "RDP",
+				"capturedocrtext": "Read"
+			}
+	]
+}

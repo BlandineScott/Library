@@ -1,0 +1,12 @@
+﻿
+
+//To find the image in a collection that was choosen by Eggplant
+
+log FoundImageInfo().ImagePath 
+
+//If you want to search just a few images in the images collection
+Set the CollectionFilter to (Name: "English")
+
+//found the last image that was found
+Click "all"
+log the last item of (foundimageinfo().imagepath split by slash)

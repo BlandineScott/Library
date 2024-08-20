@@ -1,0 +1,39 @@
+﻿Set the remoteClipboard to "français"
+
+typeText controlKey, "v" // paste the string
+------------------------
+log the international time
+log the short international date
+put the international time
+put the international time
+
+Log the availableTimeZoneNames
+Log availableTimeZoneAbbreviations ()
+---------------------------------
+params EnglishWord -- Takes an English word...
+
+set translation to {Hello: "Bonjour",Open: "Ouvrir",Yes: "Oui"} -- Sets the translation variable to a property list, in which each English key is assigned a French value
+Wait 5
+log translation's (EnglishWord) -- Returns the French value of the English key that was passed in
+
+--------
+log text:"Hello",Translation:"french"
+
+Set the InitialSuites to ("French") -- Ensures that the "Translate" script comes from the French suite
+
+Click {text: Translate ("Hello")} -- Runs the "Translate" script with "Hello" as the EnglishWord parameter. Uses the returned value of "Translate" as the Text value in this property list.
+------------
+put ImageFound(text: "some text", language:Portug) into bResult
+log readtext(739,235,883,299,language:french)
+log readtext(739,235,883,299)
+
+-------------------------
+//Using the Language property to find text (searching)
+Click (Text:"Aubergine", Language:"French")
+
+--------------------------------
+
+Log readtext (("desjardins","image0001"), Language:"French")
+
+//Using the Language property to find text (searching)
+Click (Text:"Aubergine", Language:"French")

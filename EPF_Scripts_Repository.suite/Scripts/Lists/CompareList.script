@@ -1,0 +1,157 @@
+﻿Put [dog,cat,rabbit] into animal1
+Put [rabbit,dog,cat] into animal2
+put animal1
+put animal2
+put animal1 is equal to animal2 -- the sequence is differnent. It has to be in the same order.
+
+------------------------
+//Compare List found on two different screen
+
+Put everyimagerectangle("add") into Images
+Repeat with each rectangle of images
+	Click foundimagelocation()
+	Log images
+	
+	Put rectangle + (-17,-267,-3,-254) into resultrect
+	Put readtext(resultrect) into stringrect
+	Put line 1 of stringrect & line 2 of stringrect & line 3 of stringrect into MyProduct
+	Insert MyProduct into MyList //List but can also use notepad txt if needed
+	Log MyList 
+End Repeat
+
+Click "CartIcon"
+Waitfor 30, "FinalizarCompra"
+Click "FinalizarCompra"
+
+waitfor 30, "Producto"
+Put everyimagerectangle("8Agregarunanota") into MyCartImages
+Repeat with each CartRectangle of MyCartImages
+	Put CartRectangle+(-12,-60,11,-28) into Carritto
+	Put Readtext(Carritto) into MyReadArea2
+	Insert MyReadArea2 into MyList2
+	Log MyList2
+end repeat
+
+-----------------------------------
+set a to (1,2,3,4,5,6,7)
+set b to 1..20 by 3
+
+set b to b as list
+log b
+put items of b that are not in a into out
+
+log out
+
+
+
+
+put (1,2,3,4,5,6,7,1,2,3,4,5,6) into FOO
+
+log the unique items of foo
+--------------------------------
+//Compare two pages
+
+//Scrolling until you find "Pulse Of the Economy", "Unemployment" section
+Click (108,524)
+Repeat until imagefound("Box_Unemployment")
+	ScrollWheelDown  3
+	if repeatindex() is 10
+		exit repeat
+	end if
+	
+End Repeat
+
+ScrollWheelDown  3
+
+Wait 4
+
+//Focus on Page1 - "Pulse Of the Economy", "Unemployment" section - Pull The Unemployment Month, Year and Pourcentage
+
+Put imagerectangle("Box_Unemployment")+(-5,72,55,125) into UnEmploymentBox -- Create a SearchRectangle based around the ReadArea
+Put readtext(UnEmploymentBox) into UnEmploymentNumberPage1 -- Readtext within the ReadArea
+Log UnEmploymentNumberPage1 -- Logs the Text in the ReadArea
+Capturescreen "Page_1_Unemployment_Numbers"
+
+Put word 1 of UnEmploymentNumberPage1 into UnEmploymentNumberPourcentage
+delete last character of UnEmploymentNumberPourcentage
+Log UnEmploymentNumberPourcentage
+Put word 2 of UnEmploymentNumberPage1 into Word2
+Put formattedtime("%b",Word2) into UnEmploymentNumberMonth
+Log UnEmploymentNumberMonth
+Put word 3 of UnEmploymentNumberPage1 into UnEmploymentNumberYear
+Log UnEmploymentNumberYear
+
+Put UnEmploymentNumberMonth&&UnEmploymentNumberYear&&UnEmploymentNumberPourcentage into UnEmploymentNumberFinalPage1
+Log "UnEmployment Numbers on Page 1 are"&&UnEmploymentNumberFinalPage1 -- Dec 2022 3.5
+
+
+//Focus on Page2 - Pull The Unemployment Month, Year and Pourcentage from the page
+Click "Box_Unemployment"
+
+Wait 3
+Put readtext("Observation_Topleft", "Observation_BottomRight") into Page2ReadArea
+Log Page2ReadArea -- Dec 2022: 3.5
+Capturescreen "Page_2_Unemployment_Numbers"
+
+Put word 1 of Page2ReadArea  into MonthPage2
+Log MonthPage2
+
+Put word 2 of Page2ReadArea into YearPage2
+delete last character of yearPage2
+Log YearPage2
+
+Put word 3 of Page2ReadArea  into PourcentagePage2
+Log PourcentagePage2
+
+Put MonthPage2&&YearPage2&&PourcentagePage2 into UnEmploymentNumberFinalPage2
+Log  "UnEmployment Numbers on Page 2 are"&&UnEmploymentNumberFinalPage2 -- Dec 2022 3.5
+
+//Compare Page1 and Page2 Unemployment Month, Year and Pourcentage
+
+If UnEmploymentNumberFinalPage1 = UnEmploymentNumberFinalPage2
+	Logsuccess "The Unemployment values do match."&&UnEmploymentNumberFinalPage1&"="& UnEmploymentNumberFinalPage2
+else
+	Logwarning "The Unemployment values do not match"&&UnEmploymentNumberFinalPage1&"="& UnEmploymentNumberFinalPage2
+End If
+
+-------------------------------------------------
+//COmparing 1 screen or products with the cart screen
+Put everyimagerectangle("add") into Images
+
+
+Repeat with each rectangle of images
+	Click "add"
+	Log images
+	
+	Put rectangle + (-80,-270,70,-250) into resultrect
+	Put readtext(resultrect) into stringrect
+	Put line 1 of stringrect & line 2 of stringrect & line 3 of stringrect into MyProduct
+	Insert MyProduct into MyList
+	Log MyList 
+End Repeat
+
+
+Click "CartIcon"
+Waitfor 30, "FinalizarCompra"
+Click "FinalizarCompra"
+
+waitfor 30, "Producto"
+Put everyimagerectangle("8Agregarunanota") into MyCartImages
+Repeat with each CartRectangle of MyCartImages
+	Put CartRectangle+(-12,-78,11,-28) into Carritto
+	Put Readtext(Carritto) into MyReadArea2
+	Replace every occurrence of newline in myreadarea2 with space
+	
+	Log "My Read Text is"&&MyReadArea2 
+	Insert MyReadArea2 split by newline into MyList2 -- Put into a list
+	Log "My List is"&&MyList2
+	
+end repeat
+
+
+
+
+
+
+
+

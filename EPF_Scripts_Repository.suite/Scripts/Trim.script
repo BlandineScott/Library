@@ -1,0 +1,30 @@
+﻿(*The trim function removes whitespace or specified characters from the beginning and end of the source text value.
+
+The trimStart function removes whitespace or specified characters from only the beginning of the source.
+
+The trimEnd function removes whitespace or specified characters from only the end of the source.
+
+The trimAll function removes all whitespace or specified characters from anywhere in the source text.
+
+
+
+Removes leading and trailing whitespace (or other characters) from a text value. Each of these functions takes one or two parameters. The first parameter is the source text value to be trimmed. The second (optional) parameter is a text string defining the set of characters that will be removed from the source text. If you omit the second parameter, whitespace and newline characters are trimmed by default.
+
+*)
+
+
+replace <max whitespace characters> with space in myText
+-------------------------------
+put trim(" my words ")-- "my words" (With no second parameter, removes whitespace from beginning and end of source)
+
+put trim(" my words ", "ms ") -- "y word" (Removes the characters m, s, and whitespace if found at the beginning and/or end of the source)
+
+put trimStart(" my words ") -- "my words " (Removes whitespace from beginning of source)
+
+put trimStart(" my words ") -- "my words " (Removes whitespace from beginning of source)
+
+put " my words ".trimEnd("ms ") -- " my word" (Removes the characters m, s, and whitespace if found at the end of the source)
+
+put trim("mississippi", "i") -- "mississipp" (Removes the character i if found at the beginning and/or end of the source)
+
+put trimall("mississippi", "i") -- "msssspp" (Removes all instances of the character i from the source)

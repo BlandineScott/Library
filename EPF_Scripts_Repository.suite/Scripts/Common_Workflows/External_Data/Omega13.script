@@ -1,0 +1,36 @@
+﻿// http://docs.eggplantsoftware.com/ePF/using/epf-error-recovery-with-omega13.htm
+
+// You must have the attempRecovery script and it must have that name.
+
+// The attempt recovery Script must return Yes or No
+
+WaitFor 8.0, (Text:"MyPassword", contrastColor:(240,240,239), contrast:"On", contrastTolerance:"45")
+
+// This is a basic attemptRecovery script.
+If ImageFound("DiscardChangesPrompt_1")
+	
+	
+	click "DiscardChangesPrompt_1"
+	
+	return yes -- we were able to dismiss the popup
+	
+Else
+	
+	return no -- it was a different problem we don't know how to deal with
+	
+End If
+
+
+
+
+Start using Omega13
+
+openWebPage
+
+RunWithNewResults "scrollThroughList"
+
+RunWithNewResults "opentheLastItem"
+
+closeWebPage
+
+Stop using Omega13

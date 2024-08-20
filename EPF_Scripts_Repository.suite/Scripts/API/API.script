@@ -1,0 +1,61 @@
+﻿(*
+GET: Returns header and body data.
+POST: Sends data in the request body. This request is often used to create a new database record.
+PUT or PATCH: Updates an existing record. Your API determines which request to use.
+DELETE: Removes a record. Note that many servers will reject this request due to issues with permissions.
+HEAD: Returns header data. Typically this is used only for testing and troubleshooting
+
+HEADER
+Accept: (I only accept json)
+authorization:<token>
+Connection
+
+RESPOONSE
+2oo good
+400 you messed up
+500 server broke
+
+example API ttps://catfact.ninja/fact
+
+*)
+
+put api_test().authenticationType --Returns the authentication type used for the request.
+put api_test().httpMethod --Returns the request type (e.g., GET, POST).
+put api_test().mimeType --Returns the MIME type used in the response.
+put api_test().oauth1Token --Returns the token if OAuth 1.0 is the authentication method; otherwise, empty.
+put api_test().password --Returns a redacted string if a password is used for authentication; otherwise, empty.
+put api_test().requestBody--Returns the body content of the request for POST, PUT, and PATCH requests; otherwise, empty.
+put api_test().requestBodyFormat--Returns the Body Format type selected in the Request Body section. For requests that don't have body content, the returned value is the most recently chosen Body Format type.
+put api_test().requestHeaders--Returns any headers entered in the Request Headers section as key/value pairs; otherwise, empty.
+put api_test().responseBody--Returns the response data from the server.
+put api_test().responseCookies--Returns details about cookies in the response, if any.
+put api_test().responseHeaders--Returns the response headers as key/value pairs.
+put api_test().responseTime--Returns the response time from the request from the server, in seconds.
+put api_test().statusCode--Returns the status code received from the server (e.g., 200, 404).
+put api_test().url--Returns the request URL.
+put api_test().userName--Returns the username for authentication (if used); otherwise, empty.
+
+//To Troubleshoot API()
+
+--Call API Script by saying
+Run "API_test"
+Log API() -- to get the whole list of information for the API and make sure it matches if you use DAI
+
+---------------------------------------------
+
+run "SampleAPI"
+--GET option - Then URL is http://dummy.restapiexample.com/api/v1/employees
+
+put JSONValue(API().responseBody) into Employees
+
+put item 5 of Employees into Employee
+
+
+if Employee.id = "47526" then
+	LogSuccess "Correct ID:"&&Employee.id
+else
+	logwarning "Wrong ID:"&&Employee.id
+end if
+
+log "Employee's Salary is" && Employee.employee_salary
+

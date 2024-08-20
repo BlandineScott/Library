@@ -1,0 +1,167 @@
+﻿
+
+if ImageFound(3, "Chrome") then
+	click "Chrome"
+else
+	logwarning "No Chrome to Click"
+end if
+//-----------------------------------------------------
+
+if ImageFound(3, "Chrome") then
+	click FoundImageLocation()
+else
+	logwarning "No Chrome to Click"
+end if
+---------------------------------------------------
+If it is "Yes"
+	
+	LogSuccess "The formatting is correct!"
+	
+else if it is "No"
+	
+	LogError "The formatting is not correct. The test has failed."
+	
+	Answer "Which recovery scenario should be run?" with "Application Restart" or "Page Refresh" title "Recovery Scenario Selection"
+	
+	if it is "Application Restart"
+		
+		ApplicationRestart
+		
+	else if it is "Page Refresh"
+		
+		PageRefresh
+		
+	end if
+	
+else if it is empty -- If the Answer window times out, it is returned empty
+
+	LogWarning "The formatting check timed out before a human could check the formatting. Capturing a screenshot for later review!"
+	
+	CaptureScreen
+	
+end if
+
+to ApplicationRestart
+
+	Click "Menu"
+	
+	Click "Exit"
+	
+	DoubleClick "ApplicationIcon"
+	
+end ApplicationRestart
+
+to PageRefresh
+
+	Click "Menu"
+	
+	Click "Refresh"
+	
+end PageRefresh
+-----------------------------------------------------
+
+if ImageFound(3, "Chrome") then
+	click "Chrome"
+else
+	logwarning "No Chrome to Click"
+end if
+//-----------------------------------------------------
+
+if ImageFound(3, "Chrome") then
+	click FoundImageLocation()
+else
+	logwarning "No Chrome to Click"
+end if
+
+//-----------------------------------------------------
+
+
+if availablebeds does not equal zero
+	logsuccess
+end if
+
+(*
+If vs Assert document
+https://techaid.co/blog/if-clauses-vs-assert-statements-when-to-use-which-one/*)
+
+End If
+(*ASSERT
+Behavior: When you run an assert command, Eggplant Functional evaluates the specified condition (an expression) as true or false. If it is evaluated as false then by default assert throws an exception. It can also log a success, failure, or warning, depending on how the behavior is set. The failure behavior for the assert command can be set in-line using the Assert command properties as shown in the syntax and examples below. 
+Syntax: assert {that} condition {with [warning | error | exception | pause]}
+*)
+
+set the AssertionBehavior to "warning" // Changes the default behavior of assertions to generate a warning instead of an exception
+assert that 11 < 10 // Logs a warning message if the value of x is not less than 10 due to the AssertionBehavior global property set previously
+
+assert that 456788 is "128901823" with Exception "Validating the order confirmation number." // Customizes the assertion message
+
+params Platform, Version, DebuggingMode
+assert paramCount() is greater than 2 with error // Asserts that at least 3 parameter values were passed into the script, and if not, logs an error
+Log the assertionErrorCount&&"assertions have failed." // Logs the total number of assertion errors that have occurred during the execution
+
+//-------------------
+//Mulitple Asserts
+assert that imagefound(text:"real", waitfor:1) AND imagefound(text:"Buttons",waitfor:1)
+assert that imagefound(text:"real", waitfor:1),imagefound(text:"Buttons",waitfor:1) -- This is OR
+assert that imagefound(text:"real", waitfor:1),imagefound(text:"Buttons",waitfor:1)
+assert that imagefound(text:"real", waitfor:1) AND IF imagefound(text:"Buttons",waitfor:1) -- it quits after the first failture
+assert that imagefound(text:"real", waitfor:1)  OR IF imagefound(text:"Buttons",waitfor:1)
+-----------------------------------EXAMPLES OF IF STATEMENTS
+//ImageFound only returns values of TRUE or FALSE
+//FoundImageLocation() will return (x,y) for the center point of the text "Showing all records near"
+//ReadText((x,y)) will read the text surrounding that point (not precise). 
+If ImageFound(text:"Showing all stores near", caseSensitive:yes,WaitFor:10) then
+	Put ReadText(FoundImageLocation()) into mySearchString
+	If mySearchString contains "28269" then
+		LogSuccess "You are searching in the correct zip code"
+	Else
+		LogWarning "You have searched in the wrong zip code"
+	End If
+Else
+	LogWarning "You have not triggered any search."
+End If
+
+//OR
+
+Put readtext("Puppy_1","Puppy_2") into mysearchstring
+assert that imagefound(text:"free")
+
+If mysearchstring contains "free" then
+	Logsuccess "found"
+Else
+	Logwarning "not found"
+End If
+
+//if image is found within this searchrectangle then click it. 
+if imagefound(text:"Hello!", SearchRectangle:("Image1","Image2"))
+then
+	click foundimagelocation()+(100,100) -- add some 
+	log "clicked it!"
+else
+	logerror "didn't find the word"
+end if
+
+//OR
+Click (ImageLocation(text:"Search Text") + (0,20))
+
+//Readtext is empty
+
+log ReadText("HeaderTop", "HeaderBottom") // Logs any text read in the specified rectangle
+
+If ReadText("NotePadUpLeft", "NotePadLowRt") is empty then // Checks to see whether ReadText() finds any text in the specified rectangle
+	log "No text found." // Logs a comment if no text is found
+End If
+--------------------------
+put number of items of EveryImageLocation(text:"puppy") into puppyCount
+if puppyCount is greater than 1 then
+	logsuccess "puppy loaded correctly"
+else
+	LogWarning "puppy did not load correctly. found 'puppy' "&puppyCount&" times"	
+end if
+-------------------------------------
+put number of items of EveryImageLocation(text:"puppy") into puppyCount
+if puppyCount is 2 then
+	logsuccess "puppy loaded correctly"
+else
+	LogWarning "puppy did not load correctly. found 'puppy' "&puppyCount&" times"	
+end if

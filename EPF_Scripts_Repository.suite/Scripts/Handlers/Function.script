@@ -1,0 +1,9 @@
+﻿Log testingexample()
+
+To Testingexample
+	Log "Inside my handler"
+	Put "hello" into greeting
+	return greeting
+end Testingexample
+
+Log ReadTextFromBelowImageLocation ("Price", rowheight, columnwidth,contrastYN)*)

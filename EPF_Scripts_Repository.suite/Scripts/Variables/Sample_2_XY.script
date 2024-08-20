@@ -1,0 +1,20 @@
+﻿
+put 3 into x
+put 4 into y
+
+
+put x into a
+put a+ y into b
+put b - x into c
+log c
+
+
+put 3 into x
+put 4 into y
+
+log x
+
+put 5 into x
+
+log x+y
+

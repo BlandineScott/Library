@@ -1,0 +1,76 @@
+﻿// http://docs.eggplantsoftware.com/en-us/ePF/SenseTalk/stk-executing-sql-directly.htm
+
+set myDB to {type:"odbc", DSN:"YourDSNName", user:"MyID", password:"1234"}
+
+open database myDB
+
+put executeSQL(myDB, "Select * From  patient_data limit 10") into Var -- or whatever yoru SQL query is...
+
+Log Var -- send us the output
+
+
+
+// http://docs.eggplantsoftware.com/en-us/ePF/SenseTalk/stk-executing-sql-directly.htm
+
+// writing
+to SQLReport thisDuration, thisScriptName, myTestStatus -- This is not a working handler! Just guessing at some stuff.
+
+	Log "Common.SQLReport"
+	
+	LogSuccess "This is just a placeholder for your SQL Command" && thisDuration && thisScriptName && myTestStatus
+	
+	set myDB to {type:"odbc", DSN:"MyDataBaseName", user:"myUserName", password:"MyPassword"}
+	
+	open database myDB
+	
+	set newresult to {Test_Duration: thisDuration, Test_ScriptName:thisScriptName, }
+	
+	add record newresult to MyDB
+	
+	close database myDB
+	
+	
+end SQLReport
+
+
+// set current record to the record of myDB where record's.firstName equals bob
+
+// handler example. Note that  the var it creates is a list... validate by each property example
+//  If FinalInfo.tn_net_am contains price
+
+to SqlQuery price
+	log "End2End/DataCollect/SqlLogic.SqlQuery"
+	put formattedtime("yyyy-MM-dd", the date) into var
+	log var
+	set myDB to {type:"odbc", DSN:"DataCollectInt", user:"db-datacollect-ta-ro", password:GetVaultValue("DcSql")}
+	//Encrypted Password for the Datacollect Read-Only Int DB
+	open database myDB
+	// Build the command first
+	put formattedtime("yyyy-MM-dd", the date) into var
+	log var
+	put <<SELECT TOP (10) *
+FROM [dbo].[rtl_sl_pos_tn]
+where la_id=652
+and bus_ut_id=772
+and bus_day_dt='>>&var&<<' and tn_tnr_am like '>>&Price&<<'
+order by begn_dt_ts desc >>into command
+	log command
+	put executeSQL(myDB, command) into FinalInfo
+	log FinalInfo
+	
+	(*set Finalinfo to "99"
+set price to "100"*)
+	
+	If FinalInfo.tn_tnr_am contains price
+		LogSuccess "Transaction Amount Succesfully validated"
+	else
+		LogError "Unbale to validate the Data"
+		//throw "No data"
+	End If
+	If FinalInfo.tn_net_am contains price
+		LogSuccess "Net Amount Succesfully validated"
+	else
+		LogError "Unbale to validate the Data"
+		//throw "No data"
+	End If
+end SqlQuery

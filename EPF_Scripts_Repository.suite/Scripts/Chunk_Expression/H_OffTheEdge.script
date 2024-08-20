@@ -1,0 +1,28 @@
+﻿// Accessing non-existent chunks
+
+set text to {{
+Not one of them is like another.
+Don't ask us why, go ask your mother.
+}}
+
+put char 12 of word 2 of text
+put word 23 of text
+put line 8 of text
+put item 5 of text
+
+put characters 64 to 298 of text
+
+put "two" into character 7 of word 2 of text
+put line 1 of text
+
+put "Yes!" into word 23 of text
+put line 2 of text
+
+put "Funny things are everywhere!" into line 5 of text
+put
+put text
+
+put "- - - - -"
+put characters 7 to last of word 2 of text
+put word 23 of text
+put line 5 of text

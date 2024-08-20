@@ -1,0 +1,30 @@
+﻿To launchalaska maxwait, Url,onhomepage
+
+	if not onhomepage
+		
+		Typetext optionkey, "d" -- use shortcut for navigating to address bar
+		Typetext url, returnkey
+		
+		If imagefound(Image:"Homepagecookies_AllowAll", waitfor:maxwait)
+		End if
+		Assert imagefound(image:"homepage/alaska", waitfor:maxwait) with exception!"[[my name]]: An exception occured with Launching Alaska Homepage" 
+	else
+		Logsuccess "Already on Alaska site"
+	End If
+end if
+End launchalaska
+---------------------------------
+
+Set mywebsite to "www.amazon.com"
+
+Waitfor 30, image:"myimage"
+Click foundimagelocation()
+typetext Controlkey, "a"
+Typetext controlekey, "c"
+Log remoteclipboard(1) -- 1 is the last second item that was copied to teh remoteclipboard
+put remoteclipboard(1) into mywebadress
+
+---------------------------------
+//Logs the number of characters in the URL
+set MyURL to "www.google.com"
+assert that length(MyURL) is 15

@@ -1,0 +1,5 @@
+﻿to clickImage
+	params image,area
+	if area is not empty then set the SearchRectangle to SearchPortion.screenpart(area) 
+	Click imageName:image, waitfor:universal pageWait
+end clickImage

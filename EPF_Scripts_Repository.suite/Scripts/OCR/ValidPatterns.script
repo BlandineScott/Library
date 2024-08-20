@@ -1,0 +1,64 @@
+﻿
+set myPattern to "^$\d{4}"
+log ReadText((585,358,646,386), ValidPattern: myPattern)
+log ReadText([585,358,646,386])
+-----------------------------
+//Log just the numbers
+put every occurrence of <digit> in "CH 1606 A 1789" into ListOfDigits
+repeat for each item of ListOfDigits
+	set StringOfDigits to StringOfDigits&it
+end repeat
+Log StringOfDigits
+
+Put "CH 1606 A" into MyString
+put ("0".."9") joined by empty into CharstoKeep
+put keepCharacters("CH 1606 A", CharstoKeep) into NumbersOnly
+Log NumbersOnly
+Log 1606
+--Documentation: https://docs.eggplantsoftware.com/ePF/SenseTalk/stk-text-data-manipulation.htm#sts=KeepCharacters%20Function
+
+set mystring to "CH 1606 A"
+delete every occurrence of <letter> in mystring
+delete every occurrence of space in mystring -- remove spaces if needed
+--OR use this for spaces delete every occurrence of <letter or " "> in mystring
+log mystring
+Log 1606
+
+put "0".."9" joined by empty into myNumerals
+put "CH 1606 A" into myString
+put keepCharacters(myString,myNumerals)
+
+set mystring to "CH 1606 A"
+delete every occurrence of <nondigit> in mystring
+log mystring
+Log "16 06"
+
+-----------------------------
+-- Passes CharstoKeep1 as a text string. Output: 'SenseTalk is a great language'
+
+set myPattern to ".{15}" // look for ANY character
+log "setting a pattern:"&&ReadText((225,286,455,405), ValidPattern: myPattern)
+put trimall(ReadText(225,286,455,405)) into myText
+log the first 15 characters of myText
+-----------------------------
+//The actual message is 67859808I45
+set mySearchAreaBasedOnText to (right of ImageRectangle(text:"Interface Message", waitFor:1) + 1,top of ImageRectangle(text:"Interface Message", waitFor:1) - 2,right of ImageRectangle(text:"Interface Message", waitFor:1) + 200,bottom of ImageRectangle(text:"Interface Message", waitFor:1) + 2)
+set mySearchAreaBasedOnImage to (right of ImageRectangle(image:"InterfaceMessage", waitFor:1) + 1,top of ImageRectangle(image:"InterfaceMessage", waitFor:1) - 2,right of ImageRectangle(image:"InterfaceMessage", waitFor:1) + 200,bottom of ImageRectangle(image:"InterfaceMessage", waitFor:1) + 2)
+Log "The full text is"&&ReadText(image:"InterfaceMessage",validPattern:"[a-zA-Z0-9]+") -- This fails. Reads the "I" as a "1"
+Log "The message only is"&&ReadText(mySearchAreaBasedOnImage,validPattern:"[a-zA-Z0-9]+") -- This passes. Reads the "I" as an "I"
+Log "The full text is"&&ReadText(text:"Interface Message",validPattern:"[a-zA-Z0-9]+") -- This fails. Reads the "I" as a "1"
+Log "The message only is"&&ReadText(mySearchAreaBasedOnText,validPattern:"[a-zA-Z0-9]+")  -- This passes. Reads the "I" as an "I"
+Log "The full text is"&&ReadText(image:"InterfaceMessage",validPattern:"[0-9]+") -- This passes. Reads the "I" as a "1"
+Log "The message only is"&&ReadText(mySearchAreaBasedOnImage,validPattern:"[0-9]+") -- This passes. Reads the "I" as a "1"
+Log "The message only is"&&ReadText(mySearchAreaBasedOnText,validPattern:"[0-9]+") -- This passes. Reads the "I" as a "1"
+
+---------------------
+//if you are always looking for this pattern of numbers and letters, the regex is [0-9]{8}[A-Z][0-9]{2}
+-----------------------
+//The actual message is 67859808I45
+Log ReadText(text:"Interface Message",validPattern:"[a-zA-Z0-9]+") -- This fails. Reads the "I" as a "1"
+Log ReadText(image:"InterfaceMessage",validPattern:"[0-9]+") -- This passes. Reads the "I" as a "1"
+Log ReadText(text:"Interface Message",validPattern:"[0-9]+") -- This fails because it applies the pattern to the anchor text of "Interface Message"
+
+---------------------------
+og ReadText([1158,582,1247,606],ValidPattern:"[0-9][0-9]/[A-Z][A-Z][A-Z]/[0-9][0-9][0-9][0-9]") // working example

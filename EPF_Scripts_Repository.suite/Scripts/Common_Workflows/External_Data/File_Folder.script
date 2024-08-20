@@ -1,0 +1,35 @@
+﻿--Files and Folders
+
+//How to read a file from a particular line
+put the number of lines of File "C:\TestPlant\logs\em.log" into myLineCount
+put 7 into LogCount
+put lines LogCount..myLineCount of File "C:\TestPlant\logs\em.log"
+
+--OR
+
+set startingLine to 7
+put lines startingLine to last of file "D:\Eggplant\logdata\aps.log" into Logtxt
+
+log the short time("01:50 pm CST") 
+log the short time("01:50 pm MST") 
+log the short time("01:50 pm MST") 
+Log the availableTimeZoneNames // Logs all time zone names known by the local operating system
+
+put availableTimeZoneAbbreviations() into TimeZoneAbbrev
+
+repeat with each item x of keys(TimeZoneAbbrev)
+	put x & ": " & property (x) of TimeZoneAbbrev into timeZonesAmericas
+	If timeZonesAmericas contains "America"
+		log timeZonesAmericas
+	End If
+end repeat
+
+Put the short CST TimeZoneAbbrev
+
+Log	the short time("SJMT: America/Costa_Rica")
+
+-----------------
+//delete a certain file type
+put ("log.txt", "image.png", "other.exe") into filelist
+delete each item of filelist which ends with ".exe"
+log filelist

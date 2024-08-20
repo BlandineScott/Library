@@ -1,0 +1,132 @@
+﻿put everyimagelocation("image") into dividerLocations
+if the number of items in dividerlocations  >1
+	set dividerloc to the last item in dividerlocations
+else
+	set dividerloc to the first item in dividerlocations
+	//	set dividerloc to item 1 in dividerlocations
+end if 
+
+Set the searchrectangle to ("MyImagetopleft", dividerlocations)
+--------------------------
+to handle selectAddressnState stateName
+	put EveryImageLocation(text:"State") into stateLoc
+	click item 2 of stateLoc
+	wait 0.5
+	WaitFor universal pagewait, text:"Alabama"
+	put ImageLocation(text:"Alabama") into reftext
+	//to restrict search are based on the refernce text
+	set the SearchRectangle to [[reftext.X-40,reftext.Y-5],[reftext.X+88,reftext.Y+230]]
+	wait 1
+	Set the SwipeSpeed to 0.5
+	repeat until ImageFound(text:stateName)
+		drag reftext+[5,70]
+		wait .5
+		drop reftext
+		wait 3
+	end repeat
+	click FoundImageLocation()
+end selectAddressnState
+
+
+
+
+//Delete last instance of an image on the screen
+Click the last item of everyimagelocation("image0001")
+
+Put everyimagelocation("checkbox") into boxlist
+Log the number of items in boxlist
+
+Repeat with each item box of boxlist
+	log box 
+	click box
+End Repeat
+---------------------------------------------------------------
+
+Log everyimagelocation (text:$39.99) -- Find everyimagelocation of the text $39.99
+
+---------------------------------------------------------------
+
+Put everyimagelocation(text:"Edit") into myeditlocation
+repeat with each item in myeditlocation
+	moveto it
+end repeat
+
+repeat while ImageFound(text:"expand",searchrectangle:(677,291,1026,848))
+	Click foundimagelocation()
+end repeat
+
+
+--------------------------------------
+Set the remoteworkint to 2
+click item 2 of everyimagelocation("")
+Typetext ""
+
+--------------------------------------
+
+
+
+set the RemoteWorkInterval to .1 // Shortens the RemoteWorkInterval (default=.7) to decrease the pause between actions that Eggplant Functional sends to your SUT. This change allows the series of clicks to execute much faster.
+
+repeat with EveryImageLocation("RadioButton") // Iterates through each occurrence of the image found with everyImageLocation().
+
+	click it // Using the it variable, clicks the current occurrence the repeat loop is operating on.
+	
+end repeat
+
+set the RemoteWorkInterval to .7
+
+----------------------
+put EveryImageLocation("GreenSaveButton","BlueSaveButton","RedSaveButton") // Returns a list of hot spot coordinates for every occurrence of the image.
+
+put the result // Returns imageInfo for every image represented in EveryImageLocation.
+-------------------
+click ImageLocation("NameLabel") + [50,-10] // Clicks 50 pixels to the right and 10 pixels up from the hot spot location of the image.
+------------
+// The following example provides an alternate syntax for the previous example.
+repeat with each item of EveryImageLocation("RadioButton")
+	click it // Using the it variable, clicks the current occurrence the repeat loop is operating on.
+end repeat
+------------------
+Set the remoteworkint to 2
+click item 2 of everyimagelocation("")
+Typetext ""
+------------------
+
+
+set the RemoteWorkInterval to .1 // Shortens the RemoteWorkInterval (default=.7) to decrease the pause between actions that Eggplant Functional sends to your SUT. This change allows the series of clicks to execute much faster.
+
+repeat with EveryImageLocation("RadioButton") // Iterates through each occurrence of the image found with everyImageLocation().
+
+	click it // Using the it variable, clicks the current occurrence the repeat loop is operating on.
+	
+Click the last item found of it 
+
+end repeat
+
+set the RemoteWorkInterval to .7
+-----------------
+set the RemoteWorkInterval to .1 // Shortens the RemoteWorkInterval (default=.7) to decrease the pause between actions that Eggplant Functional sends to your SUT. This change allows the series of clicks to execute much faster.
+
+repeat with EveryImageLocation("RadioButton") // Iterates through each occurrence of the image found with everyImageLocation().
+
+	click it // Using the it variable, clicks the current occurrence the repeat loop is operating on.
+	
+end repeat
+
+set the RemoteWorkInterval to .7
+----------------------
+put EveryImageLocation("GreenSaveButton","BlueSaveButton","RedSaveButton") // Returns a list of hot spot coordinates for every occurrence of the image.
+
+put the result // Returns imageInfo for every image represented in EveryImageLocation.
+-------------------
+click ImageLocation("NameLabel") + [50,-10] // Clicks 50 pixels to the right and 10 pixels up from the hot spot location of the image.
+
+Put everyimagelocation("image0018") into myimagename
+Log everyimagelocation("image0018")
+Click the last item of everyimagelocation("image0018")
+-------------------
+Put everyimagerectangle("ReservNumber") into ReservatioNumberImageLocation
+Put the number of items of ReservatioNumberImageLocation into ReservationnumberCount
+Repeat ReservationnumberCount times
+	Log item repeatindex() of ReservatioNumberImageLocation
+End Repeat

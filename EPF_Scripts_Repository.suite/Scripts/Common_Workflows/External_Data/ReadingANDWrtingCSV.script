@@ -1,0 +1,53 @@
+﻿//Set myFile to file resourcePath("AmerisourceBergen.txt") -- Either way works. csv or txt
+Set myFile to file resourcePath("Drivers.csv")
+
+repeat with each line of myfile
+	put it into var
+	Log the first item of var-- Or whatever you want to do here.
+	LogSuccess the second item of var-- Or whatever you want to do here.
+end repeat
+
+// Repeat with each line
+Set myFile to file resourcePath("items.csv")
+
+repeat with each line of myfile
+	put it into var
+	Log the first item of var-- Or whatever you want to do here.
+	Put the first item of var into global itemToLookup
+	Log the second item of var-- Or whatever you want to do here.
+	put the second item of var into global whatToValidate
+	
+	LogSuccess "Lookup this"&&global itemToLookup
+	LogSuccess "Validate this"&&global whatToValidate
+end repeat
+
+
+// Pick any from the CSV ... for the random action in the model
+put any line of file ResourcePath("items.csv") into vars
+
+log item 1 of vars // what to Type
+log item 2 of vars // What to validate
+
+// Pick a line based on what's in it.
+repeat with each line of myfile
+	put it into myLine
+	If the first item of myLine contains "Tax"
+		
+		put the second item of myLine into CurrentBoolean
+		Log "The Tax Validation is set to"&&CurrentBoolean
+		
+		Set global myBoolean to "TRUE" -- for Use later
+		
+	End If
+end repeat
+
+
+// Writing
+put CSVValue(file resourcePath("Drivers.csv")) into DataContainer
+Set (item 1 of DataContainer).Result to "Fail"
+put CSVFormat(DataContainer) into file resourcePath("Drivers.csv")
+
+
+
+
+

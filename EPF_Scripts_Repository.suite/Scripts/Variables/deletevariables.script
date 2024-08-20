@@ -1,0 +1,4 @@
+﻿delete [variable | local | global | universal] variableName 
+
+delete local password
+delete global accountNumber

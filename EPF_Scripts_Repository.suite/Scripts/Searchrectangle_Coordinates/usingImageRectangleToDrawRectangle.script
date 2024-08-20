@@ -1,0 +1,25 @@
+﻿(*
+imageRectangle will return a list of four values: [left, top, right, bottom]
+however, you can reference properties of this value using dot notation such as rect.bottomRight which returns a coordinate pair (ie. [x,y] OR you can reference a side such as rect.bottom which returns a single value, either the X or Y value
+*)
+Set the searchrectangle to (150,203,957,988)
+Put sectionRectangleForText("Discount",0)
+
+function sectionRectangleForText myLabelText, bottomPaddingValue
+	// find location (and rectangle) for label first
+	put imageRectangle(text: myLabelText) into labelRect
+	
+	// since the label is at the top, we want to use the BOTTOM of it to limit our search inside, since all the content inside will be BELOW it
+	// we also need the LEFT since it's left-aligned -- you can also modify this for any standard padding
+	put labelRect.bottomLeft + [-bottomPaddingValue,100] into topLeftConstraint
+	
+	// we still need two (2) more constraints though: RIGHT and BOTTOM
+	// the right can be depending on many things, but because we're already limiting the search area, you can sometimes just use the screen width
+	// the bottom can be a param you pass into a function you wrap this all in
+	put remoteScreenSize().width into rightConstraint
+	put labelRect.bottom + bottomPaddingValue into bottomConstraint
+	
+	//now put it all together into a rectangle
+	return [topLeftConstraint, [rightConstraint, bottomConstraint]]
+end sectionRectangleForText
+

@@ -1,0 +1,2 @@
+﻿// Read text on two different lines with spaces
+WaitFor 2, text:"AARP Medicare Advantage Focus (HMO)", ignoreNewLines:yes, ignoreSpaces: yes

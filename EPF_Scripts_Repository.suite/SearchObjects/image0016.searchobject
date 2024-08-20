@@ -1,0 +1,46 @@
+{
+	"lastmodifieddate": 1680291595.527,
+	"lastfoundlocation": [
+		12,
+		100,
+		16,
+		15
+	],
+	"originalcapturelocation": [
+		12,
+		100,
+		16,
+		15
+	],
+	"createddate": 1680291595.527,
+	"lastfounddate": 1680291616.497,
+	"testlocationdata": [
+		{
+				"connectionportnum": 61658,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[46,6]",
+					"Tolerance": "_45",
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "image0016.png",
+				"connectionname": "Android 7.0",
+				"type": 1,
+				"capturerect": [
+					12,
+					100,
+					16,
+					15
+				],
+				"connectiontype": "SauceLabs",
+				"connectionserverid": "localhost"
+			}
+	],
+	"name": "image0016"
+}

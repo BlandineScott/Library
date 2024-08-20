@@ -1,0 +1,38 @@
+﻿set the mousedoubleclickdelay to 1
+tap text:"Puppies" //click on the text to be found - Menu appears
+Click "Select" //select "Select"
+Typetext backspace //Delete selection
+
+setremoteclipboard "12283" -- Sends the string "12283" to the clipboard of the SUT
+Press "AddressField" -- Presses on the image AddressField
+wait 2 -- Holds down the press for 2 seconds
+Release -- Releases the press action
+Tap "PasteDialog"
+-----------------------------------------------
+//Select something on an Android and select all + delete
+DoubleClick "TestField"
+Click Text:"Select all"
+Typetext backspace
+
+set the mousedoubleclickdelay to 1
+tap text:"Yourtext" //click on the text to be found - Menu appears
+Click "Select" //select "Select"
+Typetext backspace //Delete selection
+
+-----------------------------------------------
+Press text:"5555"
+Typetext backspace
+----------------------------------------------
+Click "Image" -- 1 is for left mouse button 2 is for right
+Mousedown 1
+Mouseup1
+Backspace
+
+----------------------------------------------
+--Pinch in and out
+try
+	pinchin{at:pinch_me, Duration:5.0}
+
+
+
+

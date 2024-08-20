@@ -1,0 +1,13 @@
+﻿//use & to concatenate values without a space, and use && to concatenate values with a space
+
+//combine related values with &
+set productname to "phone"
+set productnumber to "1234"
+set productfinale to productname&productnumber
+log productfinale // logs phone1234
+
+//combine related values with &&
+set productname to "phone"
+set productnumber to "1234"
+set productfinale to productname&&productnumber
+log productfinale // logs phone 1234

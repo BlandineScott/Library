@@ -1,0 +1,32 @@
+﻿
+set trees to ["pine","elm","oak","redwood","yew","walnut"]
+
+delete item 2 of trees
+put trees
+
+delete each item of trees which is "yew"
+put trees
+
+delete each item of trees which doesn't contain "a"
+put trees
+-------------------
+Put readtext(368,163,501,430)into test1
+log "before: "&Test1
+
+repeat with each line of test1
+	If it equal "reserv." then //word where we need to use to delete before and after that word
+		Insert repeatindex() into mylist
+	End If
+end repeat
+
+
+Repeat with each item of mylist reversed
+	if it is greater than 1 then
+		put it-1 into mycounterbefore
+		delete line (mycounterbefore) of test1
+		put it+0 into mycounterafter
+		delete line (mycounterafter) of test1
+	end if
+End Repeat
+log test1
+log "after: "&Test1

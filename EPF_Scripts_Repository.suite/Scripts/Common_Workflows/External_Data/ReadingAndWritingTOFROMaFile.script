@@ -1,0 +1,265 @@
+﻿// http://docs.eggplantsoftware.com/ePF/SenseTalk/stk-file-folder-interaction.htm
+
+/// Super basic read and write
+
+put "TRUE" into file ResourcePath("myBoolean.csv") -- This will make the file if it doesn't exist and write to it. Can be whatever .txt, .csv, etc
+Set myFile to file resourcePath("myBoolean.csv")
+
+If myFile contains "TRUE"
+	Log "yup"
+Else
+	Log "Nope"
+End If
+
+// Writing
+put "FALSE" into file ResourcePath("myBoolean.csv")
+
+
+Set myFile to file resourcePath("items.csv")
+log item 1 of line 3 of myFile
+log item 2 of line 3 of myFile
+
+
+-- READING
+
+Set myFile to file resourcePath("Retail_FSP_1001.in")
+log item 1 of line 3 of myFile
+log item 2 of line 2 of myFile
+
+Set myFile to file resourcePath("AmerisourceBergen.txt") -- Either way works. csv or txt
+//Set myFile to file resourcePath("AmerisourceBergen.csv")
+
+repeat with each line of myfile
+	put it into var
+	LogSuccess the first item of var-- Or whatever you want to do here.
+	//	LogSuccess the second item of var-- Or whatever you want to do here.
+end repeat
+
+
+// Another version
+Set myFile to file resourcePath("Test.csv") -- Either way works. csv or txt
+//Set myFile to file resourcePath("AmerisourceBergen.csv")
+
+repeat with each line of myfile
+	put it into var
+	if var contains "garbage"
+		Log "I found it!"
+		Throw
+	end if
+end repeat
+
+
+// If you have it in resources
+Set global Strings to CSVValue(file resourcePath("USLinks.csv"))
+
+repeat with each item StringSet of global Strings
+	
+	Set global String1 to StringSet's StringOne
+	
+	Set global String2 to StringSet's StringTwo
+	
+	Set global String3 to StringSet's StringThree
+	
+	LogSuccess "Next Set"
+	Log "First String is "&global String1
+	Log "Second String is "&global String2
+	Log "Third String is "&global String3
+	
+	
+end repeat
+
+// Writing
+put CSVValue(file resourcePath("Drivers.csv")) into DataContainer
+Set (item 1 of DataContainer).Flag to "N"
+put CSVFormat(DataContainer) into file resourcePath("Drivers.csv")
+
+
+
+
+// If you have it in resources
+Set myFile to CSVValue(file resourcePath("USLinks.csv"))
+
+repeat with each item of myFile
+	
+	Set String1 to myFile's StringOne
+	Set String2 to myFile's StringTwo
+	Set String3 to myFile's StringThree
+	
+	Log String1
+	Log String2
+	Log String3
+	
+end repeat
+
+put file ResourcePath("ResponsiveList.csv") into InputFile
+
+repeat with Myline = each line of line 2 to the last of InputFile
+	Click imageName:"Web_images/Full_Name", waitFor:30
+	typetext item 1 of Myline
+	typetext tab
+	
+	//Enter the email
+	Click imageName:"Web_images/Email", waitFor:30
+	typetext item 2 of Myline
+	typetext tab
+	
+	//Enter the message
+	Click imageName:"Web_images/Message", waitFor:30
+	typetext item 3 of Myline
+	typetext tab
+	
+	Click imageName:"Web_images/OK", waitFor:30
+	
+end repeat
+
+
+
+
+
+// If it's somewhere else... Note... to file makes it treat each row seperately
+set myFile to file "/Users/johnspitta/Desktop/TMWOrders0514DEV.csv"
+
+repeat with each line of myFile
+	
+	put it into CurrentOrderNum
+	
+	delete every occurrence of " " in CurrentOrderNum
+	If the first item of CurrentOrderNum is empty -- if you have a blank
+		Next Repeat
+	End If
+	
+	LogSuccess the first item of CurrentOrderNum-- Or whatever you want to do here. Like
+	//Click (Image:"OrderEntryBox", WaitFor:8)
+	//TypeText CurrentOrderNum,return
+	
+End Repeat
+
+
+
+//set myFile to file "/Users/johnspitta/Desktop/Qualtrics/20200506 Survey Test v1.docx.qsf"
+set myFile to file "/Users/johnspitta/Desktop/Qualtrics/20200506_Survey_Test_v1_Qualtrics.qsf"
+
+repeat with each line of myFile
+	
+	Log it
+	
+End Repeat
+
+
+//For JSONs
+put JSONValue( file ResourcePath("20200506_Survey_Test_v1_Qualtrics.qsf")) into JSONoutput
+put Jsonoutput."surveyElements" into surveylist
+repeat with each item surveyitem of surveylist
+	put surveyitem.payload into payloadlist
+	repeat with each item payload of keys(payloadlist)
+		put payloadlist.(payload).blockelements into blockelementsList
+		repeat with each item element in blockelementsList
+			if keys(element) contains "skiplogic"
+				log element.skiplogic
+			end if
+		end repeat
+	end repeat
+end repeat
+
+//Example Two
+put JSONValue( file ResourcePath("tunnel_inventory_qa.json")) into JSONoutput
+Wait 1
+
+
+
+// Writing
+
+// In resources -- recommended
+put "" into file ResourcePath("new.csv") -- Make file
+
+If file ResourcePath("new.csv") exists
+	Log "It is there. Do the thing you want to do if it's there."
+else
+	LogWarning "It is not there. Do the not there thing. ;) "
+End If
+
+
+put  "Order Date" && "," && "Order Number" & return after file ResourcePath("AutoOrderFile.csv") -- Write to file
+
+put  orderDate && "," && orderNumber && return after file ResourcePath("AutoOrderFile.csv") -- Write to file
+
+Delete file ResourcePath("new.csv")-- Deletes file - in windows... this can take a few seconds for the UI to refresh but it works!
+
+
+// In resources -- writing a warning to a file
+put "" into file ResourcePath("new.csv") -- Make file
+Wait 2
+put  "Header1" && return after file ResourcePath("new.csv") -- Set Headers
+
+set PopUpExists to "TRUE"
+
+if PopUpExists contains "TRUE"
+	LogWarning "The Popup has appeared."
+	put "The Popup has appeared." into WarningMessage
+	put  WarningMessage && return after file ResourcePath("new.csv") -- Write to file
+end if
+
+Delete file ResourcePath("new.csv")-- Deletes file - in windows... this can take a few seconds for the UI to refresh but it works!
+
+
+// Somewhere else
+Log "Set the values."
+set Var1 to "100"
+set Var2 to "200"
+set Var3 to "300"
+set Var4 to "400"
+
+Log "Make the headers"
+
+Log "Input the data... you could put this in a repeat"
+put  var1 && "," && var2 && "," && var3 && "," && var4 && return after file ("/Users/johnspitta/Desktop/Test/report.csv")
+
+Log "Do it again just for fun"
+Log "Input the data... you could put this in a repeat"
+put  var4 && "," && var3 && "," && var2 && "," && var1 && return after file ("/Users/johnspitta/Desktop/Test/report.csv")
+
+Log "Clean up the file for the next run" 
+If file("/Users/johnspitta/Desktop/Test/report.csv") exists -- mac
+	shell "rm /Users/johnspitta/Desktop/Test/report.csv"  -- mac
+End If
+
+
+
+
+
+// From anne
+
+//This script will read from a spreadsheet and then write info to it
+set myDB to (file:ResourcePath("Book1.xlsx"), type:"excel", writeable:"Yes")
+set patientList to table("Sheet1") of myDB
+repeat with each item row of the records of patientList by reference //repeating with each line of the excel and saving any updates directly to the file
+	log row
+	log the repeatIndex
+	log row."First Name"
+	log row."Last Name"
+	put random (100000000,999999999) into row.SSN
+	put "complete" into row."complete" -- You only need quotes if you have spaces. Just showing it works.
+end repeat
+
+
+// other wise writing to the excel as a excel sheet:
+set MyExcelFile to Workbook(ResourcePath(filename))
+set worksheet1 to Worksheet(MyExcelFile, 1)
+SetRemoteClipboard file ResourcePath("Example.csv")
+put remoteclipboard() into data
+set currentrow to 1
+set currentcolumn to 1
+//write data to excel
+repeat with each line currentline in data
+	repeat with each item cell in currentline
+		put cell into worksheet1.Cell(currentrow,currentcolumn)
+		// set the cellType of worksheet1.Cell(currentrow,currentcolumn) to Number
+		add 1 to currentcolumn
+	end repeat
+	add 1 to currentrow
+	set currentcolumn to 1
+end repeat
+
+
+
+

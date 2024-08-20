@@ -1,0 +1,47 @@
+{
+	"originalcapturelocation": [
+		338,
+		269,
+		190,
+		63
+	],
+	"lastmodifieddate": 1704472981.951,
+	"createddate": 1704472981.951,
+	"name": "Googleagain",
+	"lastfounddate": 1704473014.8410001,
+	"ocrcapturestring": "C7OOQ",
+	"lastfoundlocation": [
+		338,
+		269,
+		190,
+		63
+	],
+	"testlocationdata": [
+		{
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[-91,112]",
+					"Tolerance": "_73",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"Type": "Testplant Screen Image"
+				},
+				"name": "Googleagain.png",
+				"connectionname": "Demo_SUT.png",
+				"type": 1,
+				"connectionserverid": "C:/Users/blanscot/OneDrive - Keysight Technologies/Desktop/Demo_SUT.png",
+				"capturerect": [
+					338,
+					269,
+					190,
+					63
+				],
+				"connectiontype": "Screenshot",
+				"capturedocrtext": "C7OOQ"
+			}
+	]
+}

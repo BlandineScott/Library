@@ -1,0 +1,87 @@
+﻿typetext windowskey, upArrow //Maximize window	
+TypeText altKey, spacebar, x //Maximize 
+//handler
+
+log (ReadText([0,0,610,20]),crlf)
+
+to maximise
+	if imagefound (0,"maximise")
+		Click foundimagelocation()
+		//wait 1
+		Waitfor 30, "minimise"
+	end if
+end maximise
+
+to minimise
+	if imagefound (0,"minimise")
+		Click foundimagelocation()
+		//wait 1
+		Waitfor 30, "minimise"
+	end if
+end  minimise
+
+-----------------
+put charTonum of each char of crlf
+put everyimageRectangle("my_icon") into appRectList
+repeat for each item rect in appRectList
+	highlightRectangle rect, {duration: 10}
+	wait 1
+	put rect.topRight into topLeftAnchor
+	put rect.bottom into bottomAnchor
+	put remoteScreenSize() into rss
+	put rss.width into rightAnchor
+	put [topLeftAnchor, [rightAnchor, bottomAnchor]] into tempRect
+	highlightRectangle tempRect, {duration: 10}
+	wait 1
+	if imageFound(text: "Build Transfer List", validWords: "*", caseSensitive: true, searchRectangle: tempRect)
+		// then check for window state
+		if imageFound(image: "maximize_window_button", searchRectangle: tempRect)
+			click foundImageLocation()
+		end if
+		put rss * [0.9, 0] into topLeftAnchor
+		put rss * [1, 0.1] into botRightAnchor
+		put [topLeftAnchor, botRightAnchor] into topRightRect
+		assert that imageFound(image: "restore_window_button", searchRectangle: topRightRect, waitFor: 15)
+		highlightRectangle tempRect, {duration: 10}
+		wait 10
+	end if
+end repeat
+
+------------------
+--Master
+
+if ZMyScript.StateWindow() = Global Minimized
+	Log "Window is minimized. Next Action: Insert myscript here to run"
+Else if ZMyScript.StateWindow() = Global TerminalOpen
+	Log "Terminal is open: Next Action: Insert myscript here to run"
+else if ZMyScript.StateWindow() = Global Closed
+	Log "Window is closed - Next Action: Insert myscript here to run"
+end if
+
+--Script
+
+
+
+
+function StateWindow
+	If ImageFound("Minimized")
+		
+		Put "Minimized" into Global Minimized
+		return(Global Minimized)
+	Else If ImageFound("Open")
+		
+		
+		Put "Terminal Window is open" into Global TerminalOpen
+		return(Global TerminalOpen)
+	Else
+		
+		
+		Put "Window is not minimized nor open." into Global Closed
+		return(Global Closed)
+		
+	End If
+	return ()
+end StateWindow
+
+
+

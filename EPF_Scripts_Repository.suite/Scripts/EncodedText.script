@@ -1,0 +1,23 @@
+﻿--Link: https://docs.eggplantsoftware.com/studio/stk-encrypting-text/index.html#encode-text
+--Description: 
+#If you need to use a password or other sensitive information in your script and do not want to pass it as 
+#plain text, you can use the TypeEncodedText command. It works along with the EncodeText and 
+#DecodeText functions
+--Behavior: Encodes text using an encryption key.Optional key to use for encryption.  
+--Example: EncodeText( plainTextString {, keyToUse} )
+
+#1 Type the following in your Eggplant Functional RUN Suite Window:
+
+log EncodeText("Mypassword", "Key1") -- should only be run once
+
+# Add the following to your script
+
+put "u_jo?Yq}>J" into Mypassword --( Enter the provided encoded code from previous run)
+put "Key1" into MypasswordKey
+
+Assert that Mypassword is not empty with message "Check that password holds a value"
+
+TypeEncodedtext Mypassword,MypasswordKey
+
+Log DecodeText(Mypassword,MypasswordKey)
+

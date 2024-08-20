@@ -1,0 +1,59 @@
+﻿--If a script is run with a regular Run command from a master script and the execution fails, it will not have its own log file and the master script will stop execution.​ RunWithNewResults is the answer. RunWithNewResults is the answer. A results log (including success or failure status) is generated for scripts called with RunWithNewResults. It allows a master script to continue running and produce its own log file
+
+Runwithnewresults "Ztest1" 
+Put the result into MyOutcome
+Log MyOutcome.duration
+Log MyOutcome.logfile
+
+Runwithnewresults "Ztest2" 
+Put the result into MyOutcome2
+Log MyOutcome2.duration
+
+If MyOutcome = MyOutcome2
+	Logsuccess "Duration matches."&&MyOutcome
+Else
+	Logwarning "Duration does not match."&&MyOutcome2
+End If
+
+
+-------------------
+--with params
+
+--RunWithNewResults using Parameters
+--Make sure your scripts needing Parameters have this on top Params MyLastName,FirstName
+
+set TestList to ((TestScriptName:"MyScripts/Scripts1",ScriptParams:"Scott",ScriptParams2:"Ann"),(TestScriptName:"MyScripts/Scripts2", ScriptParams:"Phil",ScriptParams2:"Turner"), (TestScriptName:"MyScripts/Scripts3"))
+-- Creates a series of script executions to be used later
+
+RunWithNewResults "Script1","Blandine"
+--RunWithNewResults testCaseName,param1,param2
+
+set Outcome to the result
+if the status of Outcome is not "Success" -- If the result of "InitialTest" is not "Success", gets the date and time of the run...
+then
+	convert Outcome's runDate to date and long time
+	
+else -- Otherwise...
+	repeat with each testScript of TestList -- For every script in TestList,
+		RunWithNewResults testScript.TestScriptName , testScript.ScriptParams , testScript.ScriptParams2--Runs the script, then...
+		
+		
+		set Outcome to the result -- Puts the results into Outcome
+		put testScript & ":" && status of Outcome && Return after currentReport -- Adds "Script: Status", then a return character to currentReport
+		if the status of Outcome is "Failure" then -- If the status property is Failure...
+			run "CleanupScript" -- Runs CleanupScript to reset the test environment
+		end if
+	end repeat -- Ends after the final test in TestList
+	Log "Final Results:" -- Logs "Final Results:" text
+	repeat with each line of currentReport
+		log it -- Logs each line in currentReport
+	end repeat
+end if
+
+
+
+
+
+(*insert "Login" before myparameterList
+RunWithNewResults myparameterList as parameters*)
+

@@ -1,0 +1,6 @@
+﻿Set webadresseslist to ("www.aol.com", "www.amazon.com","pizzahut")
+
+repeat with each item webadress of  webadresseslist
+	Log "Love this website"&&webadress
+end repeat
+

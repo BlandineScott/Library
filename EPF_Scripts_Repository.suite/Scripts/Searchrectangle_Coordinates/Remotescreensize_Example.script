@@ -1,0 +1,46 @@
+﻿Set Screensize to remotescreensize()
+
+log the width of the remotescreensize
+log the height of the remotescreensize
+
+Log Screensize
+
+Log RemoteScreenSize()*[.5,.5] // will log the center of the screen of the SUT
+
+Set the searchrectangle to [RemoteScreenSize()*[.25,.20],RemoteScreenSize()*[.75,.75]]
+
+wait 10
+
+
+
+
+
+
+
+
+
+
+set rect to screensize *[0.00,.007] &&& screensize*[1.0,.96]
+set roundedrect to round of each item of rect
+
+
+-----------------------------------------------------
+log the width of the remotescreensize
+log the height of the remotescreensize
+
+-----------------------------------------------------
+//remotescreenrectangle()
+
+log the top of RemoteScreenRectangle()
+Log the bottom of RemoteScreenRectangle()
+Log the left of RemoteScreenRectangle()
+Log the right of RemoteScreenRectangle()
+
+-----------------------------------------------------
+assert imagefound(text:"Administration", SearchRectangle:Handlers.ScreenPart("TopQuarter"))-----------------------------------------------------
+-----------------------------------------------------
+Set the searchrectangle to [RemoteScreenSize()*[0,0.7],RemoteScreenSize()*[1,1]]
+Wait 1
+
+-----------------------------------------------------
+Log RemoteScreenSize()*[.5,.5] // will log the center of the screen of the SUT

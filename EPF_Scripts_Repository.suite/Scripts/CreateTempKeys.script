@@ -1,0 +1,249 @@
+﻿set myBrowser to "edge"//firefox chrome edge
+set myEmail to "lindsey.rominsky@keysight.com"
+set myInfo to ("Lindsey","Rominsky","Keysight",myEmail,"","2101 Pearl St")
+put ["DAI", "Functional", "Manager", "Performance"] into listOfLicenses
+
+--set the remoteWorkInterval to 1
+set the textStyle's DPI to 144
+connect "windows"
+
+if not ImageFound(text:"Keysight Software Manager", waitFor:2, SearchRectangle:KSMScreenPart("TopMiddle"))
+	// if KSM is not already displayed
+	typetext windowskey
+	typetext myBrowser
+	typetext return
+	wait 2
+	typetext windowskey, uparrow -- maximize the window
+	typetext "https://ksm.it.keysight.com/ASM/Internal/UI/Authenticate.aspx", return
+	
+	// verify on VPN, if not, display popup
+	if ImageFound(text:"Try Again", waitFor:8)
+		Answer "Verify EPF machine is on the VPN" with "OK" or "Cancel" title "Verify On VPN"
+		
+		If it is "OK"
+			Log "Refreshing web page and trying again."
+			typetext f5
+			wait 5
+		else if it is "Cancel"
+			Log "Cancelling this test"
+			closeWindow
+		end if
+	end if
+	
+	// do I need to login?
+	if ImageFound(text:"sign in", waitFor:10)
+		typetext myEmail, tabKey
+		Set the scriptlogging to Silent
+		Ask Password "What is your Password?" title "Log into Keysight"
+		Typetext it, return
+		set it to "" // clear out password value
+		Set the scriptlogging to On
+		wait 2
+	end if
+end if
+
+// verify web page is up
+if ImageFound(text:"Keysight Software Manager", waitFor:8)
+	log "KSM web page is up"
+	
+	// ask for info: 
+	// types of licenses: DAI, EPF, EPM, EPP
+	// how many licenses and hostname of each
+	// length (days)
+	// notes
+	
+	answer "What type(s) of licenses? Default is EPF" from list the unique items of listOfLicenses allow multiple
+	put it into myLicenseTypes
+	log "creating licenses for: "&myLicenseTypes
+	
+	ask "How many days is this key good for? Default is 14 days" with "14"
+	put it into daysNumber
+	log "licenses good for "&daysNumber&&"days"
+	
+	Repeat with each item myType of myLicenseTypes
+		set myHostId to "" // reset for repeated use
+		ask "How many licenses for "&myType with "1"
+		//put it into value(myType&"_count") -- this line is broken
+		do !"put it into [[myType]]_Count"
+		log "setting "&myType&" license count to "&it
+		
+		ask "What is the hostname for "&myType&"? Nothing will use a dynamic Host ID"
+		if it is empty
+			put genRandomHostId(myType) into myHostId
+		else
+			if myType is "Functional" or myType is "Performance"
+				set myHostId to "0x"&it
+				// remove all - and .
+				delete every occurrence of "-" and "." from myHostId
+			else
+				// make sure its in the correct format
+				if character 2 of myHostId is "-"
+					log "good given host id format"
+				else
+					logError "TODO fix the format for "&myHostId
+					PauseScript
+				end if
+			end if
+		end if
+		do !"put myHostId into [[myType]]_hostId"
+		log !"setting [[myType]] host ID to [[myHostId]]"
+	End repeat
+	
+	ask "What is the note for these licenses?"
+	put it into myNote
+	log "Note: "&myNote
+else
+	LogError "KSM web page is down"
+	CaptureScreen
+	closeWindow
+	exit all
+end if
+
+// log in as me
+If ImageFound(text:"Continue", waitFor:8, caseSensitive:"Yes") then click FoundImageLocation()
+
+Click text:"Licenses", waitFor:10
+
+
+// step 1: Enter Customer
+WaitFor 15, text:"Enter customer information"
+Repeat with each item of myInfo
+	typetext it, tabKey
+End repeat
+Click text:"Continue", waitFor:5
+
+
+// step 2: Select Products
+WaitFor 15, text:"Selected Products"
+Repeat with each item myType of myLicenseTypes
+	chooseType myType
+End Repeat
+wait 2
+click text:"Continue"
+WaitFor 20, text:"Assigned Hosts"
+
+
+// step 3: Assign Hosts
+Repeat with each item myType of myLicenseTypes
+	put EveryImageLocation(text:"□", SearchRectangle:KSMScreenPart("LeftHalf")) into checkBoxLocations -- page changes each time
+	click item counter() of checkBoxLocations
+	typetext tab, value(myType&"_Count")
+	// TODO support a date in addition to days
+	click text:60 -- 60 days is the default
+	typetext daysNumber, return
+	setHostId myType
+	WaitFor 20, text:"You can assign more licenses"
+End Repeat
+
+click text:"Continue", waitfor:20, SearchRectangle:KSMScreenPart("BottomRightOneThird")
+
+
+// step 4: Review and Submit
+click text:"University", waitfor:20, SearchRectangle:KSMScreenPart("BottomLeftQuadrant")
+click text:"Technical Issue", SearchRectangle:KSMScreenPart("MiddleLeft")
+typetext tab, myNote
+typetext tab, tab
+log ImageFound(text:"Submit Request", SearchRectangle:KSMScreenPart("BottomMiddle"))
+CaptureScreen (Name: "finished_product")
+--click text:"Submit Request", SearchRectangle:KSMScreenPart("BottomMiddle") //**** uncomment this line to actually SUBMIT REQUEST
+
+closeWindow
+
+
+(*** end of script here. below are corresponding handlers ***)
+
+to closeWindow
+	typetext altKey, f4
+end closeWindow
+
+function KSMScreenPart Portion
+	// Set up an easy-to-maintain property list that stores the necessary multipliers for the specified screen portion parameter value
+	set screenPortions to {
+		// x,y for the individual points
+		BottomLeftOneThird:[[0,.5],[.3,1]],
+		BottomRightOneThird:[[.7,.5],[1,1]],
+		BottomLeftQuadrant:[[0,.5],[.5,1]],
+		BottomMiddle:[[.3,.7],[.8,1]],
+		LeftHalf: [[0,0],[.5,1]],
+		MiddleLeft:[[0,.3],[.5,.7]],
+		TopMiddle:[[.3,0],[.8,.3]],
+	}
+	
+	set multiplier to screenPortions.(Portion) // Retrieves the value for the key in the property list. The name of the key is passed as a parameter into the function.
+	
+	// Error handling is needed in the event that an unrecognized parameter is passed to the function
+	if multiplier is empty then
+		throw "Parameter error", Portion && "is not a recognized screen portion."
+	end if
+	
+	return (the remoteScreenSize,the remotescreenSize) * multiplier
+	
+End KSMScreenPart
+
+to chooseType licenseType
+	log "choose "&licenseType&" license"
+	set the SearchRectangle to KSMScreenPart("BottomLeftQuadrant")
+	if ImageFound(text:"Add Selected", waitFor:2, InvertImage:"Yes")
+		Click text:"Clear"
+		Repeat while ImageFound(text:"Add Selected", waitFor:2, InvertImage:"Yes")
+			// wait for clear to actually clear page
+			wait 1
+			try
+				if counter() is divisible by 3 then Click text:"Clear"
+			end try
+		End repeat
+	end if
+	wait 1
+	typetext tabKey, licenseType, return
+	WaitFor 20, text:"Add Selected", InvertImage:"Yes"
+	set the SearchRectangle to KSMScreenPart("LeftHalf")
+	put EveryImageLocation(text:"Product Number") into prodNumberLocations // must be 2
+	repeat while (number of items in prodNumberLocations) is not 2
+		wait 1
+		put EveryImageLocation(text:"Product Number") into prodNumberLocations // must be 2
+	end repeat
+	put the last item of prodNumberLocations into myTop
+	put EveryImageLocation(text:"□", SearchRectangle:[[myTop.x,myTop.y],[0,RemoteScreenSize().y*.95]]) into checkBoxLocations -- page changes each time
+	if licenseType is "functional"
+		click item 2 of checkBoxLocations -- standard is 2, team is 3 TODO support epf team?
+	else
+		click item 1 of checkBoxLocations
+	end if
+	click text:"Add Selected", InvertImage:"Yes"
+	wait 2
+	set the SearchRectangle to empty
+end chooseType
+
+
+to setHostId myType
+	set the SearchRectangle to KSMScreenPart("LeftHalf")
+	click text:"click to add"
+	click {text:"Add a new Eggplant "&myType}, {text:"Add a new host"} // if there is only 1 product, name is ommited
+	WaitFor 20, text:"Enter new host information"	
+	set the SearchRectangle to empty
+	if value(myType&"_hostId") contains "_hostId"
+		put genRandomHostId(myType) into myHostId
+		do !"put myHostId into [[myType]]_hostId"
+		log !"resetting [[myType]] host ID to [[myHostId]]"
+	end if 
+	typetext value(myType&"_hostId"), return
+end setHostId
+
+
+to genRandomHostId myType
+	// generate a random host id
+	if myType is "Functional" or myType is "Performance"
+		put "0x" into myHostId
+		repeat 12 times
+			put any item of (0..9 &&& "a".."f") after myHostId
+		end repeat
+	else
+		// DAI and EPM
+		repeat 6 times
+			put any item of (0..9 &&& "a".."f") & any item of (0..9 &&& "a".."f") after myHostId 
+			put "-" after myHostId
+		end repeat
+		delete the last character of myHostId
+	end if
+	return myHostId
+end genRandomHostId

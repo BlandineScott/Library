@@ -1,0 +1,142 @@
+﻿Put readtext((718,374,820,966),(ValidCharacters:"1234567890"))into test1
+Log "text"&& test1
+split test1 by newline
+--------------------
+
+Put readtext((468,407,571,496)) into Fruitlist
+Put Fruitlist as a list into mylist
+Log Mylist
+
+repeat with each item Fruit in Mylist
+	repeat for each item in Fruit split by "\t" -- split text from list
+		insert it into test3
+	end repeat
+	Log test3
+	
+end repeat
+
+
+Put readtext((718,374,820,966),(ValidCharacters:"1234567890"))into test1
+Log test1
+
+Put each line of test1 split by "\t" into test2
+log test2
+log item 5 of test2
+
+repeat with each item line in test2
+	repeat for each item in line split by "\t" -- split text from list
+		insert it into test3
+end repeat
+end repeat
+
+log number of items of test3
+log item 57 of test3
+log word 1 of item 59 of test3 
+
+1
+--@Characters: The difference is that backslashes are treated as escape characters, so something like the string @"line\t1\nline\t2" will have two lines with tab characters in them.
+
+
+Put readtext(380,188,674,358)into test1
+log Test1 
+put "\t" after the wordDelimiter
+put the wordDelimiter.archive 
+put the first word of item 1 of test2 
+
+(*Put readtext(380,188,674,358)into test1
+log Test1 
+put "\t" after the wordDelimiter
+put the wordDelimiter.archive 
+log word 1 of test1*)
+
+
+Put each line of test1 split by "\n" into test2
+log test2
+
+--------------
+--put something into a list and then log it 1 by 1
+Put readtext((468,407,571,496))into listdata
+Put Split(listdata,"\n") into listdata
+Put Split(listdata,"\n") into listdata
+Log item 1 of listdata
+repeat with  each item tempItem of listdata
+	repeat for each item in tempItem split by "\n"
+		Log tempitem
+	end repeat
+	Log repeatindex()
+	Log tempitem
+
+end repeat
+
+(*put "\\t" after the wordDelimiter
+put the wordDelimiter.archive
+put the first word of item 1 of test2
+
+put each item of test2 split by "\t" into test3 
+log test3*)
+
+repeat with each item line in test2
+	repeat for each item in line split by "\t" -- split text from list
+		insert it into test3
+	end repeat
+end repeat
+
+log test3
+log item 4 of test3
+
+---------------------------------------------
+Put "John, Steve, amy" into testnames
+Set testnames to trimall (testnames) -- removed the spaces
+log testnames
+Split testnames by comma
+log testnames
+-- creates spaces in between names
+
+
+---------------
+put path split by "/" into components
+
+put "/tuser1/Navigate_Here/" into varPathInsideRepository 
+split varPathInsideRepository by "/" 
+put varPathInsideRepository -- this variable now contains a list 
+
+split "/tuser1/Navigate_Here/"  by "/" 
+put it
+---------------
+put "abc" into myVar // Stores 'abc' in a variable as text (not actually a list)
+put "de" after myVar // Appends 'de' to 'abc' resulting in 'abcde' (still not a list)
+insert "xyz" after myVar // Creates a list using the myVar variable contents 'abcde' as the first list item, and 'xyz' as the second, resulting in the list ["abcde","xyz"]
+insert 24 before item 2 of myVar // Inserts an additional item into the list, resulting in the list ["abcde",24,"xyz"]
+------------------
+put [1,2,3,4] into list // [1,2,3,4]
+insert [A,B] after item 2 of list // Item 2 of list // -- [1,2,A,B,3,4]
+------------------
+put [1,2,3,4] into list // [1,2,3,4]
+put ["A","B"] into otherList // [A,B]
+insert otherList nested after item 2 of list // [1,2,[A,B],3,4]
+------------------
+put ["carrots","bananas","pistachios"] into GroceryList
+pull GroceryList into gList
+put gList // Returns "carrots"
+-----------------
+--Combining list
+put [3,4,5] into tr1 // [3,4,5]
+put [5, 12,13] into tr2 // [5,12,13]
+put tr1 &&& tr2 into longList // Creates one, not-nested list [3,4,5,5,12,13]
+put [tr1,tr2] into twoTriples // Creates a nested list - a list of two lists [[3,4,5],[5,12,13]]
+-----------------
+--Accessing List Items
+put [1,2,3,4,5] into NumberList // [1,2,3,4,5]
+put list items 3 to last of NumberList // [3,4,5]
+put item 2 of NumberList // Displays '2'
+put items 2 to 2 of NumberList // Displays the single-item list '[2]'
+put items [4,2,5] of NumberList // [4,2,5]
+
+put ["cheddar","provolone","brie","muenster","mozzarella"] into CheeseList
+put the penultimate item of CheeseList // Displays 'muenster'
+put item random(5) of CheeseList // Prints a random item from the list
+put "My favorite cheese is " & the third item of CheeseList & period // Displays "My favorite cheese is brie."
+
+----------------------------
+put [5, 12,13] into tr2 
+Log all items of tr2 

@@ -1,0 +1,4 @@
+﻿--Read the SUT Time
+
+set timePattern to <2 digits, ":", 2 digits> // build the format for the pattern matching of the time of day
+log Imagelocation(text: timePattern) // OCR search

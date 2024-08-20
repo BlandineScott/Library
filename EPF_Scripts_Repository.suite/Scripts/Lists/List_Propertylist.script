@@ -1,0 +1,140 @@
+﻿
+
+
+
+
+put (Firstname:"John",middlename:"A",lastname:"Doe",sex:"Male",age:"60") into Patient
+
+put keys(Patient) into key_list
+log key_list
+log item 3 of key_list
+
+---------------------------------------
+
+put (Firstname:"John",middlename:"A",lastname:"Doe",sex:"Male",age:"60") into Patient
+put "Firstname" into var
+log Patient.(var)
+
+-------------------------------------
+
+
+Global mywebsite
+Global websiteslist
+Set my websiteslist to ("www.amazon.com","Best Buy","wikipedia")
+Set global searchterm to "Sound bar"
+Repeat with each mywebsite of websiteslist
+	Run Naviatetowebsite
+End Repeat
+
+Log " I am shopping at"&&mywebsite
+If imagefound("Chromerefreshbutton")
+	Typetext controlkey, "t"
+else 
+	Exit repeat
+End If
+---------------------------------------------
+--Combine list
+Lists can be joined using &&&:
+put ("red", "green", "blue") into colors -- ("red", "green", "blue")
+put (12,17,32) into numbers -- (12,17,32)
+put colors &&& numbers into combinedList -- ("red","green","blue",12,17,32)
+
+----------------------------------------------------
+--Nested list
+To create a list of nested lists instead of combining into a single list, just use parentheses to create a new list:
+put (colors,numbers) into nestedList -- (("red","green","blue"), (12,17,32))
+
+-----------------------------------------
+put (Firstname:"John",middlename:"A",lastname:"Doe",sex:"Male",age:"60") into Patient
+
+put "Firstname" into var
+
+log Patient.(var)
+
+
+-----------------
+put ("Apple","Banana", "Grapes","Organge","Strawberry","Peach") into Fruits
+put ("Carrot","Tomato","peas","Onion","Broccoli") into Vegetables
+
+
+put (Fruits,Vegetables) into groceries
+put the number of items of groceries into All_max
+repeat All_max times
+	put item repeatindex() of groceries into specific_list
+	put the number of items of  specific_list  into specific_max
+	repeat specific_max times
+		put item repeatindex() of specific_list into specific_item
+		log specific_item
+	end repeat	
+end repeat
+--------------------------------
+//create a list
+
+put [550,374,638,477] into rectangle //coordinate of my  rectangle
+
+put ["France","Germany","US","Canada"] into travelist //details of my list
+
+Click text:item 2 of travelist, SearchRectangle:(rectangle) //clicking on the list item
+
+//if I want to click on all 4 items
+Click text:item 1 of travelist, SearchRectangle:(rectangle)
+Click text:item 2 of travelist, SearchRectangle:(rectangle)
+Click text:item 3 of travelist, SearchRectangle:(rectangle)
+Click text:item 4 of travelist, SearchRectangle:(rectangle)
+
+//optimize the code with a loop
+
+put [550,374,638,477] into rectangle //coordinate of my  rectangle
+
+put ["France","Germany","US","Canada"] into travelist //details of my list
+put the number of items of travelist into count
+log count
+
+repeat count times
+	Click text:item repeatindex() of travelist, SearchRectangle:(rectangle)
+end repeat
+
+//property list - unordered list - Key Value Pair
+put {firstname:"Kellan",lastname:"scott",adress:"Kansas",zipcode:"64152"} into info
+log info //reorder the list
+
+log info.firstname
+//or
+typetext info.firstname
+
+//add a value to the property list
+put "6 feet" into info.height
+log info.height
+
+//how do I know all the keys
+log keys(info)
+-------------------------------
+//list
+put [5] into list
+log list //5
+
+put [5+3] into list
+log list //8
+
+put [France,US,Canada,China] into list
+log list //list of countries
+
+put [France,US,Canada,China] into list
+log item 1 of list
+
+put [] into newlist // newlist is now a list with no items
+put 16 into item 1 of newlist // [16]
+log newlist
+put empty list into item 2 of newlist // [16,[]]
+
+
+
+-------------------------------
+
+put (Firstname:"John",middlename:"A",lastname:"Doe",sex:"Male",age:"60") into Patient
+
+put "Firstname" into var
+
+log Patient.(var)
+
+

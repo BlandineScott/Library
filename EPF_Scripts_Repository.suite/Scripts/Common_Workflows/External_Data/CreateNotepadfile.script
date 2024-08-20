@@ -1,0 +1,49 @@
+﻿//Open File Explorer
+typetext windowskey,"e"
+//Click on the address bar
+typetext controlkey,"l"
+//Navigate to the Documents folder
+typetext "Documents",returnkey
+//Create a new file of type "text"
+typetext,shiftkey, f10,"w", "t"
+//Type the name of the file
+typetext controlkey,"a"
+put "Contacts_"&FormattedTime("%1m"&"-"&"%1d", the date)&"_"&FormattedTime("%p", the time)&"_"&chars 5 to 10 of the seconds&".csv" into FileNameVar  -- change this to the name you want
+put FileNameVar into the remoteclipboard
+typetext controlkey,"v",returnkey
+typetext returnkey -- rename file extension confirmation
+typetext returnkey -- Opens the file
+waitfor 10, text:"Notepad"
+
+set newcsv to file ResourcePath("DOB.csv") -- change this to the file you want
+delete return from newcsv
+put newcsv into the RemoteClipboard
+typetext controlkey,"v","s"
+typetext altKey,f4,f4
+Log "Created file:"&&FileNameVar
+----------------
+(* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Script Name:  Create_Notepad_File
+Description:  This test script is to create a Notepad file and open the file so you can write in it.  
+Prerequisite: none
+Input: none
+Output: none
+Change History:
+Author            Date Modified        Description
+Logan C.                                    Initial
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *)
+
+//Open File Explorer
+typetext windowskey,"e"
+//Click on the address bar
+typetext controlkey,"l"
+//Navigate to the Documents folder
+typetext "Documents",returnkey
+//Create a new file of type "text"
+typetext,shiftkey, f10,"w", "t"
+//Type the name of the file
+typetext controlkey,"a"
+typetext "Contacts_"&FormattedTime("%1m"&"-"&"%1d", the date)&"_"&FormattedTime("%p", the time)&"_"&chars 5 to 10 of the seconds&".csv",returnkey  -- change this to the name you want
+typetext returnkey -- rename file extension confirmation
+typetext returnkey -- Opens the file
+waitfor 10, text:"Notepad"

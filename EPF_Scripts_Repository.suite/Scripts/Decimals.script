@@ -1,0 +1,66 @@
+﻿--Adding Commas every 3 number
+-- You can use 	Put Trunc(MyFinalNumber) into New To returns just the integer portion of the number 
+Log PullCorrectFormat()
+
+To PullCorrectFormat
+	Put "184891232513.0" into MyNumber
+
+	--Put number of characters in MyNumber into MyNumberCount
+	--Put MynumberCount divided by 3 into MyDividedNumber
+	Put MyDividedNumber rounded to nearest 1 into MyFinalNumber
+	Log MyFinalNumber
+	
+	If MyNumber = 0
+		Log "-"
+	Else if MyNumber = empty 
+		Log "This is empty."
+	Else
+		
+		repeat MyFinalNumber times
+			
+			put "," before character (the counter * -3) - (the counter -1) of myNumber
+			--so each time is going to the left 3 characters plus however many commas have previously been added
+			if character 1 of mynumber = "," then delete character 1 of mynumber
+		end repeat
+		
+		
+	End if
+	
+	return MyNumber
+	
+End PullCorrectFormat
+
+----------------
+to FormatDigits MyNumber
+	// Check for exceptions first
+	if MyNumber = 0
+		return "-"
+	end if
+	if MyNumber is not a Number
+		return ""
+	end if
+	if MyNumber is Empty
+		return ""
+	end if
+	// Now see if it is a negatiive number
+	set NegativeFlag to False
+	if myNumber < 0
+		set NegativeFlag to True
+		set MyNumber to MyNumber * -1
+	end if
+	// Now add commas every 3 digits as needed
+	Put number of characters in MyNumber into MyNumberCount
+	Put MyNumberCount divided by 3 into MyDividedNumber
+	Put MyDividedNumber rounded to nearest 1 into MyFinalNumber
+	repeat MyFinalNumber times
+		put "," before character (the counter * -3) - (the counter -1) of MyNumber
+		if character 1 of myNumber = "," then delete character 1 of MyNumber
+	end repeat
+	// Finally, if negative, wrap in parenthesis
+	if NegativeFlag = True
+		set MyNumber to "(" & MyNumber & ")"
+	end if
+	return MyNumber
+end FormatDigits
+
+

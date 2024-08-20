@@ -1,0 +1,5 @@
+﻿(*Words such as true and return which have pre-defined values that cannot be changed are called "constants". 
+SenseTalk has only seven true constants (empty, return, true, false, up, down, and end). In addition, there 
+are a large number of "predefined variables". These are words which have a predefined value, but may also be used 
+as variables (and have their value changed in a script). See Appendix A – Restricted Words for more details.
+Some of the SenseTalk words which have pre-defined values are*)

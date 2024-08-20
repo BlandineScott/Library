@@ -1,0 +1,6 @@
+﻿to readingprice
+	put ImageLocation("Buttons/ADDTOCART") into refText
+	set the SearchRectangle to [[refText.X-110,refText.Y-70],[refText.X-20,refText.Y-30]]
+	wait 5
+	put ReadText(the SearchRectangle) into price
+end readingprice

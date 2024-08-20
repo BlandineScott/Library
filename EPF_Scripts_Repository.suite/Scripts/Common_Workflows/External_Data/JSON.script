@@ -1,0 +1,163 @@
+﻿
+set testInfo to JSONValue(file ResourcePath("Data.json"))
+set Doordasher_Name to testinfo.doordasher
+Log Doordasher_Name
+
+-- make sure the resource pane is visible, and add files there
+--add resources and select your files. Files now show under resources. If I have to update my file, it has to be in the file where resource file ffolder.
+
+--JSON
+
+put file resourcepath("Data.json") into JData
+Log Jdata
+put JSONValue(JData) into Thedata -- convert the JData into a Eggplant readable Format which is list and property list format
+Log thedata -- combination of list and property list
+
+--can use this:https://jsononline.net/json-validator
+
+--Pull out 1 item
+Log thedata.store -- logs city market
+
+--Pull out from a list
+Log thedata.fruitlist
+Log item 2 of (thedata.fruitlist)
+
+--Put it into a variable
+Put item 2 of (thedata.fruitlist) into myfavorite
+Log myfavorite
+
+
+--Tip: Play with the data
+
+
+
+------------------------------------------------------------------------------------
+
+
+
+
+
+
+set testdata to JSONValue(file ResourcePath ("Histories.json"))
+set username to testdata.username
+set password to testdata.password
+
+---------------------------
+//  put file ("C:\folder\example_1.json") into JData
+
+put file ResourcePath("thefiledata.json") into JData
+
+
+put JSONValue(JDATA) into EPFDATA
+
+
+//put everyImageLocation(text:EPFDATA.color) into var
+
+//log var
+
+
+click text:EPFDATA.color,SearchRectangle:(525,512,1317,760)
+--------------------------
+
+
+
+//put data in a JSON file
+
+put imagerectangle("SSN") into rect
+log rect
+put rect +[350,-10,500,20] into newrectangle
+log readtext(newrectangle)
+put readtext(newrectangle) into newssn
+
+put {name: "Kellan", ssn:newssn} into Data
+log Data
+put JSONFormat(Data) into jasondata
+Log jasondata
+//now in JSON format
+
+//write it into a file
+
+put resourcepath() & "/thefiledata.json"  into filepath
+log filepath
+put jasondata into file (filepath)
+
+--------------------
+set testdata to JSONValue(file ResourcePath("thefiledata.json"))
+set password to testdata.password
+log password
+
+------------
+--Parsing a JSON
+// Example pic for this is in images APIjson.png
+// 1 - from Anne - one line
+put property CartItems of Cart of Tlog into CartITems
+
+// A good one from Anne too!
+put Tlog.cart.payment into paymentList -- this is the top item
+put (item 1 of paymentlist).error  -- Item 1 ... you get this from the variable browser... it's the next level. Just keep nesting
+put (item 1 of paymentlist) into MyPaments
+assert MyPaments.error contains "approved"
+
+// Getting an item by number of keys in it
+put each item of overflowlist where the number of items in the keys of each equals 3 into myitem
+
+
+//2 Matt - more readable
+put propertyCart of TLog into CartPlist
+put property CartItems of CarPlist into CartItemList
+put the first item of CartItemlist into MyItem
+Assert that property AgeVerification of my item is True
+
+
+Log "PARSE QSF to retrieve Quesion List."
+put JSONValue( file ResourcePath("20200506_Survey_Test_v1_Qualtrics.qsf")) into JSONoutput
+put Jsonoutput."surveyElements" into surveylist
+repeat with each item surveyitem of surveylist
+	put surveyitem.payload into payloadlist
+	repeat with each item payload of keys(payloadlist)
+		put payloadlist.(payload).blockelements into blockelementsList
+		repeat with each item element in blockelementsList
+			if keys(element) contains "QuestionID"
+				LogSuccess "Question Identifier"&&element
+			end if
+		end repeat
+	end repeat
+end repeat
+
+
+Log "Retrieve SkipLogic."
+put JSONValue( file ResourcePath("20200506_Survey_Test_v1_Qualtrics.qsf")) into JSONoutput
+put Jsonoutput."surveyElements" into surveylist
+repeat with each item surveyitem of surveylist
+	put surveyitem.payload into payloadlist
+	repeat with each item payload of keys(payloadlist)
+		put payloadlist.(payload).blockelements into blockelementsList
+		repeat with each item element in blockelementsList
+			if keys(element) contains "skiplogic"
+				//log element.skiplogic
+				Put element.skiplogic into var
+			end if
+		end repeat
+	end repeat
+end repeat
+
+//Wait 30
+
+
+put item 1 of var into Var2
+LogSuccess "Logic for Question"&&var2.QuestionID
+LogSuccess "Choice Locator"&&var2.choiceLocator
+LogSuccess "Condition"&&var2.Condition
+LogSuccess "Locator"&&var2.Locator
+LogSuccess "Skip Logic Identifier"&&var2.SkipLogicID
+LogSuccess "Skip Logic Destination"&&var2.skipToDestination
+
+Log "Continue Parsing etc..."
+
+Log "Build Model..."
+
+
+
+
+
+

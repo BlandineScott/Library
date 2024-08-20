@@ -1,0 +1,31 @@
+﻿Set the searchrectangle to ("MyImagetopleft", remotescreensize())
+wait 10
+
+Set the searchrectangle to ("MyImagetopleft", remotescreensize()-(0,50))
+wait 10
+//put your mouse on the bottom right corner, and go up. Looka t the cursor location change, and sustract.
+
+------------
+put everyimagelocation("image") into dividerLocations
+lOg "found dividers at:"&dividerlocations
+if the number of items in dividerlocations  is greater than 1
+	set dividerloc to the last item in dividerlocations
+else
+	set dividerloc to the first item in dividerlocations
+	//	set dividerloc to item 1 in dividerlocations
+end if 
+
+Set the searchrectangle to ("MyImagetopleft", dividerlocations)
+
+------------
+put everyimagelocation("image") into dividerLocations
+lOg "found dividers at:"&dividerlocations
+if the number of items in dividerlocations  is greater than 1
+	set dividerREctangle to dividerrectangle.topright
+	set dividerloc to the last item in dividerlocations
+else
+	set dividerREctangle to dividerrectangle.topright
+	set dividerloc to item 1 in dividerlocations
+end if 
+
+Set the searchrectangle to ("MyImagetopleft", dividerlocations)

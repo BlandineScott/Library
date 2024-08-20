@@ -1,0 +1,235 @@
+﻿--Use the results in GUI of Eggplant Functional and gather the log saved on the machine
+--Use Eggplant Manager
+(*--Eggplant Manager is the easiest and best way to collect and analyze Eggplant Functional test results.
+This test management tool is a browser based application that provides a single point of control for Eggplant Functional suites. It provides the ability to define tests, as well as schedule execution of multiple tests simultaneously, as well as a central location for the collection and analysis of results.*)
+--Use DAI
+
+--RUNWITHNEWRESULTS
+// Calls a script named "Logout" and creates a separate set of results for it
+
+Set testlist to ("Script01","Script02","Script03")
+Runwithnewresults "InititalSetup" -- get environment ready for execution
+put the result into inititalsetupoutcome
+
+SendMail(To:"tester@testplant.com", subject:"Initita setup of test environment failed",message:"test runat"&& rundate of inititalsetupoutcome && "had" && errors of inititalsetupoutcome && "errors")
+else
+repeat with each testscript of testlist
+	RunWithNewResults testscript -- run each test
+	put the result into testscriptoutcome
+	--store the results in a list
+	put testscript & ":" && status of testscriptoutcome && return after currentreport
+	if the status of testscriptoutcome is "Failire" then
+		-- a failure occured in teh test, bring the env back to known state
+		cleanupscript
+	end if
+	
+end repeat
+--show the results of the execution
+put currentreport
+end if
+
+--Runwithnewresults example 2
+RunWithNewResults "Script01"
+
+if the result's status is "failure" then // Checks the value of the status property to see if it is failure
+	LogError "Login failed. Performing cleanup."
+	CleanupScript
+	// Runs a script named CleanupScript in the event that the status is failure
+end if
+
+-- Save to an excel document
+
+set ResultFile to ResourcePath("myTestResults.csv") // Stores the file path of the myTestResults resource file in a variable
+RunWithNewResults "Script01"
+set myResult to the result // Stores the result of the RunWithNewResults into a variable named myResult
+put "Login" &comma & myResult.runDate & comma & myResult.status & CRLF after file ResultFile // Writes a new line out to the end of the resource file, based on the contents of myResult
+
+--The result
+if the result is not empty then throw "Error", the result
+
+--Results using begin test case and end test case
+BeginTestCase "Script01"
+Script01
+EndTestCase "Script01"
+Put the result into myscriptresult
+log myscriptresult.duration
+
+------------Other option
+--This example script highlights the functionality of master scripts. First, it runs an initial test. If that test fails, it sends an email warning to a system administrator; otherwise it proceeds to execute a series of tests, storing the results in a text string that it logs at the end.
+
+set TestList to ("Test1", "Test2", "Test3") -- Creates a series of script executions to be used later
+RunWithNewResults "InitialTest"
+set Outcome to the result
+if the status of Outcome is not "Success" -- If the result of "InitialTest" is not "Success", gets the date and time of the run...
+then
+	convert Outcome's runDate to date and long time
+	sendMail (to: "administrator@yourcompany.com", from: "JoeTester@yourcompany.com", subject: "Initial Test Failed", body: "Test run at" && rundate of Outcome && "had" && errors of Outcome && "errors") -- Sends email to report the date and errors of the execution. (&& joins text strings with a space between them.)
+else -- Otherwise...
+	repeat with each testScript of TestList -- For every script in TestList,
+		RunWithNewResults testScript -- Runs the script, then...
+		set Outcome to the result -- Puts the results into Outcome
+		put testScript & ":" && status of Outcome && Return after currentReport -- Adds "Script: Status", then a return character to currentReport
+		if the status of Outcome is "Failure" then -- If the status property is Failure...
+			run "CleanupScript" -- Runs CleanupScript to reset the test environment
+		end if
+	end repeat -- Ends after the final test in TestList
+	Log "Final Results:" -- Logs "Final Results:" text
+	repeat with each line of currentReport
+		log it -- Logs each line in currentReport
+	end repeat
+end if
+
+-------------
+repeat with each testcase of mytestcases 
+	runWithNewResults testcase
+	put file (the last item of ScriptResults(testcase))'s LogFile into theResults
+	repeat with each line of theResults
+		replace every occurrence of tab with "," in it
+		put it & return after csvResults
+	end repeat
+	sendMail(from:"someone@yourcompany.com", to:"buffalo@yourcompany.com", subject:"Results for" && testcase, body:csvResults)
+end repeat
+
+--OR
+repeat with each testcase of mytestcases 
+	runWithNewResults testcase
+	put the result into outcome
+	put testcase & ": " after resultsMailer
+	put outcome's status after resultsMailer
+	if outcome's status is "Failure" then
+		put ", Errors: " & outcome's errors & ", Exceptions: " & \
+				outcome's exceptions after resultsMailer
+	end if
+	put return after resultsMailer
+end repeat
+sendMail(from:"someone@yourcompany.com", to:"buffalo@yourcompany.com", \
+		subject:"Results for" && testcase, body:resultsMailer) 
+
+--OR
+put ("testcase727","testcase728","testcase732", \ 
+		"testcase735", "testcase736", "testcase738") into mytestcases 
+
+set the strictProperties to true -- so undefined testcases don't report success
+repeat with each testcase of mytestcases 
+	try
+		get SendAFile.(testcase) -- call the testcase as a function
+		put testcase & ";Passed" into reportLine
+	catch error
+		put testcase & ";Failed;" & error.reason into reportLine
+	end try
+	put reportLine & return after report
+end repeat
+
+put report -- display the results
+---------CSV
+runWithNewResults nameOfScriptToRun
+put the result into outcome
+
+get file outcome.logFile
+replace every tab in it with comma
+put it into file "/tmp/convertedLogFile.csv"
+-------------------------------
+set connectionList to ( \
+		"192.168.1.100", \
+		"192.168.1.102", \
+		"192.168.1.111", \
+		"offsite.mycompany.com")
+
+repeat for each item connection in connectionList
+	connect (ServerID: connection)
+	
+	runWithNewResults "MyTestScript" -- Run this generating independent results
+end repeat
+-----------------------------------
+-- This approach will run the script against each SUT sequentially.
+set connectionList to ( \
+		"192.168.1.100", \
+		"192.168.1.102", \
+		"192.168.1.111", \
+		"offsite.mycompany.com")
+
+repeat for each item connection in connectionList
+	connect (ServerID: connection)
+	
+	runWithNewResults "MyTestScript" -- Run this generating independent results
+end repeat
+
+-------------
+//Post Run Results
+PostRun.script:
+Params ScriptName, myResult 
+
+log myResult
+
+Put CRLF & "Start time = " & myResult.RunDate & CRLF & "Duration of run = " & myResult.duration && "seconds" & CRLF after file global varOutputFile
+
+the only change you need to do is make varOutputFile a global variable
+
+Begintestcase "Parsing file"
+Global varoutputfile
+Set varfilename to "sample file.text"
+-------------------
+
+
+repeat 5 times
+	set runNumber to "5"
+	
+	BeginTestcase "Five"
+	
+	Log "something"
+	Wait 2
+	WaitFor 5, text:"Chrome"
+	
+	//WaitFor 8, "Browserloaded"
+	
+	EndTestCase "Five"
+	
+	put the result into var
+	//LogSuccess "The Result is"&&var
+	
+	put (var)'s duration into duration 
+	
+	LogSuccess "The Result duration is"&&duration
+	
+	
+	put duration & "," & runNumber && return after file ResourcePath("WSECU.csv")
+end repeat
+
+-------------------
+CreateFolderinResultsFolder
+
+
+
+--------- To create a custom folder in Suite >> Results Folder 
+
+put suiteInfo().resultsFolder&slash&MPCBPart&"" into RootPath  -- It creates a custom folder with the name of MPCBPart
+put RootPath&slash&"Logfile.txt" into TotalFilePath -- It creates a LogFile.txt folder inside above custom folder
+log TotalFilePath
+put "TextFile" into TotalFilePath
+log TotalFilePath
+
+
+
+
+--
+put suiteInfo().resultsFolder&slash&MPCBPart&"" into RootPath  
+put RootPath&slash into ScreenshotPath
+log ScreenshotPath
+
+-----------------
+set SetOfTests to ["Script1","AdvancedScripting/ConcatenatingValues","AdvancedScripting/AccessingLists"]
+repeat with each test of SetOfTests
+	RunWithNewResults test
+	put the result into Outcome
+	if Outcome.status ="Success"
+		put Outcome.logFile into LogFile
+		SendMail to:"vijayalaxmi.kummari@ideabytes.com", subject:"Report", message:"Please find the attached log file for"&test, attachment:LogFile
+		
+	end if
+end repeat
+
+
+
+
+
+

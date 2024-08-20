@@ -1,0 +1,41 @@
+﻿--Remoteworkinterval 
+
+(*
+
+Value: Time (in seconds).
+
+Default: 0.7
+
+When you begin writing longer SenseTalk scripts and using advanced scripting techniques in Eggplant Functional, you might soon need to address the overall execution speed of your tests. Adjusting your runtime by even a few seconds here and there can make a huge difference when you're running a large number of complex scripts.
+
+One of the best things you can do to improve script execution time is to adjust the RemoteWorkInterval global property. This property controls the amount of time between events before Eggplant Functional sends the next event to the system under test (SUT)
+
+How many seconds the system will wait in between each steps. BY default, 0.7 seconds. If your script is running out of control, like super fast, you should use it and increase from 0.7 to an increase value. It is going to slow down your script through your entier steps.
+
+*)
+
+Set the remoteworkinterval to 1
+
+--yourcode
+
+Set the remoteworkinterval to 0.7
+
+(*YOU CAN CHANGE IT GLOBALLY
+
+Select eggPlant > Preferences
+Select the Run tab, then the System tab.*)
+
+//top of the script
+set tmpRWI to the remoteWorkInterval
+log "The default remote work interval is"&&tmpRWI
+setoption remoteWorkInterval, 1
+log "The current remote work interval is"&&(the remoteworkinterval)
+
+--Code here
+
+// The last line restores the timing between Eggplant Functional commands by resetting the RemoteWorkInterval global property to its original value.
+setoption remoteWorkInterval, tmpRWI
+
+log "The current remote work interval is"&&tmpRWI
+---------------------------------------------------------------------------------
+

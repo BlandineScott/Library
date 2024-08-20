@@ -1,0 +1,6 @@
+﻿Put Readtext(Carritto) into MyReadArea2
+Replace every occurrence of newline in myreadarea2 with space -- replace newline with a space, in case its read with additional lines
+
+Log "My Read Text is"&&MyReadArea2 
+Insert MyReadArea2 split by newline into MyList2 -- Put into a list
+Log "My List is"&&MyList2

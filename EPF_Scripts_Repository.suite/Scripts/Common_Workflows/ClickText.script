@@ -1,0 +1,26 @@
+﻿to handle clickText text,area,waitTime,properties --handler to click a text by passing OCR properties, search area, text and wait time.
+	try
+		if properties is not empty then do"set the TextStyle to"&&properties
+		if text is not empty and area is empty and waitTime is empty then
+			Click text:text
+		else if text is not empty and area is not empty then
+			Click text:text,SearchRectangle:"CommonUtilities/CommonHandlers".screenpart(area)
+		else if text is not empty and area is not empty and waitTime is not empty then
+			Click text:text,SearchRectangle:"CommonUtilities/CommonHandlers".screenpart(area),waitfor:waitTime
+		end if
+		if properties is not empty then set the TextStyle to default
+		Catch theException
+		CaptureScreen name:"clickTextError", increment:Yes
+		"CommonUtilities/ErrorMessageHandler".userFriendlymessage theException
+	end try
+end clickText
+
+--------------
+//tabkey: You are making use of the tabkey a lot. I assume (as I do not know what the script actually does) That you are jumping from one entry field to another. This works as long as the form or UI does not change wrt to adding/ removing /different order of fields. You can use a function similar to this in order to define a field name and click at a distance (hospot)from the initially found location
+
+textEntry "My Name", "Karsten","200,0" # This will click 100 pixel right to the center of the text "My Name"
+to textEntry label, input, offset:(100,0)
+	click text: label + offset
+	typetext controlkey,"a" #fail safe if the box has already text in it 
+	typetext input
+end textEntry

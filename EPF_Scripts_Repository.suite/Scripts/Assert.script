@@ -1,0 +1,76 @@
+﻿// Soft Assertions
+
+(*
+
+Soft Asserts
+
+The default behavior for assert commands. Options are Exception, Error, Warning, or Pause. Defaults to Exception.
+
+http://docs.eggplantsoftware.com/ePF/using/epf-qr-global-properties.htm
+docs.eggplantsoftware.com
+Global Properties
+A list of global properties for use in Eggplant Functional
+
+http://docs.eggplantsoftware.com/ePF/SenseTalk/stk-global-properties-object-messages-results.htm#assertionBehavior
+docs.eggplantsoftware.com
+Objects, Messages, and Results
+Global properties for working with objects, messages, and results in the SenseTalk programming language
+
+
+*)
+
+
+
+
+
+
+
+
+
+Assert ImageFound(imageName:"FireFox", waitFor:1) with error "Clearing the" && "Field Name" && "field did not result in the default text appearing"
+
+
+set var1 to 1
+set var2 to 1
+
+// assert var1 = var2
+
+if (var1 = var2)
+	LogSuccess "Assertion Succeeded : " & var1 & " = " & var2
+	put "Assertion Succeeded : " & var1 & " = " & var2 after file ResourcePath("Multiple Calculator.csv")
+else
+	Logerror "Assertion Failed : " & var1 & " NOT = " & var2
+	put "Assertion Failed : " & var1 & "NOT = " & var2 after file ResourcePath("file.csv")
+end if
+
+
+set Poop to "iOS"
+
+Assert "iOS" is in Poop
+
+assert (1 = 2)
+
+assert that (1 = 1)
+
+set var to "Android"
+
+Assert that var is in ["iOS","Android","Windows","MacOS"] 
+
+Assert that ["iOS","Android","Windows","MacOS"] contains var // Asserts that the value stored in SUTPlatform is one of 4 acceptable values and if not, throws an exception to stop the execution
+
+assert that (1 = 1)
+
+
+// Changing it to just a warning
+
+set the AssertionBehavior to "warning" // Changes the default behavior of assertions to generate a warning instead of an exception
+
+set the assertBehavior to "Exception" -- or ERROR ... Error will not stop EPF but will Stop in DAI
+
+assert that x < 10 // Creates a LogWarning message if the value of x is less than 10 due to the AssertionBehavior global property set previously
+
+// http://docs.eggplantsoftware.com/ePF/SenseTalk/stk-results-reporting.htm
+
+// or 
+
+assert FilteredResults is less than UnfilteredResults with Warning -- inline warning behaviour

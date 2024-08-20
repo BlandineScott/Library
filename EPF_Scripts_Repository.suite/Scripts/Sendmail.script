@@ -1,0 +1,198 @@
+﻿//VA Email SendMail
+--They mentioned Username/password should not be required to relay mail through smtp.va.gov.
+--Host/port information would be smtp.va.gov over port 25. 
+--the to email to a Va.gov account - VA to VA
+SendMail{smtp_host:"smtp.va.gov ", smtp_port:"25",From:"poonam.advani@va.gov",To: "poonam.advani@va.gov",subject:"TestEmail",body:"FRDW and FMs Totals do not match."}
+
+//Will send log files and error messages via email
+
+
+
+Set testlist to ("Script1","Script2","Script3")
+Runwithnewresults "StartUp" -- get environment ready for execution
+put the result into inititalsetupoutcome
+
+if the status of inititalsetupoutcome is not "success" then
+	-- a failure occured it the inititalsetup, no tests can be run
+	convert inititalsetupoutcome's rundate to date and long time
+	--send email to alert of execution failure
+	SendMail(To:"Kellan.fromontscott@gmail.com", subject:"Initita setup of test environment failed",message:"test runat"&& rundate of inititalsetupoutcome && "had" && errors of inititalsetupoutcome && "errors",attachment:last item of file ResourcePath())
+	
+else
+	
+	
+	repeat with each testscript of testlist
+		Log testscript
+		RunWithNewResults testscript-- run each test
+		put the result into testscriptoutcome
+		convert testscriptoutcome's runDate to date and long time
+		--store the results in a list
+		put testscript & ":" && status of testscriptoutcome && return after currentreport
+		put testscriptoutcome's logfile into FailureRun-- store the file path of the log file
+		replace "logfile.txt" with "Screen_Error.png" in FailureRun-- store the file path of the screen error, if there is one
+		
+		if the status of testscriptoutcome is "Failure" then
+			
+			SendMail(To:"Kellan.fromontscott@gmail.com", subject:"Test Script Failed"&&Testscript,message:"Test Script Failed"&&Testscript&&"at"&& testscriptoutcome's runDate&& "Review Errors. Number of Errors =" && testscriptoutcome.errors &&"-Second Try Results",attachment:(testscriptoutcome's logfile, FailureRun)) 
+			
+		end if
+		
+		
+		if the status of testscriptoutcome is "Success"
+			
+			SendMail(To:"Kellan.fromontscott@gmail.com", subject:"Test Script Failed"&&Testscript,message:"Test Script Failed"&&Testscript&&"at"&& testscriptoutcome's runDate&& "Review Errors. Number of Errors =" && testscriptoutcome.errors &&"-Second Try Results",attachment:testscriptoutcome's logfile) 
+		end if
+		
+		
+		
+		
+		
+	end repeat
+	--show the results of the execution
+	put currentreport
+	
+	
+end if
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+sendMail (To:"tester@testing.com", from:"tester@testing.com", smtp_host:"<smtp mail server IP or hostname>",smtp_type:"login", smtp_user:"tester", smtp_password:"123456", smtp_port:"465" ,Subject:"test email")
+
+-----------------------
+
+set MailHost to "smtp.office365.com"
+set MailAuthentication to "none"
+set MailUser to "Kellan.scott@keysight.com"
+set MailPassword to "Kellan.scott@keysight.com"
+set MailType to "text/html"
+SendMail to:"Kellan.scott@keysight.com", subject:"Test", message:"Test"
+
+SendMail to:"Kellan.scott@keysight.com", subject:"Test", message:"Test"
+
+RunWithNewResults "Login"
+put the result into Outcome -- Stores the result property list from the RunWithNewResults in variable Outcome
+// Displaying the different sendmail properties on different lines can make the code more readable
+SendMail(To: "test@gmail.com",\
+		subject:"Login script results:"&&Outcome's status,\
+		body:"Find attached the logfile for the script run.",\
+		attachment:(Outcome's Logfile))
+
+put global TestResult.Duration div 60 into TestDurationInMinutes
+put global TestResult.Duration rem 60 into TestDurationInSeconds
+put format ("%02i",TestDurationInSeconds) into TestDurationInSeconds
+put TestDurationInMinutes&":"&TestDurationInSeconds into TestDuration
+put global TestResult.LogFile into ScreenError
+replace "logfile.txt" with "screen_error.png" in ScreenError
+
+put "<table>" into MailBody
+put "<tr><td>Duration:</td><td>"&&TestDuration&&"</td></tr>" after MailBody
+put "<tr><td>Errors:</td><td>"&&global TestResult.Errors&&"</td></tr>" after MailBody
+put "<tr><td>Exceptions:</td><td>"&&global TestResult.Exceptions&&"</td></tr>" after MailBody
+put "<tr><td>Log File Location:</td><td>"&&global TestResult.LogFile&&"</td></tr>" after MailBody
+put "<tr><td>Run Date/Time:</td><td>"&&global TestResult.RunDate&&"</td></tr>" after MailBody
+put "<tr><td>Warnings:</td><td>"&&global TestResult.Warnings&&"</td></tr>" after MailBody
+put "</table>" after MailBody
+
+set Recipient to "Kellan.scott@keysight.com"
+set Title to "Robograder Results"
+
+If global TestResult's Status is "success" then
+	set Title to "Eggplant Manager: SUCCESS - Test:"&&TestName
+	sendMail (To:Recipient,\
+			Subject:Title,\
+			SMTP_HOST:MailHost,\
+			SMTP_TYPE:MailAuthentication,\
+			SMTP_USER:MailUser,\
+			SMTP_PASSWORD:MailPassword,\
+			"Content-Type":MailType,\
+			Body: MailBody)
+else
+	set Title to "Eggplant Manager FAILURE - Test"&&TestName
+	sendMail (To:Recipient,\
+			Subject:Title,\
+			SMTP_HOST:MailHost,\
+			SMTP_TYPE:MailAuthentication,\
+			SMTP_USER:MailUser,\
+			SMTP_PASSWORD:MailPassword,\
+			"Content-Type":MailType,\
+			Body: MailBody)
+	
+End If
+
+---------------------------
+// Good list of properties
+// https://docs.eggplantsoftware.com/studio/epf-qr-property-lists/#sendmail-properties
+
+// Testing your exchange creds 
+
+// https://testconnectivity.microsoft.com/tests/O365OutboundSmtp/input
+// https://testconnectivity.microsoft.com/tests/OutboundSMTP/input
+
+
+to sendEmail
+	put suiteinfo().path &"/Resources/data.csv" into AttachmentPath
+	
+	SendMail to:"Blah.Smith@exdsdoke.com", subject:"SCRD Log", message:"Daily Log File",from:"Blah.Smith@examoke.com",attachment:AttachmentPath,smtp_host:"smtp.mine.net",smtp_port:25,smpt_transport:"Unencrypted"
+	
+end sendEmail
+
+
+// RANDY's
+to sendEmail
+	
+	
+	logwarning  ComparedResults
+	
+	put suiteinfo().imagesFolder &"/[Baseline_Screens]/"& BannerNumber &".png"  into AttachmentImagePath
+	put "Issue with Section" &&BannerNumber&&". In"&&  global Website && ".More Information:" &&ComparedResults  into emailMessage
+	
+	
+	if global emailFolks contains "YES"
+		SendMail to:"Blah.Smith@exadddke.com; Yarg.Smith@exadadke.com; More.more@more.com", subject:"Screen Compare Issue", message:emailMessage,from:"Eggplant@bddd.com",attachment:AttachmentImagePath,smtp_host:"sdrvsmtp.test.net",smtp_port:25,smpt_transport:"Unencrypted"
+	else
+		Log "I'm not supposed to email folks!"
+	end if
+	
+	(*end if*)
+	
+end sendEmail
+
+------------------
+--Sends the error files and log files with it.
+RunWithNewResults ("Test2") -- run each script in the test, creating a new set of results for each
+put the result into Outcome -- get the result of the script execution and store it in a variable
+put TestScript & the long date into title -- create the title for the email
+put Outcome's logfile into screenError -- store the file path of the log file
+replace "logfile.txt" with "Screen_Error.png" in screenError -- store the file path of the screen error, if there is one
+// Use a conditional statement to send the email based on whether or not the script failed
+if Outcome's status is "failure"
+then
+	SendMail(To: Kellan.fromontscott@gmail.com,\
+subject:title,\
+body:"the test script generated an error.",\
+attachment:(screenError, Outcome's Logfile)) -- Indicate the attachments. Note, this will log a warning in your master script log file if there is no screen error to attach.
+else
+
+// send an email with the log file attached
+SendMail(to: Kellan.fromontscott@gmail.com,\
+subject: title,\
+body: "the test script ran successfully.",\
+attachment: Outcome's logfile)
+end if

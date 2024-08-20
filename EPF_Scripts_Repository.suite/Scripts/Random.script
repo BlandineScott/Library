@@ -1,0 +1,181 @@
+﻿log any item of ("a".."z")
+
+put random (100000000,999999999) into row
+Log row
+
+put random(0,10) into var
+log var
+
+
+// Random BirthDay
+put ("2022-12-31" - "1949-12-31") as days into numberOfDays
+put "1949-12-31" + random(numberOfDays) days into randomBirthday
+log randomBirthday
+
+
+// Random BirthDay
+put ("01/01/2022" - "12/31/1949") as days into numberOfDays
+put "12/31/1949" + random(numberOfDays) days into randomBirthday
+log randomBirthday
+
+----------------------------
+//Any is broken on windows
+--https://siteconfidence.atlassian.net/browse/CRD-1607?atlOrigin=eyJpIjoiZmZiZDY4ZWRlYzM5NDhmNWJiOGI5ZmNhNzg4MjAxNWYiLCJwIjoiamlyYS1zbGFjay1pbnQifQ&focusedCommentId=316878&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-316878
+repeat 10 times
+	reset random
+	set myRandomLetter to any item of ("a" .. "z")
+	log myRandomLetter
+end repeat
+
+reset random -- need this line for bug in epf 23.3 on windows
+----------------------------
+//s there a way to log all the number 1-22 and then 48?  
+log 1..22 &&& 48
+-----------------------------
+
+// Generate random names for file\
+-- 2 letters generated
+to createName
+	put a..z into Letters -- Store the alphabet in a variable using a range
+	put random(2,2) into NewNameLength -- Use the random function to randomly select a name length
+	repeat newNameLength times -- Repeat for each character in the new customer name
+		put any item of letters after NewName -- Create a new name using random letters
+	end repeat
+	//return Capitalized(NewName) -- Capitalize the new customer name and return it to the calling handler
+	
+	Log NewName 
+end createName
+
+----------------------------
+--Check documentation " Generate test data"
+https://docs.eggplantsoftware.com/studio/epf-dynamic-data-generation/
+
+put 1..20 into NumberRange
+Log any item of NumberRange
+--------------------------------
+#This creates an empty file with a random five-character name. This method can be adapted to name files of various types.#
+Put "~/Temp/" into Path -- Specify a file path
+
+put a..z as list into alphas -- Create a range of letters
+put 1..5 as list into nums -- Create a range of numbers
+
+put (any item of alphas for each item of nums) joined by empty into Name -- Dynamically create the name using any. Note that this initially creates a list, but then joins the items of the list with empty, creating a string from the list items, and storing that in the variable Name.
+
+put path & Name into filePath -- Store the path and name into a fully assembled file path
+put filePath & ".txt" into myFile -- Assemble the file with file extension
+if there is not a file myFile then -- Check to make sure the file does not already exist before creating it
+	create file myFile -- Create the file
+	log "Created file " & myFile -- Log a message that the file was created, as well as its full path
+end if
+
+-------------------------------
+insert (".com",".net",".org") into ListOfEnds
+set Part1 to (any item of a..z for each item of 1..6) joined by empty -- Make a random first half
+set Part2 to (any item of 1..9 for each item of 1..6) joined by empty -- Make a random second half
+set EmailEnd to any item of ListOfEnds -- Choose a random ending
+put Part1 & "@" & Part2 & EmailEnd into DynamicAddress -- Compile the email address
+Log DynamicAddress -- Log the dynamically created email address
+
+-------------------------------------
+//--The file is going to contain a column of customer ID numbers, a column of customer names, and a column of email addresses, all dynamically generated during the script run--\\
+
+// Create random file contents
+
+Put 20 into numberofRecords -- Define the number of records you want to create
+
+Repeat numberofRecords times -- Repeat the number of times you want rows in your file
+
+	// Create customer ID by calling handler
+	put createID() & comma into Row
+	
+	// Create customer name by calling handler
+	put createName() & comma after Row
+	
+	// Create customer email by calling handler
+	put createEmail() after Row
+	
+	// Add row to file
+	put row & return after FileContents
+end repeat
+
+// Create file and store the created content in it
+
+Put "~/Temp/CustomerEmail.txt" into myFile -- Specify a location on the Eggplant system for the file to be created
+
+put "ID,Name,Email" & return into HeaderRow -- Create a header row for the file
+
+put HeaderRow before FileContents -- Insert the header row before the previously created content
+
+put fileContents into file myFile -- Insert the contents into the file, located on the Eggplant system
+
+//FUNCTIONS AND HANDLERS GO AT THE BOTTOM OF THE SCRIPT\\
+
+// Create customer ID
+
+to createID
+	put random(100000,999999) into customerID -- Use the random function to create the numbers for the ID
+	put "-" after character 2 of customerID -- Put the ID in the correct format by inserting a dash
+	returncustomerID -- Return the newly created customer ID to the calling handler
+end createID
+
+// Generate random names for file
+
+to createName
+	put a..z into Letters -- Store the alphabet in a variable using a range
+	put random(5,10) into NewNameLength -- Use the random function to randomly select a name length
+	repeat new NameLength times -- Repeat for each character in the new customer name
+		put any item of letters after NewName -- Create a new name using random letters
+	end repeat
+	returnCapitalized(NewName) -- Capitalize the new customer name and return it to the calling handler
+end createName
+
+// Dynamically create random email addresses
+
+to createEmail
+	insert(".com",".net",".org") into ListOfEnds
+	set Part1 to (any item of a..z for each item of 1..6) joined by empty -- Make a random first half
+	set Part2 to (any item of 1..9 for each item of 1..6) joined by empty -- Make a random second half
+	set EmailEnd to any item of ListOfEnds -- Choose a random ending
+	put Part1&"@"&Part2&EmailEnd into DynamicAddress -- Compile the email address
+	Return DynamicAddress -- Return the address to the calling handler
+end createEmail
+
+--------------------------
+// Specify a location on the Eggplant Functional system for the file to be created
+Put "~/Temp/CustomerData.txt" into myFile
+// Define the number of records to be created
+Put 20 into numberofRecords
+// Create random file contents
+Repeat numberofRecords times -- Repeat the number of times you want rows in your file
+	// Create customer ID by calling handler
+	put createID() & comma into Row
+	// Create customer name by calling handler
+	put createName() & comma after Row
+	// Create customer email by calling handler
+	put createEmail() after Row
+	// Add row to file
+	put row & return after FileContents
+end repeat
+--------------------------
+//Create Customer ID
+to createID
+	put random(100000,999999) into customerID -- Use the random function to create the numbers for the ID
+	put "-" after character 2 of customerID -- Put the ID in the correct format by inserting a dash
+	return customerID -- Return the newly created customer ID to the calling handler
+end createID
+
+// Generate random names for file
+to createName
+	put a..z into Letters -- Store the alphabet in a variable using a range
+	put random(5,10) into NewNameLength -- Use the random function to randomly select a name length
+	repeat newNameLength times -- Repeat for each character in the new customer name
+		put any item of letters after NewName -- Create a new name using random letters
+	end repeat
+	return Capitalized(NewName) -- Capitalize the new customer name and return it to the calling handler
+end createName
+
+-------------------
+// Create file and store the created content in it
+put "ID,Name,Email" & return into HeaderRow -- Create a header row for the file
+put HeaderRow before FileContents -- Insert the header row before the previously created content
+put fileContents into file myFile -- Insert the contents into the file, located on the Eggplant Functional system

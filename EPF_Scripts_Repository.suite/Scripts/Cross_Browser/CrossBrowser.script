@@ -1,0 +1,44 @@
+﻿to initiateVariables
+	set global SR to {
+		Chrome:{
+		
+		//browser : (0,105,1920,1040),
+		//main_menu : (355,275,1550,360),
+		//side_Pane : (355,105,655,1040),
+		//content : (655,105,1550,1040),
+		//top_Pane : (0,105,1920,360)
+		
+		},
+		Firefox:{
+		
+		//browser : [0,75,1920,1040],
+		//main_menu : [355,245,1550,330],
+		//side_Pane : [355,75,655,1040],
+		//content : [655,75,1550,1040],
+		//top_Pane : [0,75,1920,330]
+		}
+	}
+	
+	log the folder of me
+	
+	set global Items_search to {
+		"Electronics":("Nikon D5500 DSLR"),
+		"Computers":("Digital Storm VANQUISH"),
+		"Apparel":("adidas Consortium Campus")
+	}
+end initiateVariables
+
+to Define_SR SR_config 
+	initiateVariables
+	//set the searchRectangle to global SR.(global Browser).(SR_config)
+	wait 2 
+end Define_SR
+
+to main_menu nav
+	Config.Define_SR (main_menu)
+	navigation nav
+	set global Main_menu to nav
+	
+	---------------------------------
+	
+end main_menu

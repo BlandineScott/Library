@@ -1,0 +1,43 @@
+﻿put ["Test 10","Test 100","Test 102","Test 104","Test 105","Test 106","Test 107","Test 112","Test 116","Test 117","Test 118","Test 119","Test 121","Test 122","Test 124","Test 125","Test 13","Test 130","Test 139"] into avaliable_Test_list
+
+repeat 10 times
+	set Test_name_list to ""
+	insert any items of avaliable_Test_list into Test_name_list
+	insert any items of avaliable_Test_list into Test_name_list
+	insert any items of avaliable_Test_list into Test_name_list
+	put uniqueItems (Test_name_list) into newlist
+end repeat
+
+Log  newlist
+
+-------------------------------
+(*There are a few ways to go about this. The simplest is just to shuffle the list into a random order:
+shuffle available_test_list
+
+Another way is to use any item to get a random item like you did, but use the pull command to remove it from the list at the same time. So something like this:*)
+
+repeat until available_test_list is empty
+	pull any item of available_test_list into currentTest
+	// do something with currentTest here
+end repeat
+Put ["apple","Banana","Cherry"] into fruit
+insert item 1 of fruit into newlist
+insert item 2 of fruit into newlist
+
+
+--Put readtext("AboutUs_TopleftAnchor","HourGlass_BottomRightAnchor",contrast:"Off",multiline:"Yes") into TopMenu
+--Split TopMenu
+Put readtext("AboutUs_TopleftAnchor","HourGlass_BottomRightAnchor", contrast:"Off", multiline:"Yes") into TopMenu
+Log Topmenu 
+
+Put each line of topmenu split by "\n" into test2
+Log test2 joined by return
+
+Set the searchrectangle to ("AboutUs_TopleftAnchor","HourGlass_BottomRightAnchor")
+Repeat with each item of TopMenu reversed
+	Click text:it
+	Assert that imagefound(text:it)
+	Logsuccess "The Item clicked on is"&it
+	Wait 2
+End Repeat
+Set the searchrectangle to Empty

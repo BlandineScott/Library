@@ -1,0 +1,51 @@
+﻿//3 different types of handlers
+---------------------------------------------
+
+//on/end - running workflows - does not return any values
+//to call it out,just type the script name and handler name
+//Example: Handlers.Module1
+
+//example 1
+on Module1
+	Log "from Module 1"
+	
+end Module1
+
+
+//example 2
+
+on Module1 var1
+	Log "from Module 1"
+	Log "Variable is"&& var1
+end Module1
+
+---------------------------------------------
+
+//function/end - returning values after performing some operations
+//to work use put/log
+//put Handlers.Module2 into variable
+//log variable
+
+function Module2
+	Log "From Module 2"
+	Return 10
+	
+end Module2
+
+//send multiple variable to a handler
+function Module2 var2, var3
+	Log "From Module 2"
+	Return var2+var3
+	
+end Module2
+
+---------------------------------------------
+
+//to/end mix between on and function
+//Handlers.Module3
+to Module3
+	Log "From Module 3"
+	return 20
+	
+end Module3
+

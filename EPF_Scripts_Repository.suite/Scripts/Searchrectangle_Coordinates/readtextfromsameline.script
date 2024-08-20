@@ -1,0 +1,37 @@
+﻿
+//function to read text at a location defined by the same line as the line text occurring beneath a column image
+//mySearchRectangle is an optional parameter to assist to find the line text
+//myReadTextPattern is an optional parameter that defines the validPattern for the OCR
+
+
+function ReadTextOnSameLine LineText, image1, rowheight, myCaseSensitive, mySearchRectangle, myReadTextPattern
+
+	put the readTextSettings into tmpRTS
+	log "The current settings for ReadTextSettings are"&&tmpRTS
+	if rowheight = "" then set rowheight = 2
+	if myCaseSensitive = "" then set myCaseSensitive to "no"
+	
+	if mySearchRectangle = "" then
+		put ImageRectangle(Text:LineText,WaitFor:5,caseSensitive:myCaseSensitive,ignoreSpaces:Yes) into ImageRectangle1
+	Else
+		put ImageRectangle(Text:LineText,WaitFor:5,caseSensitive:myCaseSensitive, SearchRectangle:mySearchRectangle,ignoreSpaces:Yes) into ImageRectangle1
+	end if
+	
+	put ImageRectangle(Image:image1,WaitFor:5) into ImageRectangle2
+	set StartLeftSearch = left(ImageRectangle2)
+	set StartTopSearch = top(ImageRectangle1) - 2
+	set EndRightSearch = right(ImageRectangle2)
+	set EndBottomSearch = bottom(ImageRectangle1) + rowheight
+	set UL_Search=(StartLeftSearch,StartTopSearch)
+	set BR_Search=(EndRightSearch,EndBottomSearch)
+	if myReadTextPattern <> "" then set the readTextSettings to {validPattern:myReadTextPattern}
+	set thevalue to ReadText(UL_Search,BR_Search)
+	
+	log "The read text is"&&thevalue
+	return thevalue
+	
+	Log "The current ReadTextSettings are"&&the ReadTextSettings
+	set the readTextSettings to tmpRTS
+	Log "The restored ReadTextSettings are"&&the ReadTextSettings
+	
+end ReadTextOnSameLine

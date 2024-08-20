@@ -1,0 +1,50 @@
+﻿//I would use points and rectangles to read each line of the table. Example based off the class schedule in the ReadTable document you linked.
+
+//if you are just interested in clicking each row, and not reading it, you can just use the location and shift down a certain number of pixels
+
+put 1 into rowNum
+put 30 into rowHeight 
+
+put Imagelocation(text:"topic") into TopicColumnLocation 
+click TopicColumnLocation + (0, rowNum*RowHeight) //shifting the point to click down to whichever row I want to click
+
+------------------------------
+//If you want to read each line of the table and do checks on them, I would use rectangles and readtext:
+
+//Get the Column header for the column you are interested in reading. Its easiest to make sure the image is of the entire column
+put ImageRectangle("Ranki") into TopicColumnSquare
+
+put TopicColumnSquare.height into RowHeight //figure out how wide the rows are
+
+repeat 7 times 
+	add (0,RowHeight,0,RowHeight) to TopicColumnSquare // shift the square  down for each row
+	log "Row " & repeatindex()
+	log readtext(TopicColumnSquare)
+	
+	(*//if you want to validate other items on the same line you can also shift the box to the right or left
+	if readtext (TopicColumnSquare+(-100,0,-420,0)) equals repeatindex() //shifting the box right to read the first column)
+		click TopicColumnSquare.center
+	end if*)
+	
+end repeat
+
+--------------------------Validate the Patient List of CareCompass and that the appropriate columns are visible 
+Put imageRectangle("PowerChart_Images/Refresh") + [-1797,104,57,106] into rectCCcolumns 
+Put ["Location" , "Patient" , "Visit" , "Care Team" , "Activities" , "Quality"] into listCCcolumns
+If readText(rectCCcolumns) contains every item of listCCcolumns then
+	Log "Step 9 Expected Result is confirmed"
+else
+	LogWarning "Step 9's Expected Result cannot be confirmed"
+End If
+
+---------------using ReadTable() function
+set sliRdTx3 to ReadTable((156,303,904,972), contrast:"On", contrastColor:"AutoDetect", contrastTolerance:"45", dpi:"144", multiline:"No", TrimWhitespace:"Yes",IgnoreNewlines:"Yes")
+
+---------------------
+// Use code similar to this to read every row in a particular table column
+put ImageLocation("ClassSchedule") into ILC // Stores the location of the hot spot of "ClassSchedule" in a variable. The hot spot is located at the center of the image.
+put ((ILC+(20,60)), (imageRectangle("ReadingAssignmentHeader").BottomLeft+(-10,34))) into TableRectangle // Use the locations of ClassSchedule and ReadingAssignmentHead to set establish the location of the first table cell you want to read
+repeat 7 times // Indicates how many rows will be read
+	log ReadText(TableRectangle) // Logs the content of the cell
+	add ((0,30),(0,30)) to TableRectangle // Shifts the read area 30 pixels down to cover the next cell
+end repeat

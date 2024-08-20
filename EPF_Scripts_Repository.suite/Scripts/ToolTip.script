@@ -1,0 +1,10 @@
+﻿//Take a picture of the image where the tooltip shows up.
+MoveTo (Image:"Windows", WaitFor:1)
+Put (FoundImageLocation()+(28,23)) into myToolTipLocation
+Wait 2
+Put ReadText(myToolTipLocation)
+
+//Take a screenprint of it
+moveto "myButton"
+wait 2 seconds
+captureScreen

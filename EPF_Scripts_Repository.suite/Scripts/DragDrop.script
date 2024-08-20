@@ -1,0 +1,5 @@
+﻿DragandDrop  {text:"[Model Version]"}, remoteScreenSize()*[0.35,0.5]
+
+put imagerectangle (Text:"Graph").centerleft + [-45,0] into myDragPos
+set myDropPos to myDragPos -[myDragPos.x*0.5,0]
+draganddrop myDragPos, myDropPos

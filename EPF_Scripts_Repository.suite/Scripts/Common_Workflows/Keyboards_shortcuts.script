@@ -1,0 +1,62 @@
+﻿//PC
+Typetext windowskey, upArrow //Maximize window	
+TypeText altKey, spacebar, x //Maximize 
+TypeText controlKey, "l" //Put the cursor in the tab itself.
+typetext controlKey,l -- To go to addressbar
+Typetext windowskey, "r" //open window file explorer
+Typetext controlkey,"w" //close all applications
+Typetext controlkey,"a" //select the line
+Typetext controlkey,"c" //copy
+Typetext controlkey,"v" //paste
+Typetext controlkey,"w" //close all applications
+Typetext controlkey, "t"//open a new tab
+Typetext altKey,f4//Close a window
+Typetext altKey,tab//Tab between open windows
+Typetext altkey,escape//Tab through windows in the order that they were opened
+Typetext controlkey,escape//Display the Start menu
+--https://support.microsoft.com/en-us/windows/keyboard-shortcuts-in-windows-dcc61a57-8ff0-cffe-9796-cb9706c75eec#keyboard-shortcuts=windows-7
+--To go to the bottom of the page you can just do this: 
+typeText endKey
+--To go to the top of the page you can just do this: 
+typetext homekey 
+
+-----Original Appointment-----
+
+
+//Mac
+typetext commandkey,F//Open a Find window
+typetext commandkey,space//Open spotlight
+typetext commandkey,tab//Tab between open windows
+typetext commandkey, shiftkey, c //Open the Computer window
+--/https://support.apple.com/en-us/HT201236
+
+TypeText ControlDown, WindowsAltDown, DeleteKey, WindowsAltUp, ControlUp //Open Security Screen, equivalent to ctl-alt-end - works only on Remote Desktop.
+
+BeginTestCase "Test"
+Repeat 10 times
+	Log "123"
+end repeat
+Endtestcase "test"
+
+Put the result into Myduration
+Log Myduration
+
+---------------------------------------------------------
+Typetext tab
+DoubleClick foundimagelocation()
+Typetext controlkey, "c"
+Typetext controlkey, "v"
+(*log RemoteClipboard()*)
+
+------------------
+(*Capture Area
+•	Use Shift+arrow to move the Capture Area in ten-pixel increments.
+•	You can use Shift+click to move the Capture Area to an image without using edge detection
+•	You can also nudge the Capture Area one pixel at a time by pressing the arrow keys. 
+•	You can also nudge the size one pixel at a time with Alt+arrow (Option+arrow on Mac) keys. Add the Shift key to resize in ten-pixel increments.
+•	To move the hot spot in a Capture Area, Ctrl+click or Ctrl+drag the crosshairs (Cmd+click or Cmd+drag on Mac). You can also nudge the hot spot in one-pixel increments with Ctrl+arrow (Cmd+arrow on Mac). Adding the Shift key moves the hot spot in ten-pixel increments.
+•	It is possible to zoom in on the SUT while in capture mode. The Viewer window must be set to show the SUT at full scale. To zoom in on Windows or Linux, hold Control and press the plus (+) key. To zoom out, hold Control and press the minus (-) key. On Mac, use the Command key instead of Control.
+•	CTRL to switch back and forth between Enter Capture Mode and Enter Live Mode*)
+
+--if you need a shortcut to comment out code, just click F7
+

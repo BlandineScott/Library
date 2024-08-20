@@ -1,0 +1,3 @@
+﻿TypeText WindowsAltDown, Tab, WindowsAltUp
+TypeText controlkey,tab -- Go to Next Tab on Windows
+TypeText controlkey,shiftkey,tab -- Go previous Tab on Windows

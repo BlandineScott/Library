@@ -1,0 +1,50 @@
+﻿//Move the hotspot to click on text right next to something else
+
+Doubleclick text:"number", waitfor:5, hotspot:(150,0)
+Typetext controlkey, "c"
+put RemoteClipboard(1) into mytext
+log mytext
+Capturescreen (name:"image"&mytext)
+Capturescreen(name:ResourcePath("image"&mytext)) -- adding to the resourcepath of the suite 
+---------------------
+set mySSN to file ResourcePath("test.txt")
+Click "SSN"
+Typetext "123456"
+typetext controlkey,"a"
+typetext controlkey,"c"
+put RemoteClipboard() into MRNfile
+log MRNfile
+add MRNfile to file ResourcePath("test.txt")
+
+---------------------
+Put imagerectangle("Icon_Photo_Profile")+(0,0,380,0) into PatientInfoBanner
+Put readtext (PatientInfoBanner) into MRNReadarea
+Put word 3 of MRNReadarea into MRN
+delete first character of MRN
+delete last character of MRN
+Log MRN
+
+----------------------
+Put imagerectangle("Icon_Photo_Profile")+(0,0,380,0) into PatientInfoBanner
+Put readtext (PatientInfoBanner) into MRN
+put "()" after the wordDelimiter
+put the wordDelimiter.archive
+Put word 3 of MRN into new
+Log new
+----------------------
+
+PArams MyMRN, MyVisitID
+
+Click imagename:"findpatienticon", waitfor:3
+Waitfor 10, text:"Quick ID", searchrectangle:Commanddepot.Screenpart("Topleftquadrant")
+Typetext Tab, Tab
+Typetext myMRN
+Typetext returnkey
+
+-----------------
+//split the string into two, into a list
+Put "123\\common.script" into Mystring
+Log Mystring --123\\common.script
+split Mystring by "\\"
+Log Mystring --["123","common.script"]
+Log item 2 of Mystring --common.script

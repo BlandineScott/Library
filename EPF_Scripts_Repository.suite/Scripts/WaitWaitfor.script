@@ -1,0 +1,73 @@
+﻿--Put formattedTime ("[year] [hr]:[mi]:[se]") into starttime -- allows to store the time in a variable while waiting for the page to load
+
+Waitfor 30, "Hourglass_Button" //Wait UP to 30 seconds for the webpage to load
+--Waitfor time can be adjusted as needed (manually)
+
+--Put formattedTime ("[year] [hr]:[mi]:[se]") into endtime --- allows to store the time in a variable when the page finishes to load
+
+--Put starttime minus endtime into difference -- Store time difference results in a variable
+
+----------------------------------------
+--https://siteconfidence.atlassian.net/wiki/spaces/OBP/pages/4003332104/05+-+Wait+Times
+
+Set global maxwait to 30
+Log global maxwait
+Waitfor global maxwait, "ImageName"
+
+--OR
+
+//Click Contact Us and wait for the Contact Keysight Banner
+to ContactUs maxWait
+	click text:"Contact Us"
+	wait 2.5
+	waitfor maxWait, text:"Contact Keysight"
+end ContactUs
+
+----------------------------------------------------
+
+// click upload icon
+click (imagename:"Keysight/uploadIcon", waitfor:5)
+
+// Look for the Updated message and log pass, else log error
+if imagefound(text:"Updated", waitfor:10)
+	LogSuccess "Application Updated Successfully"
+else
+	LogError "Application not updated"
+end if
+
+//OCR
+click text:"Contact Us"
+waitfor 20, text:"Contact Keysight"
+----------------------------------------------------
+
+wait 1
+wait 10
+wait 20 seconds
+wait 2 minutes
+wait 24 hours
+wait 6000 years
+wait 100000 decade
+
+--weeks, days, hours, minutes, seconds, ticks, milliseconds, and microseconds - If a time unit is not specified, seconds are assumed.
+
+wait until "12:50 PM"
+wait until temperature(hell) < 32
+wait while the sound is not done
+wait 2 days 7 hours 14 minutes and 28.6 seconds
+wait 3 milliseconds
+
+--The WaitFor command halts the script execution until a specified image or text string (OCR) is found on the SUT or until a specified amount of time elapses—whichever occurs first.
+
+WaitFor 15, "Launch_Chrome.png" // Proceeds immediately when the image is found or throws an exception if it isn't found within 15 seconds
+
+Click "Launch_Chrome.png"
+waitfor 10, "Launch_AI", (text: "Apps", casesensitive: "yes", searchrectangle:(125,678,305,809)) // Proceeds when either the Launch_AI image or the text "Apps" is found, but throws an exception if neither is found within 10 seconds
+
+Click (ImageName: "Done_button", waitFor: 2 minutes)
+
+(*Important: The WaitFor command is distinctly different from the simpler Wait command. For the Wait command, you specify only a time value, creating a hard wait time. You might find this useful in some situations, particularly during script development and debugging.
+
+As a best practice, you should attempt to use WaitFor in most circumstances. The WaitFor command typically leads to scripts that run faster. However, remember that if the specified image or text reference is not found, an exception is thrown.*)
+
+Waitforall 8, (image:"myimage1"),(image:"myimage2"),(image:"myimage3")
+Waitforall 8, "Image1","Image2"

@@ -1,0 +1,164 @@
+﻿
+Typetext windowskey,"r"
+Typetext "chrome.exe https://google.com",return
+Typetext Windowskey, uparrow
+
+Typetext "Eggplant Documentation",return
+typetext controlkey,F4
+
+//Launch URL
+to launchURL browser,url,varlogos
+	set global app to browser
+	typetext windowskey,"r"
+	if browser contains "edge" 
+		typetext "msedge"&&url,returnkey
+	else
+		typetext browser&&url,returnkey
+	end if
+	typetext windowskey, upArrow // maximize window on windows
+	
+	assert that ImageFound(20,varlogos)
+end launchURL
+
+
+//You can also use just the Windows Key instead of Windowskey r
+TypeText windowsKey
+TypeText "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe", return
+TypeText windowskey, upArrow
+
+//1. Launch my URL
+Typetext windowsKey,"r"
+--Typetext "chrome --start-maximized https://va--dtcsqa.my.salesforce.com/",return
+Typetext "msedge.exe --start-maximized https://google.com",return
+Waitfor 30, text:"Salesforce"
+//if you use images, make sure to create an image collection, with the grey out version, and the normal version.
+
+Doubleclick "Icon_chrome" //Click Google Chrome Icon 
+typetext windowsKey,uparrow //Maximize Window
+Waitfor 10, "refresh Icon" //Wait for Browser to load
+Click  "refresh Icon" //Clicks in the URL
+Typetext controlkey,"a"
+Typetext backspace
+typetext "MyURL",return //Type your URL in the field
+Typetext Return
+
+waitfor 4.3,"keysight logo"
+waitfor 10, "refresh icon"
+Click (image:"solutions",waitfor:8)
+click "design automation"
+waitfor 3.6, "designerandautomationbanner"
+waitfor 10, "refresh icon"
+typetext controlkey &F4
+--------------
+
+Typetext windowskey, "r"
+Typetext "chrome.exe www.google.com"
+Typetext returnkey
+
+--------------
+Typetext windowskey, "r"
+Typetext "chrome www.google.com"
+Typetext "msedge  www.google.com"
+Typetext returnkey
+
+--------------
+//handler
+
+to handle open with browserURL, URL
+	typetext windowsKey,"r"
+	TypeText controlKey & "a"
+	typetext browserURL,returnKey
+	--Typetext "chrome --start-maximized https://va--dtcsqa.my.salesforce.com/",return
+	assert that imagefound(imagename:"addtherefreshbutton",waitfor: 10)
+	typetext windowsKey,uparrow //Maximize Window
+	typetext URL,returnkey
+	
+end open
+
+//handler in a different script
+Open_Browser.open "msedge", "www.wikipedia.org"
+
+on OpenApp appToLaunch
+	TypeText WindowsKey,"r" -- open the Run panel
+	
+	Wait 2
+	
+	TypeText appToLaunch, return -- enter the name of the app to run and press return
+	
+end OpenApp
+
+----------------------------------------
+//handler
+
+to handle open with website, URL
+	typetext windowsKey,"r"
+	TypeText controlKey & "a"
+	typetext website,returnKey
+	typetext URL,returnkey
+end open
+
+//handler in a different script
+Open_Browser.open "msedge", "www.wikipedia.org"
+
+on OpenApp appToLaunch
+	TypeText WindowsKey,"r" -- open the Run panel
+	
+	Wait 2
+	
+	TypeText appToLaunch, return -- enter the name of the app to run and press return
+	
+end OpenApp
+
+
+Repeat until ImageFound(ImageName:"CatToy", waitfor:5) // This repeat loop iterates until the ImageFound() function returns true.
+
+	TypeText PageDown // Sends a Page Down keyboard action to scroll down the page.
+	
+	if the repeatindex is greater than 5 then throw "Image Not Found:", "Item not found when scrolling." // This conditional statement checks to see whether the repeat loop has iterated more than 5 times, and if so, throws an exception to stop the execution in order to avoid an endless loop if the image isn't on the page
+	
+end repeat
+
+-------------------------------------------------
+(** This script is to "launch browser" , either chrome or Firefox.
+maxWait: The amount of time it would wait
+browserType: Type of browser to be launched
+
+ **)
+
+to launchBrowser maxWait, browserType
+
+	Run "Browser/CleanUp".close_browser
+	
+	TypeText windowskey, "r" --"R"
+	
+	
+	set command to empty
+	set browserImage to empty
+	
+	if browserType is ...
+	
+		..."chrome" then
+			put "chrome" into command
+			put "Browser/Refresh" into browserImage
+			
+		..."firefox" then
+			put "firefox" into command
+			put "Browser/BrowserOpen" into browserImage
+			
+		else
+			
+			LogError !"BrowserType [[browserType]] not currently supported. Please enter either chrome or firefox"
+			
+	end if
+	TypeText windowskey, UpArrow
+	TypeText command & returnKey
+	
+	
+	
+	Assert imageFound(Image:browserImage, WaitFor:maxWait) with Exception !"[[my name]]: Checking browser [[browserType]] is open."
+	
+	//This is to maximize the browser Window
+	TypeText windowskey,UpArrow
+	
+end launchBrowser
+

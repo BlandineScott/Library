@@ -1,0 +1,29 @@
+﻿//Grabbing System Time from screen
+Repeat until (Length(ReadText(1585,12,1919,111)) is 12) or (counter() > 10)
+	
+	log "Capturing time from ELD Action Bar"
+	
+	-- put ReadText(1585,12,1919,111) into tempScreenCapture
+	put ReadText(1595,33,1894,92) into tempScreenCapture
+	
+	log tempScreenCapture
+	
+end repeat
+
+//Delete the number of characters within a field, using the count and backspace
+Put (Readtext(706,493,842,524)) into mytext
+Log Mytext
+Put the number of characters in mytext into Mytextcount
+
+Click "Ox54378976345"
+Repeat mytextcount
+	Typetext backspace
+End Repeat
+
+//Use Keydoown and then backspace --https://docs.eggplantsoftware.com/studio/stk-keyboard-clipboard-events/#keydown-command
+
+
+KeyDown backspace
+wait 3
+keyup backspace
+

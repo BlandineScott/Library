@@ -1,0 +1,71 @@
+﻿on connectTo
+	// only connect if not already connected
+	if ConnectionInfo() is empty then connect "IansAWS"
+end connectTo
+//Verify Connection is 'connected' else try to connect with a hard wait
+
+--------------------------------------------------------------------------------------------------------
+on connectTo
+	// only connect if not already connected
+	if ConnectionInfo() is empty then	connect "ec2-18-117-120-219.us-east-2.compute.amazonaws.com"
+end connectTo
+--------------------------------------------------------------------------------------------------------
+on connectVerify
+	repeat until the status of connectioninfo("IansAWS") is connected
+		try 
+			connect "IansAWS"
+		catch
+			LogWarning "SUT Not Available. Waiting 30 seconds before trying again"
+			Wait 30 seconds
+		end try
+		if the repeatindex is greater than 3 then throw "Unable to connect to SUT"
+	end repeat
+	
+	If the status of connectioninfo("IansAWS") is connected 
+		LogSuccess "Connected"
+		
+	End If 
+end connectVerify
+--------------------------------------------------------------------------------------------------------
+params SUTID, SUTPassword, SUTUsername // Parameterizes the connect command so it can connect to any desired RDP SUT using a screen resolution of 1920x1080. Example parameter values: "10.1.10.130", "password123", "Administrator".
+Connect {serverID: SUTID, portNum: 3389, password: SUTPassword, username: SUTUsername, Type:"RDP", Width: 1920, Height: 1080}
+
+on connectTo
+	// only connect if not already connected
+	if ConnectionInfo() is empty then connect "IansAWS"
+end connectTo
+
+//Verify Connection is 'connected' else try to connect with a hard wait
+-----------------------------------
+(**Handlers for setting up the SUT and browser etc
+
+@Version: 1.0 28/07/2022
+
+**)
+
+to checkSUTconnected
+	
+	repeat 2 minutes
+		
+		if not Connected of ConnectionInfo() then
+			
+			Logwarning "SUT does not seem to be connected.Trying again in 10seconds."		
+			wait 10	
+			
+		else
+			
+			Log !"[[my name]]: SUT connected!"
+			Exit Repeat
+			
+		end if
+		
+	end repeat
+	
+	Assert Connected of ConnectionInfo() with error !"[[my name]]: Checking SUT connected"
+	Assert RemoteScreenSize() is [1920,1080] with error !"[[my name]]: Remote Screen Size is [[RemoteScreenSize()]]"
+	Wait 10
+	
+end checkSUTconnected
+
+
+

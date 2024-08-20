@@ -1,0 +1,54 @@
+﻿log the international time
+log the short international date
+put the international time
+put the international time
+
+Log the availableTimeZoneNames
+Log availableTimeZoneAbbreviations() joined by return
+
+log timeZonesAmericas
+
+Put the short time("Europe/Paris") into Mytime
+Log Mytime
+
+log the short time("01:50 pm CST")  - 01:50
+log the short time("01:50 pm CDT")  -
+
+Put short time into aTime
+Set atime.timezone to "CDT" --CDT:"America/Chicago"
+Log aTime&&"CDT:America/Chicago"
+//Central Daylight Time (CDT) is a North American time zone in use from the second Sunday in March to the first Sunday in November during Daylight Saving Time (DST).
+
+Put short time into aTime
+Set atime.timezone to "CST" --CST:"America/Chicago"
+Log aTime&&"CST:America/Chicago"
+//Central Standard Time (CST) is used during the remainder of the year.
+
+
+Put short time into aTime
+Set atime.timezone to "ADT" --ADT:"America/Halifax"
+Log aTime 
+
+
+Put short time into aTime
+Set atime.timezone to "EST" --EST:"America/New_York"
+Log aTime 
+
+Put short time into aTime
+Set atime.timezone to "WEMT" --WEMT:"Europe/Paris"
+Log aTime 
+
+Put short time into aTime
+Set atime.timezone to "PDT" --PDT:"America/Los_Angeles"
+Log aTime 
+
+----------------------
+(*Added the ability to access and change the timeZone of a date/time value through several new properties: TimeZone to access or set the time zone identifier name (such as "America/New_York"); TimeZoneAbbreviation (or TimeZoneAbbrev or TimeZoneAbbr) to access or set the time zone abbreviation (such as "MDT"); and TimeZoneOffset to access or set the time zone offset from UTC of the date/time value.*)
+put now into aTime
+put aTime —> 2022-04-12 09:41:58 -0600
+put aTime's timeZone —> America/Denver
+put aTime's timeZoneOffset —> -6 hours
+set aTime's timeZoneOffset to -2 hours
+put aTime —> 2022-04-12 13:41:58 -0200
+set aTime.timeZone to "GMT"
+put aTime —> 2022-04-12 15:41:58 +0000

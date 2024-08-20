@@ -1,0 +1,67 @@
+﻿Run "1Ztest1"
+
+
+installApp(applicationPath:"/Users/johnspitta/Desktop/CitizensInviteOnly-SIT.ipa")
+
+installApp(applicationPath:"/Users/johnspitta/Desktop/app-invite-only-US-mvpsit.apk")
+
+// App Manipulation, install, uninstall, launch, stop
+
+//To launch an Android App first find its name
+put AppList() -- Get all the apps on a phone. Handy.
+
+put AppList(simple) into var -- Works.
+log var
+
+put ADBCallRemote("shell logcat -d") into file ResourcePath("myAndroidLog.txt")
+
+
+// Then
+LaunchApp "com.google.android.deskclock" --  works
+
+InstallApp applicationPath:"/Users/johnspitta/Desktop/app-invite-only-US-mvpsit.apk"
+
+UninstallApp "com.CitizensBank.MobileBankingApp.InviteOnly.SIT"
+
+killApp "com.google.android.deskclock" -- works
+
+KillApp Command
+//Example:
+KillApp "Podcasts" //Kills the Podcasts app on iOS 9 and 10
+
+//Example:
+KillApp "com.apple.camera" //Kills the Camera app on iOS 9 and 10
+
+//Example:
+KillApp "com.google.android.apps.maps" //Kills the Maps app on Android
+//Parameters: The name of the app you want to terminate:
+//On iOS, the app name is the name of the app or the bundle ID (i.e., com.apple.camera).
+//On Android, the app name is the package name.
+
+// Get network usage
+// https://docs.eggplantsoftware.com/ePF/SenseTalk/stk-mobile-sut-information.htm#sts=AppList%20Function
+// adb shell cat /proc/net/xt_qtaguid/stats
+
+// LIke so. Both work although ADBCall has been depricated
+put ADBCall("shell cat /proc/net/xt_qtaguid/stats") into file "C:\Users\john\Desktop\myReport.txt"
+
+put ADBCallRemote("shell cat /proc/net/xt_qtaguid/stats")  into file "C:\Users\john\Desktop\myReport2.txt"
+
+// Good way to test is to try your stuff in POwershell
+//These Two Work in Powershell one line at a time.
+CD C:\ProgramData\AndroidGateway\dist\backend\androidgateway-backend\Resources\adb\Windows\1.0.41
+.\adb.exe shell cat /proc/net/xt_qtaguid/stats
+
+//These Two Work in Powershell one line at a time.
+CD C:\ProgramData\AndroidGateway\dist\backend\androidgateway-backend\Resources\adb\Windows\1.0.41
+.\adb.exe shell cat /proc/net/xt_qtaguid/stats > c:\temp\myReport.txt
+
+This works!
+CD C:\ProgramData\AndroidGateway\dist\backend\androidgateway-backend\Resources\adb\Windows\1.0.41; .\adb.exe shell cat /proc/net/xt_qtaguid/stats
+
+This works!
+CD C:\ProgramData\AndroidGateway\dist\backend\androidgateway-backend\Resources\adb\Windows\1.0.41; .\adb.exe shell cat /proc/net/xt_qtaguid/stats > c:\temp\myReport.txt
+
+
+
+
