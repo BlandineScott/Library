@@ -1,0 +1,23 @@
+﻿to clickText
+	params textToClick,area
+	wait 0.3
+	if area is not empty then set the SearchRectangle to SearchPortion.screenpart(area) 
+	Click text:textToClick, waitFor:universal pageWait	
+	
+end clickText
+-----------------
+to textEntry label,input, offset:(config().dataEntry.textBoxOffset)
+	click CenterLeft of scrollTo(label) + offset
+	wait 0.5
+	typetext controlkey,"a"
+	typetext input
+	wait 0.3
+end textEntry
+---------------------
+to hiddenTextEntry label,input, offset:(config().dataEntry.textBoxOffset)
+	click CenterLeft of scrollTo(label) + offset
+	wait 0.5
+	typetext controlkey,"a"
+	typehiddentext input
+	wait 0.3
+end hiddenTextEntry

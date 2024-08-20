@@ -1,0 +1,33 @@
+﻿
+//Script > Run
+Set the remoteworkinterval to 0.7
+
+//Log ["DynamicTolerance","AlternateTypes","CropEdges","ScalingSearch"]
+Log the AutoImageUpdateDiagnostics
+
+//Set the Image Update to Disable the timer OR change the timer time: In the UI you can select Run Menu > Image Update > Update Off (Throw Exception) - This sets the default ImageUpdate to 0 which disable the timer. defaults write Eggplant ImageUpdate 0
+
+--whitelisting for %APPDATA%\eggplant folder 
+
+SetOption ImageUpdate, 0
+
+--Disable the imageupdate:
+
+put the ImageUpdate -- Manual by default 
+#put the imageUpdate into universal myImageupdate
+--you can probably use off, but the ImageUpdate accepts 0, 1, and 2
+defaults write Eggplant ImageUpdate 0 — Throw Exception
+defaults write Eggplant ImageUpdate 1 — Guided Update
+defaults write Eggplant ImageUpdate 2 — Auto Update
+
+The Auto-proceed Delay is called DelayForDoctor
+In a script,
+put GetOption("DelayForDoctor")  -- read value
+SetOption DelayForDoctor, 0
+SetOption DelayForDoctor, 2
+
+The Auto-proceed Delay is called DelayForDoctor
+In a script,
+put GetOption("DelayForDoctor")  -- read value
+SetOption DelayForDoctor, 0
+SetOption DelayForDoctor, 2

@@ -1,0 +1,44 @@
+﻿//Global variables can be referenced from any handler within a project. Global variables retain their value between different handlers. Holds the value while it runs OR if you hit the abord button is stops the run and flushes the variable. If i am troubleshooting, I cant troubleshoot. Abort to be used as a last resort.Pause is a better way to go, it will hold the values, and do decent troubleshooting. 
+//they can be accessed from any handler in any script within a project. Global variables have a value that persists across handlers. They are discarded at the end of a run.
+
+to doSomethingUniquely
+	global didItBefore -- Declare the global variable
+	if didItBefore is true then -- Don't allow it to be done twice
+		answer "Can’t do it again!"
+	else
+		dotheThingToBeDone
+		put true into didItBefore
+	end if
+end doSomethingUniquely
+
+-------------
+global userName
+
+ask "What is your name?"
+put it into userName
+
+put generateGreeting()
+
+put "Welcome to Global Land, " & userName
+
+
+to generateGreeting
+	global userName
+	put "Hey there" && userName into greeting
+	return greeting & "!"
+end generateGreeting
+--------------
+
+
+ask "What is your name?"
+put it into global userName
+
+put generateGreeting()
+
+put "Welcome to Global Land, " & global userName
+
+
+to generateGreeting
+	put "Hey there" && global userName into greeting
+	return greeting & "!"
+end generateGreeting

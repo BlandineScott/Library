@@ -1,0 +1,62 @@
+﻿
+---------------------------
+//Reading a Date
+validCharacters: "0123456789:apmCDT"
+ 
+validCharacters:"0..9"
+
+Typetext {text:"test",validcharacters:"abcdef,"}
+
+Click (text:"Eggplant, Antipasto", ignorespaces:yes, ValidCharacters:"A".."Z" &&& "a".."z" &&& ",",textdifference: 1, searchrectangle:((600,128,696,581)))
+----------------------
+on clickToTheRight text:"france"
+	put ImageRectangle(text:"france") into bounds 
+	Click rightCenter of bounds + (0,10)
+end clickToTheRight
+
+put imagerectangle(text:"france") into bounds
+click rightcenter of bouds + [0,10]
+
+Click text:"france" +[10,10]
+
+-----------
+log ColorAtLocation("emr")
+-----------
+//CaseSensitive, ValidCharacters, ValidWords, and DPI.
+-------------
+//ignorespaces:yes
+---------------
+//TextDifference – If the purpose of your OCR search is to Click on text instead of ReadText, and 
+//your OCR is struggling to interpret one or two letters, you may choose to set TextDifference: to '1' 
+//or '2' to allow the OCR to be "close enough" to find the search text. 
+
+-------------------
+
+Put "Charlie" into MyText
+Click (Text: MyText, ValidCharacters: MyText)
+
+--------------------
+Put "Charlie Brown" into mytext
+Click (text: mytext, searchRectangle:("RT1","RT2"), validwords:mytext)
+
+---------------
+//looks at the pixels and compare to the rest of the SUT. Color tolerance. Range of colors that is acceptable. It has to fall in the acceptable range. 
+
+//RGB 69,181,197
+//acceptable range is
+// RGB 24,136,152 (-45)
+// RBG 114,226,242 (+45 each)
+//define the search
+put "wikibooks" into button1
+
+//Estimating location while building a rectangle
+Put ImageRectangle("PatientInformation") into Rectangle1
+Put rectangle1+[0,100,100,500] into rectangle2
+
+log readtext(rectangle2)
+log imagerectangle(text:button1),searchrectangle:rectangle2
+Wait 6
+
+----------------------
+Log EveryImageLocation(text:"France")
+Click item 2 of EveryImageLocation(text:"France")

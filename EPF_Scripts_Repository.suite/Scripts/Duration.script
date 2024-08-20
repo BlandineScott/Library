@@ -1,0 +1,83 @@
+﻿//Getting a Test Identifier for CaptureScreen or other area of your script
+Put (Untitled.GetTestIdentifier) into RunID
+Log RunID
+
+CaptureScreen(imagename:"TEST"&&RunID) -- Logs capturescreen	TEST 202311091555155.png
+-------
+To GetTestIdentifier
+	Log "Getting a test identifier"
+	
+	Put the dateitems into strReturn
+	delete every occurrence of "," in strReturn
+	Log strReturn
+	Log "Returning number."&strReturn
+	Log strReturn
+	Return strReturn
+	
+End GetTestIdentifier
+
+
+//for example, a test result takes Z duration to execute. they want to convert that duration to a readable format rather than 118.282
+put global TestResult.Duration div 60 into TestDurationInMinutes
+put global TestResult.Duration rem 60 into TestDurationInSeconds
+put format ("%02i",TestDurationInSeconds) into TestDurationInSeconds
+put TestDurationInMinutes&":"&TestDurationInSeconds into TestDuration
+
+BeginTestCase "A"
+EndTestCase "A"
+
+//Starts a timer - Capture lengh how long it took to run.
+
+set startTime to the long time
+Log the long time
+--Yourcode here
+
+set elapsedTime to the long time - startTime
+log "Time Spent" && elapsedTime
+
+
+/////////////////////////////////////
+Runwithnewresults "Ztest1" 
+Put the result into MyOutcome
+Log MyOutcome.duration
+
+Runwithnewresults "Ztest2" 
+Put the result into MyOutcome2
+Log MyOutcome2.duration
+
+If MyOutcome = MyOutcome2
+	Logsuccess "Duration matches."&&MyOutcome
+Else
+	Logwarning "Duration does not match."&&MyOutcome2
+End If
+
+
+//Use results to know how long a page has loaded
+BeginTestCase "test1"
+
+Click "EnterZip"
+Typetext "64152"
+Waitfor 30, "find"
+Click "Find"
+EndTestCase "test1"
+set myresult to the result
+log "application took this long to load:"&myresult.duration
+
+------------------------
+//add excel document here
+
+Begintestcase "loadurl"
+Begintestcase "verifyurl"
+Doubleclick "icon_edge"
+waitfor 30, "anchor_urlfield"
+endtestcase "loadurl"
+log the result
+//add results to excel
+Click text:"sports"
+Log imagelocation(text:"NBA")
+endtestcase "verifyurl"
+Log the result
+click "close"
+
+----------------------------------
+put myResult.testcase & comma & myResult.duration & comma & myResult.starttime & CRLF after file ResourcePath ("myTimings.csv") // Writes the duration of the test case for the "Results" image appearing out to a csv fil

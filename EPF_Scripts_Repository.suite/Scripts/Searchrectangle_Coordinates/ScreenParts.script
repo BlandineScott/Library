@@ -1,0 +1,50 @@
+﻿function screenpart portion
+	try	
+		set AdressBar to 0 ---//whole screen		
+		//set AdressBar to 0.063  ----//without tab and address bar		
+		//set AdressBar to 0.095  ---//without tab, address bar and bookmark
+		set screenPortions to {			
+			FullScreen:[[0,AdressBar],[1,1]],
+			TopHalf: [[0,AdressBar],[1,.5]],
+			BottomHalf: [[0,.5],[1,1]],
+			LeftHalf: [[0,AdressBar],[.5,1]],
+			RightHalf: [[.5,AdressBar],[1,1]],
+			HorizontalMiddle: [[0,.25],[1,.75]],
+			VerticalMiddle:[[.25,AdressBar],[.75,1]],
+			TopLeftQuadrant:[[0,AdressBar],[.5,.5]],			
+			TopRightQuadrant:[[.5,AdressBar],[1,.5]],
+			BottomLeftQuadrant:[[0,.5],[.5,1]],
+			BottomRightQuadrant:[[.5,.5],[1,1]],
+			Center:[[.25,.20],[.75,.75]],			
+			TopHalfOfTopHalf: [[0,AdressBar],[1,.25]],
+			BottomHalfOfTopHalf:[[0,.25],[1,.5]],
+			TopHalfOfBottomHalf: [[0,.5],[1,.75]],			
+			BottomHalfOfBottomHalf: [[0,.75],[1,1]],
+			LeftHalfOfLeftHalf: [[0,AdressBar],[.25,1]],
+			RightHalfOfLeftHalf: [[.25,AdressBar],[.5,1]],
+			LeftHalfOfRightHalf: [[.5,AdressBar],[.75,1]],
+			RightHalfOfRightHalf: [[.75,AdressBar],[1,1]],
+			LeftHalfOfTopLeftQuadrant:[[0,AdressBar],[.25,.5]],
+			RightHalfOfTopLeftQuadrant:[[.25,AdressBar],[.5,.5]],
+			LefttHalfOfTopRightQuadrant:[[.5,AdressBar],[.75,.5]],
+			RightHalfOfTopRightQuadrant:[[.75,AdressBar],[1,.5]],
+			LeftHalfOfBottomLeftQuadrant:[[0,.5],[.25,1]],
+			RightHalfOfBottomLeftQuadrant:[[.25,.5],[.5,1]],
+			LeftHalfOfBottomRightQuadrant:[[.5,.5],[.75,1]],
+			RightHalfOfBottomRightQuadrant:[[.75,.5],[1,1]],
+			LeftHalfOfHorizontalMiddle: [[0,.25],[.5,.75]],
+			RightHalfOfHorizontalMiddle: [[.5,.25],[1,.75]],
+			TopHalfOfVerticalMiddle:[[.25,AdressBar],[.75,.5]],
+			BottomHalfOfVerticalMiddle:[[.25,.5],[.75,1]],
+			LeftHalftoSecondLeftHalf:[[0,0],[0.125,1]],
+		}
+		set multiplier to screenPortions.(portion) // Retrieves the value for the key in the property list. The name of the key is passed as a parameter into the function.
+		// Error handling is needed in the event that an unrecognized parameter is passed to the function
+		if multiplier is empty then
+			throw "Parameter error", portion && "is not a recognized screen portion."
+		end if
+		return [the remoteScreenSize,the remotescreenSize] * multiplier
+	Catch theException
+		"CommonUtilities/ErrorMessageHandler".userFriendlymessage theException
+	End try
+End screenpart

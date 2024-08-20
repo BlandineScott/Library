@@ -1,0 +1,66 @@
+﻿Log " This is my Command Line Script"
+(*
+INFO 
+https://docs.eggplantsoftware.com/studio/epf-running-from-command-line/
+You can have one or more instances of Eggplant Functional running tests from the command line while you continue to develop and run scripts in GUI mode.
+You can use Windows Scheduled Tasks (or Unix crontab or at command on Mac and Linux) to schedule Eggplant Functional scripts to run at specific times.
+
+Notes: 
+The Ask and Answer commands won't prompt for input when running from the command line. If you intend to run Eggplant Functional script from the command line and have Ask or Answer commands in scripts, you should set default values for the information that would otherwise be obtained from the use
+
+Licences:
+
+Every instance of Eggplant Functional requires a license. To use Eggplant Functional from the GUI and the command line at the same time, you need at least two licenses.
+
+The runscript command, which runs scripts without launching the Eggplant Functional GUI. (C:\Program Files\Eggplant\runscript.bat)
+The Eggplant command, which launches the Eggplant Functional GUI, then runs scripts. ("C:\Program Files\Eggplant\Eggplant.bat")
+
+*)
+
+
+
+(*RUN FROM COMMAND LINE
+
+EPF THROUGH CLI
+
+--Eggplant Functional saves the results of each script run in the Results folder for that script's suite. Then, after all scripts have finished running, Eggplant Functional reports the number of successful scripts as the return value.
+
+--May have to redirect the directory by doing cd C:\Program Files\Eggplant then hit Enter. Then copy paste everything after runscript.bat....
+--C:\Program Files\Eggplant\runscript.bat C:\Eggplant\SandBox\CommandLineTest.suite\Scripts\commandline.script C:\Eggplant\SandBox\CommandLineTest.suite\Scripts\commandline1.script -Commandlineoutput yes -AlertOnError
+(the example above have two scripts running)
+----------------------------------------------------------
+
+DAI THROUGH CLI
+
+--#1 Install the DAI Runner CLI From our website https://docs.eggplantsoftware.com/dai/dai-test-automation/
+--#2 Run the .exe from the command line with the following mandatory options:
+--Get the TEST CONFIG, CLIENT ID, CLIENT SECRET, SERVER URL
+--Generate the Client ID and Secret https://docs.eggplantsoftware.com/dai/dai-rest-api/
+
+Get the Test Config >>Go to Controller > Test Config and edit the test configuration that you want to run. The TEST_CONFIG value is appended to the URL.
+
+MyServer URL http://5cd151jqn2:8000
+Test Config 7bff1889-a576-4eff-99fd-cefb2059ec8f
+Client-id client:dai:api:integration:3b5db329-0792-4995-86e6-f06fb66687cf
+Client-user Yx8evstJpyVevdsE9vAu2RHIyaxCArR7
+client-secret 3gJzKlBXIAniIw8zJRrjujwPnSmIwqDf
+
+Sample: eggplant-runner-Windows-6.1.2.exe <SERVER_URL> <TEST_CONFIG_ID> --client-id <CLIENT_ID> --client-secret <CLIENT_SECRET>
+
+eggplant-runner-Windows-6.4.0-5.exe http://5cd151jqn2:8000 7bff1889-a576-4eff-99fd-cefb2059ec8f  --client-id client:dai:api:integration:3b5db329-0792-4995-86e6-f06fb66687cf  --client-secret 3gJzKlBXIAniIw8zJRrjujwPnSmIwqDf                           
+If the test config runs successfully, it will complete with an exit code of 0.
+
+
+
+*)
+
+----------------------------------------------------------
+(*
+
+DAI Runner = Run your DAI Test Scripts remotely ( exe is in python and available for download)
+DAI Service = Putting results to dev ops, Xray JIRA.... ( exe is in python and available for download)
+
+DAI Runner
+
+
+*)

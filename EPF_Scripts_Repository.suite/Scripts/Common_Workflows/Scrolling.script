@@ -1,0 +1,552 @@
+﻿
+
+Put remotescreensize() into screensize
+
+If NOT imagefound(image:"image0001", waitfor:2.0)
+	put screensize.height into ycoord
+else
+	put foundimagelocation() into yCoord
+End If
+
+repeat until ycoord is less than the screensize.height / 2
+	if ImageFound(3, "EndOfPage") then
+		logerror "Reach the end of the page. Unable to locate image on the screen."
+		exit repeat
+	else
+		TypeText pagedown
+	end if
+end repeat
+-----------------------------------------------------
+--Examples with a repeat loopTy
+
+Typetext Pagedown
+Typetext pageUp
+
+Typetext Downarrow
+Typetext Uparrow
+(*In order for the ScrollWheelDown command to work, you must make sure that the mouse cursor is within the scrolling area. If you try this in Live Mode, you'll see that for the scroll wheel or arrow keys to produce scrolling in an application, the mouse has to be inside the area that you want to scroll. So first script the positioning of the mouse, possiblty with Moveto and then the ScrollWheelDown /upcommand should work .*)
+
+ScrollWheelDown 10
+ScrollWheelUp 10
+
+SwipeLeft 10
+SwipeRight 10
+SwipeDown 10
+SwipeUp 10
+
+SwipeUp (12,12)  
+
+DragAndDrop
+
+--Goes directly to the bottom of the page - I love this one! Works on Windows. 
+typeText endKey
+
+Swipedown RemoteScreenSize()*(1,0.12)
+
+---------------------
+repeat until imagefound(text:MyVariable)
+	Typetext Downarrow
+	if repeatindex() is 10
+		exit repeat
+	end if
+end repeat
+-------------------------------------------------------------------------
+--scroll
+to scrollforImgorText toFind
+	moveto the center of RemoteScreenRectangle()
+	if file (suiteinfo().imagesFolder&"/"&toFind&".png") exists
+		repeat until imagefound(0,image:toFind)
+			ScrollWheelDown 5
+			wait 1
+			if repeatindex() > 10 then 
+				logerror "Cannot find"&&toFind
+				Exit repeat
+			end if
+		end repeat
+	else
+		repeat until imagefound(waitfor:0,text:toFind,caseSensitive:Yes)
+			ScrollWheelDown 5
+			wait 1
+			if repeatindex() > 10 then 
+				logerror "Cannot find"&&toFind
+				Exit repeat
+			end if
+		end repeat
+	end if
+	log FoundImageLocation()
+	return FoundImageLocation()
+	
+end scrollforImgorText
+
+----------------------------------------------------------
+to navigation action,Validation
+	click scrollforImgorText(action)
+	wait 1
+	if file (suiteinfo().imagesFolder&"/"&Validation&".png") exists
+		log "imagefound"
+		WaitFor 20, imagename:Validation
+	else
+		// OCR
+		WaitFor 20, text:Validation,caseSensitive:Yes
+		log "text found"
+	end if
+	
+	(*if file (suiteinfo().imagesFolder&"/"&action&".png") exists
+		log "imagefound"
+		click imagename:action,waitFor:0
+	else
+		// OCR
+		click text:action,caseSensitive:Yes,waitfor:0
+		log "text found"
+	end if*)
+end navigation
+---------------------------------------------------
+
+// Use code like below to detect when you've scrolled to the bottom of a page/screen.
+put RemoteScreenSize() into DUTScreenSize // Stores the size of the screen of the SUT
+put (.25*DUTScreenSize.x, .25*DUTScreenSize.y, .75*DUTScreenSize.x, .75*DUTScreenSize.y) into ClippingRectangle
+CaptureScreen (Name: "state", Rectangle: ClippingRectangle) // Captures a screenshot of the SUT, only in the center portion of the screen
+put the result into refImage // Stores the file path of the CaptureScreen image in a variable
+repeat at least once while not imageFound(image:refImage,searchRectangle:ClippingRectangle,waitFor:0) // Forces the statements within the repeat loop to happen at least once, even if the condition is immediately met
+	CaptureScreen (Name: "state", Rectangle: ClippingRectangle) // Captures a new screenshot of the SUT
+	put the result into refImage
+	TypeText PageDown // Scrolls the screen toward the bottom of the page
+	Wait 2.5 // Wait long enough to allow the scrolling action to "settle"
+end repeat
+
+--The handler might possibly encounter an issue if the visual change to the scrollbar appears before the rest of the SUT changes.
+---------------------------------------------------
+
+---------------------------------------------------
+Set the swipespeed to 5 -- for mobile
+
+repeat until imagefound("Myimage")
+	if the repeatindex is 4 then throw "image not found","image not found while scrolling."
+	Swipeup
+end repeat
+-------------------------------------------------------------------------
+Repeat until imagefound("checkStatement/DateITime_TopOfStatement","ScrolledToBottom")
+	TypeText DownArrow -- another way to scroll down
+end repeat
+if imagefound().ImageName is "ScrolledToBottom"
+then
+	logWarning "Scrolled all the way to the bottom and did not find the image"
+else
+	log "Found the image"
+	click foundimagelocation()
+end if
+-------------------------------------------------------------------------
+--Using the slider on the screen, if there is one
+
+put imagelocation("slider") into coord
+repeat until imagefound("atBottom")
+	drag coord
+	add (0, 10) to coord
+	drop coord -- drag 10 pixels in the y direction
+end repeat 
+
+-------------------------------------------------------------------------
+--This is a handler that calls an Image Name and a Waitfor Time
+--to call this handler, just write the name of the script 
+scrolluntilfound "MySavedImage", 30 --Time for the waitfor
+
+on ScrollUntilFound ImageName, myTime
+	Repeat until imagefound(image:imageName,waitfor:mytime)
+		
+		if the repeatindex is greater than 10 // if it goes through the repeat loop more than 10 times, then through a message to me and end the repeat loop.
+			throw "image not found", imageName&&"not found when scrolling."
+			Exit repeat
+		end if
+		
+		Typetext PageDown -- You can change the page down to up
+		--OR
+		ScrollWheelDown 10 -- You can change the scroll amount - you can also use scrollwheelup if you are going up instead of down.
+		--OR 
+		--Use swipe up, down, left right for mobile testing only
+		
+		Wait 1
+	end repeat
+end ScrollUntilFound
+
+-------------------------------------------------------------------------
+--Speed up the remoteworkinterval - which will make eggplant go faster.
+set tmpRWI to the remoteWorkInterval -- Set default speed
+log "My current RemoteWorkInterval is"&&tmpRWI
+setoption remoteWorkInterval, .1  -- allows for faster scrolling
+
+ScrollUntilFound "Dogs_Image", 30 -- Handler above 
+
+setoption remoteWorkInterval, tmpRWI1 -- Reset to default speed
+
+-------------------------------------------------------------------------------
+
+
+
+
+--To go to the bottom of the page you can just do this: 
+
+typeText endKey
+
+--To go to the top of the page you can just do this: 
+
+typetext homekey
+----------------------------------------
+ScrollUntilFound "Dogs_Image", 30
+
+--With PageDown
+on ScrollUntilFound1 ImageName, myTime
+	Repeat until imagefound(image:imageName,waitfor:mytime)
+		if the repeatindex is greater than 10 // Read more about the repeatIndex below
+			throw "image not found", imageName&&"not found when scrolling."
+		end if
+		Typetext PageDown
+		Wait 1
+	end repeat
+end ScrollUntilFound1
+
+----------------------------------------
+--With ScrollWheelDown
+
+set tmpRWI to the remoteWorkInterval
+log "My current RemoteWorkInterval is"&&tmpRWI
+setoption remoteWorkInterval, .1  -- allows for faster scrolling
+ScrollUntilFound "Dogs_Image", 30
+setoption remoteWorkInterval, tmpRWI1
+
+on ScrollUntilFound ImageName, myTime
+	Repeat until imagefound(image:imageName,waitfor:mytime)
+		if the repeatindex is greater than 10 // Read more about the repeatIndex below
+			throw "image not found", imageName&&"not found when scrolling."
+		end if
+		ScrollWheelDown 30
+		Wait 1
+	end repeat
+	
+end ScrollUntilFound
+-------------------
+To scrollTo toFind
+	set the searchRectangle to config().SUT.(global app)
+	// Images 
+	set the remoteWorkInterval to 0.1
+	if file (suiteinfo().imagesFolder&"/"&toFind&".png") exists
+		repeat until imagefound(0,image:toFind) 
+			Log "image"
+			ScrollWheelDown 5
+			wait 1
+			if repeatindex() > 10 then 
+				logerror "Cannot find"&&toFind
+				Exit repeat
+			end if
+		end repeat
+	else
+		// OCR
+		repeat until imagefound(text:toFind,ignoreNewlines:on, ignorespaces:on,waitfor:0) 	
+			ScrollWheelDown 5 
+			wait 1
+			if repeatindex() > 10 then 
+				logerror "Cannot find"&&toFind
+				Exit repeat
+			end if
+		end repeat
+	end if
+	set the remoteWorkInterval to 0.4
+	set the searchRectangle to []
+	return foundimageinfo().imageRectangle 
+end scrollTo
+
+To navigate action,expectation, offset:[0,0]
+	// do something 
+	
+	if action is not empty
+		click the center of scrollTo(action) + offset
+		moveto bottomCenter of the SearchRectangle
+		wait 1
+	end if 
+	// check something
+	if expectation is not empty
+		if file (suiteinfo().imagesFolder&"/"&expectation&".png") exists
+			waitfor global TimeToWaitfor, image:expectation
+		else
+			waitfor global TimeToWaitfor,text:expectation
+		end if 
+		moveto bottomCenter of the SearchRectangle
+	end if 
+	wait 1
+	
+end navigate
+
+to textEntry label, input, offset:(config().dataEntry.textBoxOffset)
+	click CenterLeft of scrollTo(label) + offset
+	wait 0.5
+	typetext controlkey,"a"
+	typetext input
+	wait 0.3
+end textEntry
+
+to hiddenTextEntry label,input:global user,offset:(config().dataEntry.textBoxOffset)
+	click CenterLeft of scrollTo(label) + offset
+	wait 0.5
+	typetext controlkey,"a"
+	typehiddentext GetVaultValue(input)
+	wait 0.3
+end hiddenTextEntry
+
+to checkBox label, offset:(config().dataEntry.checkBoxOffset)
+	click the CenterLeft of scrollTo(label) + offset
+	wait 0.5
+end checkBox
+-------------------------------------------
+//window needs to be active to be able to scroll
+
+Typetext pagedown
+
+ScrollWheelDown 3
+
+typetext downarrow
+
+-------------------------
+set ScrollDownButtonLocation to ImageLocation("image0001")
+repeat 10 times
+	click ScrollDownButtonLocation
+end repeat
+-------------------------
+
+repeat until imagefound("")
+	if the repeatindex is 4 then throw "image not found","image not found while scrolling."
+	Typetext Pagedown
+end repeat
+------------------------------
+Set the swipespeed to 5
+repeat until imagefound("")
+	if the repeatindec is 4 then throw "image not found","image not found while scrolling."
+	Swipeup
+end repeat
+---------------------------
+//Scrolls down a page to locate text
+//Uses the mySearchRectangle parameter to restrict search area for text
+//Uses an optional parameter of myMoveToPoint to place cursor within scrollable area
+//Uses a parameter of myValidCharactersYN to assist if text cannot be located
+Common_Workflows/Scrolling "Language", (300,0), "position"
+Common_workflows.scrolling "Vietnamese",(873,224,1270,770),(100,0)
+
+to dropdown1 label,offset,input
+	put ImageLocation(text:label) into labelLocation
+	click labelLocation + offset
+	wait 0.5
+	typetext input,return
+end dropdown1
+
+Common_workflows.scrolling "Vietnamese",(873,224,1270,770),(100,0)
+on ScrollToFindText myText,mySearchRectangle,myMoveToPoint,myValidCharactersYN
+
+	if mySearchRectangle = "" then set mySearchRectangle to RemoteScreenRectangle()
+	
+	log "The SearchRectangle is"&&mySearchRectangle
+	set tmpRWI to the remoteWorkInterval
+	log "My current RemoteWorkInterval is"&&tmpRWI
+	setoption remoteWorkInterval, .1  -- allows for faster scrolling
+	
+	If FoundImageLocation() <> "" then MoveTo FoundImageLocation() - (-30,30)
+	
+	If myMoveToPoint <> "" then MoveTo myMoveToPoint
+	
+	If myValidCharactersYN = "N" then
+		
+		Repeat until ImageFound(text:myText, WaitFor:2,SearchRectangle:mySearchRectangle,ignoreSpaces:Yes)
+			ScrollWheelDown 2
+		End repeat
+		
+		ScrollWheelDown 1 -- accounts for images that may be partially obscured by the bottom of the page
+		Wait 1 -- allows for the GUI to stabilize prior to attemtping to calculate the final location of the image
+		
+		If FoundImageLocation() <> "" then MoveTo FoundImageLocation() - (-30,30) -- makes certain that the cursor is not hovering over the image to be located which might cause the image to change color
+		
+		Try
+			MoveTo text:myText,SearchRectangle:mySearchRectangle,ignoreSpaces:Yes
+		Catch theException
+			ScrollWheelUp 1
+			MoveTo FoundImageLocation() - (-30,75) -- accounts for rare instances in which the image is still displayed in a hover state
+			MoveTo text:myText,SearchRectangle:mySearchRectangle,ignoreSpaces:Yes
+		End try
+		
+	Else
+		
+		Repeat until ImageFound(text:myText, WaitFor:2,SearchRectangle:mySearchRectangle, validCharacters:"*",ignoreSpaces:Yes,validWords:"*")
+			ScrollWheelDown 2
+		End repeat
+		
+		ScrollWheelDown 1 -- accounts for images that may be partially obscured by the bottom of the page
+		Wait 1 -- allows for the GUI to stabilize prior to attemtping to calculate the final location of the image
+		
+		If FoundImageLocation() <> "" then MoveTo FoundImageLocation() - (-30,30) -- makes certain that the cursor is not hovering over the image to be located which might cause the image to change color
+		
+		Try
+			MoveTo text:myText,SearchRectangle:mySearchRectangle,validCharacters:"*",ignoreSpaces:Yes,validWords:"*"
+		Catch theException
+			ScrollWheelUp 1
+			MoveTo FoundImageLocation() - (-30,75)  -- accounts for rare instances in which the image is still displayed in a hover state
+			MoveTo text:myText,SearchRectangle:mySearchRectangle,validCharacters:"*",ignoreSpaces:Yes,validWords:"*"
+		End try
+		
+	End If
+	
+	setoption remoteWorkInterval, tmpRWI
+	
+end ScrollToFindText
+----------------------------------------
+//Scrolls up a page to locate an image
+//Uses an optional parameter of myMoveToPoint to place cursor within scrollable area
+on ScrollUpToFindImage ImageName,myMoveToPoint
+
+	set tmpRWI to the remoteWorkInterval
+	log "My current RemoteWorkInterval is"&&tmpRWI
+	setoption remoteWorkInterval, .1  -- allows for faster scrolling
+	
+	If FoundImageLocation() <> "" then MoveTo FoundImageLocation() - (-30,30)
+	
+	If myMoveToPoint <> "" then MoveTo myMoveToPoint
+	
+	Repeat until ImageFound(Image:ImageName, WaitFor:1)
+		ScrollWheelUp 1
+	End repeat
+	
+	Wait 1  -- allows for the GUI to stabilize prior to attemtping to calculate the final location of the image
+	
+	If FoundImageLocation() <> "" then MoveTo FoundImageLocation() - (-30,30) -- makes certain that the cursor is not hovering over the image to be located which might cause the image to change color
+	
+	Try
+		MoveTo image:ImageName
+	Catch theException
+		MoveTo FoundImageLocation() - (-30,75) -- accounts for rare instances in which the image is still displayed in a hover state
+		MoveTo image:ImageName
+	End try
+	
+	setoption remoteWorkInterval, tmpRWI -- resets the RemoteWorkInterval back to its prior value
+	
+end ScrollUpToFindImage
+----------------------------
+//Scrolls down a page to locate an image
+//Uses an optional parameter of myMoveToPoint to place cursor within scrollable area
+
+ScrollToFindImage "Dogs_Image"
+on ScrollToFindImage ImageName,myMoveToPoint
+
+	set tmpRWI to the remoteWorkInterval
+	log "My current RemoteWorkInterval is"&&tmpRWI
+	setoption remoteWorkInterval, .1 -- allows for faster scrolling
+	
+	If FoundImageLocation() <> "" then MoveTo FoundImageLocation() - (-30,30)
+	
+	If myMoveToPoint <> "" then MoveTo myMoveToPoint	
+	
+	Repeat until ImageFound(Image:ImageName, WaitFor:1)
+		ScrollWheelDown 2
+	End repeat
+	
+	ScrollWheelDown 1 -- accounts for images that may be partially obscured by the bottom of the page
+	Wait 1 -- allows for the GUI to stabilize prior to attemtping to calculate the final location of the image
+	
+	If FoundImageLocation() <> "" then MoveTo FoundImageLocation() - (-30,30) -- makes certain that the cursor is not hovering over the image to be located which might cause the image to change color
+	
+	Try
+		MoveTo image:ImageName
+	Catch theException
+		MoveTo FoundImageLocation() - (-30,75) -- accounts for rare instances in which the image is still displayed in a hover state
+		MoveTo image:ImageName
+	End try
+	
+	setoption remoteWorkInterval, tmpRWI -- resets the RemoteWorkInterval back to its prior value
+	
+end ScrollToFindImage
+---------------------------------------
+Set the SwipeSpeed to 1
+SwipeUp RemoteScreenSize()*[0.5,0.5] // swiping up from the centre of the screen
+-This swiped for 4-5 seconds and swiped half a page up
+Set the SwipeSpeed to 300
+SwipeUp RemoteScreenSize()*[0.5,0.5]
+- This swiped for 2 seconds and swiped a page and a half up
+
+-----------------------------
+drag "[image near the top]"
+drop "[image closer to the bottom]"
+or you could just use a couple of coordinates:
+
+drag (50, 10)
+drop (50, 100)
+------------------------
+set the mouseDragSpeed to 1
+set the mouseDragSpeed to 1
+Drag (300,300)
+Drop "ios4BackBtn" 
+
+--------------------------
+to scrollForText
+	params textToFind,scroll,amountOfScroll,maxRepeatCount,area
+	
+	if area is not empty then set the SearchRectangle to SearchPortion.ScreenPart(area) 
+	repeat until ImageFound(0, text:textToFind, waitfor:universal pageWait)
+		if maxRepeatCount is not empty then
+			if repeatIndex() is greater than maxRepeatCount then 
+				LogError textToFind&"- text is not found on the page"
+				exit repeat
+			end if
+		end if 
+		if scroll is "up" then 
+			ScrollWheelUp amountOfScroll
+		else if scroll is "down" then 
+			ScrollWheelDown amountOfScroll
+		end if
+	end repeat
+end scrollForText	
+
+
+to setUp
+	set universal pageWait to 30
+end setUp
+
+to scrollForImage
+	params imagetoFind,scroll,amountOfScroll,maxRepeatCount,area
+	
+	if area is not empty then set the SearchRectangle to SearchPortion.ScreenPart(area) 
+	repeat until ImageFound(0, imageName:imagetoFind, waitfor:universal pageWait)
+		if maxRepeatCount is not empty then
+			if repeatIndex() is greater than maxRepeatCount then 
+				LogError imagetoFind&"- text is not found on the page"
+				exit repeat
+			end if
+		end if 
+		if scroll is "up" then 
+			ScrollWheelUp amountOfScroll
+		else if scroll is "down" then 
+			ScrollWheelDown amountOfScroll
+		end if
+	end repeat
+end scrollForImage	
+---------------------
+to scrollTo toFind
+	// Images 
+	set the remoteWorkInterval to 0.1
+	if file (suiteinfo().imagesFolder&"/"&toFind&".png") exists
+		repeat until imagefound(0,image:toFind,searchRectangle:(config().SUT.(global browser)))
+			ScrollWheelDown 5
+			wait 1
+			if repeatindex() > 10 then 
+				logerror "Cannot find"&&toFind
+				Exit repeat
+			end if
+		end repeat
+	else
+		// OCR
+		repeat until imagefound(waitfor:0,text:toFind,searchRectangle:(config().SUT.(global browser)), ignoreNewlines:on, ignorespaces:on)
+			log the textstyle
+			ScrollWheelDown 6 
+			wait 1
+			if repeatindex() > 10 then 
+				logerror "Cannot find"&&toFind
+				Exit repeat
+			end if
+		end repeat
+	end if
+	set the remoteWorkInterval to 0.4
+	return foundimageinfo().imageRectangle 
+end scrollTo

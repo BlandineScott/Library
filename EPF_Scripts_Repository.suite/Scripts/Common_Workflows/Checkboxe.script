@@ -1,0 +1,73 @@
+﻿--for Checkboxes and radio buttons
+to radioButtons label, offset
+	put ImageLocation(text:label) into labelLocation
+	click labelLocation + offset
+	wait 0.5
+end radioButtons
+-------------------
+to checkBox label, offset:(config().dataEntry.checkBoxOffset)
+	click the CenterLeft of scrollTo(label) + offset
+	wait 0.5
+end checkBox
+-----------------------------------------------
+put [] into myCheckboxItems
+
+Repeat 10 times -- could be modified to use a visual indicator that you are at the end of the list
+	
+	Repeat with EveryImageLocation("Checkbox_unselected") reversed -- lines will sometimes increase in height when a checkbox is selected
+		
+		Put (FoundImageLocation(),FoundImageLocation()) + ((100,-5),(500,5)) into myReadRectangle
+		Insert ReadText(myReadRectangle) into myCheckboxItems
+		Click FoundImageLocation() -- allows for repeat loop below
+		
+	End Repeat
+	
+	Repeat until ImageFound("Checkbox_selected") is false -- scrolls until all checked boxes are off the screen
+		
+		ScrollWheelDown 5
+		
+	End Repeat
+	
+End Repeat
+
+-----------------------------------------------
+Put everyimagelocation("radiobutton") into boxlist
+Log the number of items in boxlist
+
+Repeat with each item box of boxlist
+	log box 
+	click box
+End Repeat
+-----------------------------------------------
+put EveryImageLocation("img_blankCheckbox") into blankCheckboxList
+
+log blankCheckboxList
+
+
+
+repeat with each item of blankCheckboxList
+	
+	put it into currentItem
+	
+	log currentItem
+	
+	click currentItem
+	
+end repeat
+------------
+to checkBox label, offset:(config().dataEntry.checkBoxOffset)
+	click the CenterLeft of scrollTo(label) + offset
+	wait 0.5
+end checkBox
+
+-----------------------
+put everyimagelocation("testmeimage") into mychecks
+log mychecks
+repeat with each item current of mychecks
+	wait 1
+	click current
+	
+end repeat
+
+put ImageRectangle(text:"IF_YOU_WT") into bounds 
+Click leftCenter of bounds + (-70,5)

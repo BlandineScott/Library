@@ -1,0 +1,41 @@
+{
+	"lastmodifieddate": 1665752973.119,
+	"ocrcapturestring": "Wiki",
+	"originalcapturelocation": [
+		29,
+		214,
+		55,
+		33
+	],
+	"createddate": 1665752973.119,
+	"testlocationdata": [
+		{
+				"connectionportnum": 3389,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Tolerance": "_71",
+					"HotSpot": "[27,16]",
+					"Scale": "    1",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown RDP"
+				},
+				"name": "Wiki.png",
+				"connectionname": "Blandine_RDP",
+				"type": 1,
+				"connectionserverid": "ec2-18-117-120-219.us-east-2.compute.amazonaws.com",
+				"capturerect": [
+					29,
+					214,
+					55,
+					33
+				],
+				"connectiontype": "RDP",
+				"capturedocrtext": "Wiki"
+			}
+	],
+	"name": "Wiki"
+}

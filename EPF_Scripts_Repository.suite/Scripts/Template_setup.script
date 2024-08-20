@@ -1,0 +1,26 @@
+﻿//SET UP Best Practices 
+//make sure windows are maximized
+//use moveto (1,1) can dismiss any pesky tooltip that might be obscuring your screen elements
+
+-------------
+//Add params
+Params LoginName, LoginDepartmentID //Line 1 of login script
+
+Click "Namefield"
+Typtext (text:LoginName),return
+Click "Departementfield", return
+typetext (text:LoginDepartmentID), return
+-------------------
+//add params as global variables
+
+Params LoginName, LoginDepartmentID //Line 1 of login script
+Set global G_Loginname to Loginname
+Set global G_LogindepartmentID to LoginDepartmentID
+-------------------
+
+//TROUBLESHOOTING
+//use OCR Tuner to troubleshoot OCR text
+
+-------------------
+Run "test script", "param1","params2" //no space
+//text in quotation, and numbers not

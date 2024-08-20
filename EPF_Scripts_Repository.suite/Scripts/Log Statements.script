@@ -1,0 +1,10 @@
+﻿Log " Things are moving along"
+Logsuccess "all is well"
+Logwarning " SOmething is going or not" //issue with workflow but can move on
+Logerror "Everything is on fire"
+
+//each color has color associates with it
+//Indicators in the script
+//help with troubleshooting and understand where you are in the script
+
+Runwithnewresults "Script01"

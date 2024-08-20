@@ -1,0 +1,128 @@
+﻿
+
+
+
+put ("Apple","Banana", "Grapes","Organge","Strawberry","Peach") into Fruits
+put ("Carrot","Tomato","peas","Onion","Broccoli") into Vegetables
+
+
+put (Fruits,Vegetables) into groceries
+put the number of items of groceries into All_max
+repeat All_max times
+	put item repeatindex() of groceries into specific_list
+	put the number of items of  specific_list  into specific_max
+	repeat specific_max times
+		put item repeatindex() of specific_list into specific_item
+		log specific_item
+	end repeat	
+end repeat
+
+
+----------------------------------------------
+
+put ("Apple","Banana", "Grapes","Organge","Strawberry","Peach") into Fruits
+
+
+put the number of items of Fruits into max
+repeat max times
+	
+	
+	put item repeatindex() of fruits into FruitName
+	
+	if (FruitName = "Strawberry") then
+		Log "Something"	
+	else
+		log FruitName
+	end if
+	
+end repeat
+
+----------------------------------------------
+put ("Apple","Banana", "Grapes","Organge","Strawberry","Peach") into Fruits
+
+
+TypeText Fruits
+
+
+log item 1 of Fruits
+TypeText item 4 of Fruits
+click item 3 of Fruits
+
+SendMail to:"anne.foster@eggplant.io", subject: "Test bolding", message:"testingbcc", CC: "anne.foster@eggplant.io"
+
+
+-----------------------------------
+
+
+
+put ("Apple","Banana", "Grapes","Organge","Strawberry","Peach") into Fruits
+
+put 6 into x
+log item x of Fruits
+
+-----------------------------------
+
+put (("Apple", "one"), ("Banana", "two"), ("Grapes", "three"), ("Orange", "four"), ("Strawberry", "Five"), ("Peach", "six")) into Fruits
+
+(*
+log item 1 of fruits && item 2 of fruits
+
+log item 1 of fruits & " "& item 2 of fruits
+
+log "The forth item is" && item 4 of Fruits
+*)
+
+log item two of (the fourth item of Fruits)
+
+
+
+
+Ask password "what is your password"
+put it into password
+log password
+
+-----------------------------------
+put "coconut" into thing
+put ("Apple","Banana", "Grapes",thing,"Organge","Strawberry","Peach") into Fruits
+log item 4 of Fruits
+//Put into a list
+Put "I would like to eat this." into try
+Put try is a list
+split try by newline
+log try
+Put try is a list
+----------------
+
+insert "Pear" into Fruits
+log Fruits
+
+delete item 4 of Fruits
+-----------------------------------
+
+log the index number of "grapes" in Fruits
+-------------------
+Put readtext("AboutUs_TopleftAnchor","HourGlass_BottomRightAnchor",contrast:"Off",multiline:"Yes",textdifference:1,EnableAggressiveTextExtraction:"Yes") into TopMenu
+Split TopMenu by newline
+Put TopMenu is a list
+Log the number of items in Topmenu
+Log TopMenu
+
+//List of items returned
+--["About Us","From President","Jim Bullard","Publications","For Teachers","& Students","Working --with","Communities","Supervising","Banks","Research &","Databases"]
+
+Put [Item 1 of TopMenu, Item 3 of TopMenu, Item 4 of TopMenu, Item 6 of TopMenu,Item 8 of TopMenu,Item 10 of TopMenu,Item 12 of TopMenu] into FinalTopMenuList
+Log FinalTopMenuList
+Log the number of items in FinalTopMenuList
+
+
+Set the searchrectangle to ("AboutUs_TopleftAnchor","HourGlass_BottomRightAnchor")
+Repeat with each item of FinalTopMenuList reversed
+	Logsuccess "The Item clicked on is"&&it
+	Click text:it,validwords:"*"
+	--Assert that imagefound(text:it)
+	Logsuccess "The Item clicked on is"&&it
+	Log "Item Number is"&&Repeatindex()
+	Wait 2
+End Repeat
+Set the searchrectangle to Empty
+

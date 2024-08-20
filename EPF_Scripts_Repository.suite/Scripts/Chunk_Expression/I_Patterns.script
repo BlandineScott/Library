@@ -1,0 +1,21 @@
+﻿// Occurrence and Match Chunks
+
+set fishy to {{
+One fish, Two fish, Red fish, Blue fish,
+Black fish, Blue fish, Old fish, New fish.
+This one has a little car.
+This one has a little star.
+Say! What a lot of fish there are.
+}}
+
+set fishPattern to <start of word, letters, " fish">
+
+put the first 2 occurrences of fishPattern in fishy
+put occurrences 3 to 5 of fishPattern in fishy
+put the last 3 instances of fishPattern in fishy
+
+put the second match of fishPattern in fishy
+
+put "Where am I?" into the third match of fishPattern in fishy
+
+put line one of fishy

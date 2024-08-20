@@ -1,0 +1,573 @@
+﻿
+//This script will read from a spreadsheet and then write info to it
+
+set myDB to (file:ResourcePath("Book1.xlsx"), type:"excel", writeable:"Yes")
+
+repeat 10 times
+	put "Anne" into row."first name"
+	put "Testing" into row."last name"
+	put random (100000000,999999999) into row.SSN
+	add record row to myDB
+end repeat
+---------------------------------------------------
+
+//This script will read from a spreadsheet and then write info to it
+
+set myDB to (file:ResourcePath("Book1.xlsx"), type:"excel", writeable:"Yes")
+set patietList to table("Sheet1") of myDB
+
+repeat with each item row of the records of patietList by reference //repeating with each line of the excel and saving any updates directly to the file
+	log  row."First Name"
+	log  patient."Last Name"
+	put random (100000000,999999999) into patient.SSN
+	put "complete" into patient."complete"
+end repeat
+
+---------------------------------------------------
+
+
+
+
+set myConnectionString to {file:ResourcePath("MathInCSV.csv"), type:"csv", writable: "Yes"}
+
+Repeat with each item CurrentRecord of the records of myConnectionString by reference
+	log CurrentRecord.Seed
+	log CurrentRecord._pk_
+	put sqrt(CurrentRecord.Seed) into CurrentRecord.Answer
+	log CurrentRecord.Answer
+	log CurrentRecord.Time
+	log "The time from the CSV file is" && formattedTime("[hr]:[mi] [am]",CurrentRecord.Time)
+	(*	log "The time from the CSV file + 30 minutes is" && formattedTime("[hr]:[mi] [am]",CurrentRecord.Time) + 30 minutes
+	log "The current time is" && formattedTime("[month name] [day], [year] [hr]:[mi]:[se]",now)*)
+End repeat
+-----------------------------------------------------
+--The first row of the worksheet is treated as a header row, identifying the names of the columns in the table. SenseTalk treats all subsequent rows as database records in the table, ignoring any empty rows.
+
+Set myexcelDB to (type:"excel",file:ResourcePath("search.xlsx"), writable:yes)
+-- set the specified variable, myExcelDB, to store the contents of the referenced Excel file and establish a SenseTalk connection. Writable Yes = able to  (insert, update, or delete) changes back to the database file
+Put the records of myexcelDB into mydata
+---- fetch all records from the myExcelDB variable and place them into the mydata variable
+Put each item of the records of myexcelDB where each."searched" ="no" into activesearches
+//put each item of the records of mytable where "Url" is "wiki into mydata"
+
+//Put item 1 of activesearches into gosearches
+
+DoubleClick "Chrome_Icon"
+Typetext "www.wikipedia.com",return
+Typetext Windowskey,uparrow
+
+repeat with each item petrecord of activesearches by reference 
+	
+	put petrecord.pets into pet
+	Typetext pet,return
+	Put imagerectangle("search") into rec
+	Put rec+(10,-2,180,-6) into new
+	assert that imagefound(text:pet,searchrectangle:new)
+	put "yes" into petrecord.searched
+	Click "searchbar"
+	Typetext "www.wikipedia.com",return
+	
+end repeat
+
+
+-----------------------------------------------------------------
+//This script will read from a spreadsheet and then write info to it
+
+set myDB to (file:ResourcePath("Book1.xlsx"), type:"excel", writeable:"Yes")
+
+repeat 10 times
+	put "Anne" into row."first name"
+	put "Testing" into row."last name"
+	put random (100000000,999999999) into row.SSN
+	add record row to myDB
+end repeat
+-----------------------------------------------------------------
+//This script will read from a spreadsheet and then write info to it
+
+set myDB to (file:ResourcePath("Book1.xlsx"), type:"excel", writeable:"Yes")
+set patietList to table("Sheet1") of myDB
+
+repeat with each item row of the records of patietList by reference //repeating with each line of the excel and saving any updates directly to the file
+	log  row."First Name"
+	log  patient."Last Name"
+	put random (100000000,999999999) into patient.SSN
+	put "complete" into patient."complete"
+end repeat
+-----------------------------------------------------------------
+
+
+
+//PK = primary Key
+(* 
+1.Create your file
+2. Save as > Name it 
+Note =>(cannot have the excel open while using it - take a screenshot of it)
+*)
+
+Set myexcelDB to (type:"excel",file:ResourcePath("status.xlsx"), writable:yes)
+Set global mytable to table("Sheet1") of myexcelDB //work out of sheet1 only
+
+Put the records of global mytable into mydata -- fetch all records from sheet1
+Log mydata -- logs all records
+
+put each item of the records of globalmytable where "firstname" is "Bob" into specificdata
+Log specificdata -- logs only first line where bob is.
+Log specificdata.colors -- specific for a column
+Log any item in specificdata.colors --logs any color in that column
+
+Put mydata.specificdata as a property list --(note data includes mulitple inf thas a property list)
+Log userfdata.url
+
+---------------------------------------------------------------------------------
+Set myexcelDB to (type:"excel",file:ResourcePath("status.xlsx"), writable:yes)
+Set global mytable to table("Sheet1") of myexcelDB //work out of sheet1 only
+
+Put the records of global mytable into mydata -- fetch all records from sheet1
+
+Repeat with each item record of mydata by reference -- allows to write back to excel
+	put record.data as a property list into userdata
+	log userdata.url
+End Repeat
+
+
+-----------------------
+Put the records of myScriptData into UserRecords
+2:37
+this already puts it into a list
+2:37
+to handle password_match username
+	Set myScriptData to (type:"excel", file: ResourcePath("passwords.xlsx"), name:"Scranton")
+	Put the records of myScriptData into UserRecords
+	
+	Repeat with each UserRecord of UserRecords
+		If Userrecord.username is equal to username
+			Put "The password is" && Userrecord.Password
+			Exit Repeat
+		Else
+			Log "Don't Tell jim"
+		End If
+	End Repeat
+	
+end password_match
+---------------------------------------------------------------------------------
+//Write back to the database
+set record.status to "loaded page"&URL&&the time
+
+if verifywiki then
+	set record.status to "successfully verified"&&thedate&&the abbrev time
+else
+	set record.status to "error in verified"&&thedate&&the abbrev time
+end if
+
+
+//Primary Key
+//Get information to pull from a specific column and line in an excel document
+
+-- set the specified variable, myExcelDB, to store the contents of the referenced Excel file and establish a SenseTalk connection.
+Set myexcelDB to (type:"excel",file:ResourcePath("status.xlsx"), writable:yes)
+
+-- Put the records into a variable
+Put the records of myexcelDB into Mydata-- Put the records into a variable
+
+Log mydata -- log all the data in the excel document 
+Put item 1 of mydata into patient1 -- Put item 1 line 1 into a variable  
+log patient1.mrn --logs variable MRN variable  
+Log patient1.firstname
+
+------------------------------------------
+--If you need to pull patient based on a specific column, that has like "complete" or any column to specify which ones to pick
+-- set the specified variable, myExcelDB, to store the contents of the referenced Excel file and establish a SenseTalk connection.
+Set myexcelDB to (type:"excel",file:ResourcePath("status.xlsx"), writable:yes)
+
+put each item of the records of myexcelDB where each."complete" = "yes" into worklist
+put item 1 of worklist into patient
+log patient.firstname
+------------------------------------------
+--add a field to an existing column to excel document 
+
+set myexcelDB to (type:"excel", file:ResourcePath("status.xlsx"), writable: "Yes")
+Put the records of myexcelDB into Patients
+log patients
+
+Put "123" into newmember.firstname
+add records newmember to myexcelDB
+------------------------------------------
+--Create repeat loop to search on sepcific column that says "yes" and add information to it, like MRN
+
+Set myexcelDB to (type:"excel",file:ResourcePath("status.xlsx"), writable:yes)
+Put the records of myexcelDB into Mydata-- Put the records into a variable
+put each item of the records of myexcelDB where each."complete" = "no" into worklist
+put item 1 of worklist into newpatientlist
+
+repeat with each item newpatientlist of mydata by reference
+	
+	typetext controlkey,"a"
+	typetext controlkey,"c"
+	
+	put remoteclipboard() into number
+	put item 1 of number into newpatientlist.mrn
+	add records newpatientlist.mrn to myexcelDB
+	put "yes" into newpatientlist.complete
+end repeat 
+
+---------------------
+set myexcelDB to (type:"excel",file:ResourcePath("test.xlsx"), writable:yes)
+Put the records of myexcelDB into mydata
+put each item of the records of myexcelDB where each."complete" = "yes" into activelist
+Put item 1 of activelist into patientlist
+
+Repeat with each item patientlist of mydata by reference
+	typetext controlkey,"a"
+	typetext controlkey,"c"
+	
+	put remoteclipboard() into number
+	put item 1 of number into patientlist.mrn
+	add records patientlist.mrn to myexcelDB
+	put "yes" into patientlist.complete
+End Repeat
+
+Set myexcelDB to (type:excel, file:ResourcePath("Practice.xlsx"),writable:yes)
+Put the records of myexcelDB into mydata
+Put each item of the records of myexcelDB where each."complete" ="no" into worklist 
+Put item 1 of worklist into newpatient
+
+repeat with each item newpatient of mydata by reference
+	log newpatient.firstname
+	put "yes" into newpatient.complete
+end repeat
+
+
+Set myexcelDB to (type:excel, file:ResourcePath("Practice.xlsx"),writable:yes)
+Put the records of myexcelDB into mydata
+Put each item of the records of myexcelDB where each."complete" ="no" into worklist 
+Put item 1 of worklist into newpatient
+
+repeat with each item newpatient of mydata by reference
+	log newpatient.firstname
+	put "yes" into newpatient.complete
+end repeat
+
+
+----------------------------------
+
+put file ResourcePath("PatientInformation.csv") into CSVFile
+put (the number of lines of CSVFile-1) into PatientCount
+put the number of items of line 1 of CSVFile into ItemCount
+put line 1 of CSVFile into ItemNames
+
+put "333333" into FindPatient
+
+repeat PatientCount times	
+	put line repeatindex()+1 of CSVFile into PatientInformation
+	
+	
+	if item 1 of PatientInformation = FindPatient then
+		repeat ItemCount times
+			log item repeatindex() of PatientInformation
+		end repeat
+	end if
+	
+	
+end repeat
+-------------------------------------------
+//Write example
+put "/Users/randyhesse/Desktop/WebFormData.csv" into MyFileVar
+open  file MyFileVar
+
+put "SOMETHING" into MyWrite
+write return to file MyFileVar at eof
+write MyWrite to file MyFileVar
+close file MyFileVar
+
+
+put "/Users/randyhesse/Desktop/WebFormData 2.csv" into MyFileVar
+
+delete line 1 of file MyFileVar
+
+
+------------------------
+put "/Users/randyhesse/Desktop/TestRead"  into MyFileVar  
+open  file MyFileVar
+
+
+put ("banana","pear","strawberry","apple") into GLIST
+
+put the number of items of glist into max
+
+repeat max times
+	
+	put item repeatindex()  of glist after WriteALL
+	put return after WriteALL
+	
+	
+end repeat
+
+log WriteALL
+
+
+write WriteALL to file MyFileVar at eof
+close file MyFileVar
+
+
+put ("banana","pear","strawberry","apple") into GLIST
+
+sort Glist alphabetically
+
+log glist
+----------------------------------------
+
+set TheData to (type:"CSV", file:ResourcePath("WebFormData.CSV"), name:"Results",writable: "Yes")
+
+put  "testing123" into newMember.Prefix
+put  "testing789" into newMember.First_Name
+add record newMember to TheData
+
+
+delete record from thedata where Prefix is "testing123"
+put  "testing456" into newMember.Last_Name
+add record newMember to TheData
+
+------------------------------
+//Read
+
+open file "//Users/randyhesse/Documents/Simple Examples/CSVRead.suite/Resources/WebFormData.CSV" 
+put file openfiles() into PatientFile 
+
+
+put the number of lines of PatientFile into max
+log max
+
+repeat max times
+	
+	put line repeatindex() of PatientFile into PatientLine
+	put item 1 of PatientLine into prefix
+	log item 2 of PatientLine
+	log item 4 of PatientLine
+	
+	
+end repeat
+----------------------------------------
+
+open file "//Users/randyhesse/Documents/Simple Examples/CSVRead.suite/Resources/WebFormData.CSV" 
+put file openfiles() into PatientFile 
+
+
+put the number of lines of PatientFile into max
+
+repeat max times
+	
+	put line repeatindex() of PatientFile into PatientLine
+	
+	put item 1 of PatientLine into Patient.suffix
+	put item 2 of PatientLine into Patient.FirstName
+	put item 3 of PatientLine into Patient.LastName
+	
+	
+	
+	log patient.FirstName
+	
+	
+	-------------------------------------
+	
+	open file "//Users/randyhesse/Documents/Simple Examples/CSVRead.suite/Resources/WebFormData.CSV" 
+	put file openfiles() into PatientFile 
+	
+	
+	put the number of lines of PatientFile into max
+	log max
+	
+	repeat max-1 times
+		put line repeatindex()+1 of PatientFile into PatientLine
+		do "put" & quote & PatientLine &quote&& "into" && "Patient" & repeatindex() 
+	end repeat
+	PauseScript
+	
+	log patient1
+	log Patient2
+	
+	
+	
+end repeat
+
+-------------------------
+(*EXCEL DOCUMENT 
+Confirm data is in ascending order*)
+
+//Click inside the excel so we can highlight the correct data
+click imagelocation(text:"A", searchrectangle:(1,221,254,515)) + [0,20]
+
+//Select all of the data in the excel and copy it
+typetext controlkey, "a"
+typetext controlkey, "c"
+//Read the data from the clipboard 
+put RemoteClipboard() into remoteData
+
+//Need to change the delimiter to tab which is what excel uses
+set the itemDelimiter to tab
+put each item of each line of remotedata into formattedData 
+
+//This loads the data as a property list similar to loading an excel spreadsheet to more easily use later
+put CSVValue of CSVFormat of formattedData into SUTData
+
+//Confirm data is in ascending order
+put the "order" of each item of SUTData into OrderList
+assert orderList is equal to orderList sorted in ascending order
+
+put the "Name" of each item of SUTData into NameList
+assert NameList is equal to NameList sorted in ascending order
+----------------------------------
+/Put ["Puppy","Kitten","Snake"] into petlist
+
+Set myexcelDB to (type:excel,file:ResourcePath("Searches.xlsx"),writable:yes)
+Put the records of myexcelDB into mydata
+
+repeat with each  petitem of mydata by reference
+	put petitem.pets into pet
+	
+	Begintestcase "mypetsearch"
+	Utilities.LoadURL "www.wikipedia.com"
+	Utilities.Search pet
+	Utilities.Verification pet
+	
+	Click "Close"
+	Endtestcase "mypetsearch"
+	Put the result into myresult
+	put myresult.duration into petitem.duration
+	put myresult.Successes into petitem.status
+end repeat
+
+
+--return userrecord.password where userrecord.username is equal to username
+
+------------------__EACH LINE
+--Documentation: https://docs.eggplantsoftware.com/studio/stk-property-lists/
+--Key = firstname ; Value:"Charles" - AThis is called Key Value Pair
+
+Put (firstname:"Charles",lastname:"Scott",address:"321 Main street",age:"25") into person
+log person --run it
+Log person.age --use . annotation 
+Log the age of person
+Log person's firstname
+
+--Delete
+delete person.age // Results in the property list '{school:"West Elementary"}'
+Log person
+
+--if you want to put an item in the property list
+Put (firstname:"Charles",lastname:"Scott",address:"321 Main street",age:"25") into person
+Put "Honda" into person.car
+log person
+
+
+--Build in functions and more
+Put (firstname:"Charles",lastname:"Scott",address:"321 Main street",age:"25") into person
+log keys(Person) --buildin functions
+log values(Person) --buildin functions
+
+--other examples
+delete joe.hobbies // Results in the property list '{school:"West Elementary"}'
+
+--------------
+-------(using excel as database)-------(*Reading Records from given File*)//to Read a record from file where the condition matches
+
+
+to ReadSingleRecord ExcelName,SheetName,UserValue
+	set Global MyExcelDB to {file:ResourcePath(ExcelName), type:"excel",name:SheetName}
+	//set global variable to single record where username matches to given value
+	Set Global CurrentRecord to the record of Global MyExcelDB where username is UserValue
+	log Global CurrentRecord
+end ReadSingleRecord
+
+ReadSingleRecord "ExcelInteractionsFile.xlsx","Sheet1","Username1"
+
+
+
+
+//to Read multiple records from file where the condition matches
+to ReadMultipleRecords ExcelName,SheetName,FlagValue
+	set Global MyExcelDB to {file:ResourcePath(ExcelName), type:"excel",name:SheetName}
+	//set global variable to multiple records where flag matches to given value
+	Set Global CurrentRecord to the records of Global MyExcelDB where flag is FlagValue
+	log Global CurrentRecord
+end ReadMultipleRecords
+
+ReadMultipleRecords "ExcelInteractionsFile.xlsx","Sheet1","No"
+
+//to Read multiple records from file with out any condition
+to ReadMultipleRecords_withoutConditions ExcelName,SheetName
+	set Global MyExcelDB to {file:ResourcePath(ExcelName), type:"excel",name:SheetName}
+	//set global variable to multiple records where flag matches to given value
+	Set Global CurrentRecord to the records of Global MyExcelDB
+	log Global CurrentRecord
+end ReadMultipleRecords_withoutConditions
+
+ReadMultipleRecords_withoutConditions "ExcelInteractionsFile.xlsx","Sheet1"(*Writing Records to given File*)
+
+//to write a single record into file
+to WriteSingleRecord ExcelName,SheetName,Flag,Username,Password,Status
+	set Global MyExcelDB to {file:ResourcePath(ExcelName), type:"excel", writeable:yes,name:SheetName}
+	//set a variable to record values
+	set NewRecord to {Username:Username, Password:Password,Status:Status,Flag:Flag}
+	//adding variable as record to file which contains data
+	add record NewRecord to Global MyExcelDB
+end WriteSingleRecord
+
+WriteSingleRecord "ExcelInteractionsFile.xlsx","Sheet1","User11","Pwd11","Passed","Yes"(*Updating a Record in given File*)
+
+//to Updating the Existing record
+to UpdateSingleRecord ExcelName,SheetName,UserName,Address,headerRow,updateValue
+	//set UserName as list
+	set Global MyExcelDB to {file:ResourcePath(ExcelName), type:"excel", writeable:yes,name:SheetName}
+
+	repeat with each item of Global MyExcelDB
+		set Global RecordData to the record of Global myExcelDB where (headerRow) is UserName
+		log Global RecordData
+		if Global RecordData.(headerRow) =UserName
+			put Address into Global RecordData's (updateValue)
+		end if
+	end repeat
+	//set Global RecordData to the record of Global myExcelDB where username is UserName
+	//put Address into Global RecordData's Address
+	//put User into Global RecordData's Username
+	//put Password into Global RecordData's Password
+end UpdateSingleRecord
+
+
+
+UpdateSingleRecord "ExcelInteractionsFile.xlsx","Sheet1","UN4","Yes","UserrrrDemo","PWD10"(*Deleting Record in a given File*)
+UpdateSingleRecord "ExcelInteractionsFile.xlsx","Sheet1","User5","Guntur","username","address"
+UpdateSingleRecord "ExcelInteractionsFile.xlsx","Sheet1",["UN1","User2","User3","User4","User5","User6","User7","User8","User9","User10","User11"],"Warangal"
+
+to UpdateSingleRecord1 ExcelName,SheetName
+	set Global MyExcelDB to {file:ResourcePath(ExcelName), type:"excel", writeable:yes,name:SheetName,readable:yes}
+
+
+	repeat with each item of Global MyExcelDB
+		log it
+		
+	end repeat
+	//set Global RecordData to the record of Global myExcelDB where username is UserName
+	//put Address into Global RecordData's Address
+	//put User into Global RecordData's Username
+	//put Password into Global RecordData's Password
+end UpdateSingleRecord1
+
+UpdateSingleRecord1 "ExcelInteractionsFile.xlsx","Sheet1"
+
+
+//deleting records where the condition matches
+to DeleteRecords ExcelName,SheetName,FalgValue
+	set Global MyExcelDB to {file:ResourcePath(ExcelName), type:"excel", writeable:yes,name:SheetName}
+	//deleting a record where it matches with flag value
+	delete record from Global MyExcelDB where Flag is FalgValue
+end DeleteRecords
+
+DeleteRecords "ExcelInteractionsFile.xlsx","Sheet1","Test"
+
+
+Click "StartTime"
+Save text as StartTimeValue
+Convert text from StartTimeValue to abbreviated time
+StartTimeValue + 1 minute, save as EndTimeValue
+Click "EndTime"
+TypeText EndTimeValue

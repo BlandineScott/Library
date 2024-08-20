@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		816,
+		562,
+		103,
+		32
+	],
+	"lastmodifieddate": 1662732658.707,
+	"createddate": 1662732658.707,
+	"name": "EnterZip",
+	"lastfounddate": 1662734394.984,
+	"ocrcapturestring": "Enter ZIP Code1",
+	"lastfoundlocation": [
+		495,
+		481,
+		103,
+		32
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 3389,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[51,16]",
+					"Tolerance": "_29",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown RDP"
+				},
+				"name": "EnterZip.png",
+				"connectionname": "Blandine_RDP",
+				"type": 1,
+				"connectionserverid": "ec2-18-117-120-219.us-east-2.compute.amazonaws.com",
+				"capturerect": [
+					816,
+					562,
+					103,
+					32
+				],
+				"connectiontype": "RDP",
+				"capturedocrtext": "Enter ZIP Code1"
+			}
+	]
+}

@@ -1,0 +1,17 @@
+﻿(*And then ultimately for this particular HTML document, there are a number of different options within eggplant as to turn that into a PDF, you can either.
+--Automate it from a UI standpoint, meaning that you open that.
+Document in your SUT and from within your browser choose print to PDF. 
+--There are Python scripts out there that will convert HTML documents to PDF, so I would actually use an existing Python script and run it in eggplant within a shell. To change that to a PDF, but those are some of the options that are out there.
+ like using Python to generate PDF.
+But because we can automate the UI, you could also do your.
+--You could also do your printing just by opening the browser and printing it as a PDF.
+
+m well. Either you'll need a Python script or from within eggplant you can write a script that would open that HTML document up in your SAT, and then from there you would with it. So let's say that you open it in Chrome.
+
+PRINT TO PDF
+
+So here is your document. Let's say that you've opened it up in Chrome. That's my particular browser. You could write a script very easily that prints this, and that would generate your PDF again. I like.
+
+*)
+
+Check the reporthelper suite

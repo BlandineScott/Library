@@ -1,0 +1,19 @@
+﻿// Line Chunks
+
+set fishy to {{
+One fish, Two fish, Red fish, Blue fish,
+Black fish, Blue fish, Old fish, New fish.
+This one has a little car.
+This one has a little star.
+Say! What a lot of fish there are.
+}}
+
+put line 3 of fishy
+
+put the last line of fishy
+
+put the number of lines in fishy
+
+put the second line delimited by ["fish","little"] of fishy
+
+put each line delimited by ["fish","little"] of fishy

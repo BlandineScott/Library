@@ -1,0 +1,211 @@
+﻿//If else statements act in a preemptive way and prevent the error from occurring by checking the conditions while try-catch blocks allow the error to occur due to which control goes back to the system and then the system transfers the control back to the catch block. In this way, if else blocks are more efficient than try-catch statements.
+//If-else blocks are handled entirely by the application program but when an exception is raised from the try block when using try-catch,the control is transferred to the system and then again the system transfers the control back to the application program and the exception is handled by the catch block. Due to this reason, try-except blocks are more costly than if-else blocks in execution.
+
+--for soft failures
+try
+	WaitFor 5, text:"Something"
+catch
+	
+	Log "Soft Failure"
+	put  "Something was not on the screen" && return after file ("C:\Reports\softFails.csv")
+end try
+
+--if for some reason that doesn't work... you can MOVE after the run...
+move file "C:\Users\John Spitta\Desktop\test.txt" into folder "C:\Users\John Spitta\Desktop\LastReport\"
+--just build the path to the hidden .run directory... I have it around here somewhere but I think it's overkill
+--A little extra snippet to clean up old reports before you run
+Log "Reporting to External File"
+
+If file ("C:\Test\report.csv") exists
+	Log "It is there. Delete it!"
+	Delete file ("C:\Test\report.csv")-- Deletes file - in windows... this can take a few seconds for the UI to refresh but it works!
+	Wait 2 -- Just pausing here so you can see it dissapear. Faster on a Mac.
+else
+	Log "It is not there. "
+End If
+
+
+
+// Put Headers in New Report
+put  "ID" && "," && "Name" && "," && "Status" &&return after file ("C:\Test\report.csv") -- External File Runs
+--------------------
+Try
+	
+	
+	Assert that imagefound(text:"The text is a lie.")
+	
+Catch theException
+	Put theException
+	
+	
+	
+end try
+------------
+
+o testExceptionstry
+
+try
+	
+	doSomething
+	
+	throw "Bad Problem", "Something went wrong"
+	
+	doSomethingElse -- This will not get executed
+	
+catch anException
+
+	//Do processing here to handle the error
+	
+	put anException -- Shows "Bad Problem"
+	
+	put anException.reason -- Shows "Something went wrong"
+	
+end try
+
+
+
+// Now test the single-statement try:
+
+try to set product to 5 * amt -- Throws an exception
+
+if the exception is not empty then put the exception
+
+end testExceptions
+-------------------------------
+Try
+	
+	
+	Assert that imagefound(text:"The text is a lie.")
+	
+Catch theException
+	Put theException
+	Put theException into Global MyWarning1
+	Put MyWarning1 &return after file resourcepath("Warnings.txt") -- Append within what already exists. You can also use newline instead of after, but does the same thing.
+	
+end try
+--------------------------------
+try
+	run "myscript"
+	
+catch myexception
+	log myexception
+	capturescreen
+	run "cleanup"
+	run "myscript"
+end try (edited) 
+---------------------
+
+If imagefound("Austr") then
+	Logsuccess "Found screen"
+	log ImageInfo("Austr")
+else
+	Logerror "not found"
+End If
+
+--Try/Catch Blocks
+--A script can catch any exceptions that are thrown when errors occur during execution:
+try -- begin trapping errors
+	riskyOperation -- do something that might raise an error
+catch theException
+	-- put code here to recover from any errors
+end try
+
+
+------------------
+(*To go into the catch section the first code needs to have an exception thrown. Exceptions are thrown by trying to click an image/text that is not on the screen, or syntax errors, among others. LogError does not throw an error so Eggplant will not go into the catch code.*)
+
+-----------
+Exceptions
+--A script may also throw an exception. If an exception thrown by a script is not caught by a try block, script execution will be stopped.
+throw "error name", "error description"
+-------------
+try -- Begins trapping errors
+	--riskyOperation -- Do something that might raise an error
+	Run "Script01"
+catch theException
+	Log theException
+end try
+//Cleanup script
+
+--Example
+to checkPasteboardConnection
+	try
+		set pasteBoardTest to remoteClipboard()
+	catch
+		logwarning "Pasteboard test failed, reconnecting SUT"
+		set currentConnection to connectionInfo().name
+		disconnect
+		wait 2
+		connect currentConnection
+	end try
+end checkPasteboardConnection
+
+-------------------------------------------------
+try
+	assert that imageFound("my_image")
+catch exception
+	log exception
+end try
+
+--------------------------------------------------
+Try
+	if ImageFound(ImageName: "/path/to/image/", waitFor: x seconds)
+		Click "ETM_review/Action"
+	else
+		throw "Image not found"
+	Catch
+
+LogWarning "Use a log warning instead of a log error. This way your script pushes forward and you can analyze the logs later. You may want to accomplish more in the script and not want it to fail out right away"
+
+end try
+-------------------------------------------------
+Try
+	If ImageFound(Text:"View12 and pay your bills", IgnoreNewLines:"Yes", ignoreSpaces:"No")
+		LogSuccess "Text on OnBoardingBillsDeatils_1_Page is correct"
+	else
+		LogError "Text on OnBoardingBillsDeatils_1_Page is incorrect"
+		Throw "Incorrect page", "Unable to find expected text"
+	end if
+catch
+	TypeText space
+end try
+
+------------------------------------------------
+
+
+set global ScriptName to my name
+
+try -- Comment out for LOCAL TESTING ONLY
+
+
+	
+	# BEGIN Test Case Block  -- One Per Test Case
+	Set global TestCaseID to "C1089684"
+	Set global TestCaseName to "Passcode - Password Changed - Multitasking with other app or home - Error Message"
+	BeginTestCase global TestCaseID
+	-- SETUP
+	HUninstallInstallLaunchApp
+	HSignOn
+	HNavigator.gotoSettings
+	
+	--VALIDATE
+	HPasscode.tapOk
+	
+	Log "------------------- PASS  -------------------"
+	-- PASS
+	HPass
+	Cleanup
+	
+	(* END TEST CASE *)
+	
+	Log "------------------- PASS  -------------------"
+	-- PASS
+	HPass
+	# END Test Case Block 
+	
+catch
+	Log "------------------- FAIL  -------------------"
+	HFail
+	Cleanup
+	
+end try

@@ -1,0 +1,41 @@
+﻿//Handler #1 ON
+//Example 1
+Handlers.Module1
+
+//Example2
+Handlers.Module1 "30"
+
+---------------------------------------------
+
+//Handler #2 FUNCTION
+
+put Handlers.Module2 into variable
+log variable
+
+put Handlers.Module2("10","20")into var
+log var
+---------------------------------------------
+
+//handler #3 TO
+Handlers.Module3
+
+//or
+
+put Handlers.Module3 into var
+log var
+-----------------------------
+to myfunction
+	//otehr way of saying to handle
+	return "yay"
+end myfunction
+
+on otherfunction
+	log "test"
+	return false
+end otherfunction
+
+function mythirsfunction
+	log "aways assume they are returning"
+	return true
+	
+end mythirsfunction

@@ -1,0 +1,18 @@
+﻿
+--If movie is not recorded, add some time before the StopMovie. Also try TRY stopmovie. 
+--Running from DAI, use syntax StartMovie resourcepath("test")
+-- Location is ProgramData/eggplant/agent/suites/local/.run/tutorialSUT/mysuite?resources/test.mp4
+-- also if it goes to the config folder, you need elevated priviledges for it - open with admin the cmd line to open config folder explorer C:\windows\system32\config
+
+Startmovie"The Movie"
+Wait 5
+Stopmovie
+
+//use for training
+
+log the files of "C:/"
+
+//Check if a drive is working
+log the files of "Z:/whatever"
+
+StartMovie "start"&random(10,100)

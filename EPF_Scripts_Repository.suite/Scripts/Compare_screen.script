@@ -1,0 +1,118 @@
+﻿
+------------------------
+
+
+//Captured initial baseline image "Baseline"
+CompareScreen name:"PDF",rectangle:["TL","BR"] -- or add coordinate
+
+//as a function
+Log Comparescreen(Myscreen)
+
+
+//scroll to next page of pdf file
+//ScrollWheelDown  1
+
+//CompareScreen "Baseline" -- to check onsignificant differences from baseline
+CompareScreen name:"PDF",rectangle:["TL","BR"]
+
+
+--------------------------------
+
+repeat 3 times
+	put the short seconds into screenshotName
+	Comparescreen screenshotName //baseline 
+	Wait 2
+	ScrollWheelDown  1
+	
+	
+	If Comparescreen (screenshotName) is empty then 
+		LogSuccess "No changes"
+	End If
+	
+end repeat
+
+
+
+--------------------------------
+Click text: "puppy" //make sure you have a command prior
+Comparescreen "compare" //base line image
+put the result into TSM_results
+log TSM_results
+
+---------------------------------
+//take baseline screenshot
+CompareScreen name:"PDF",rectangle:["TL","BR"]
+
+
+//scroll to next page of pdf file
+//ScrollWheelDown  1
+
+//take second screenshot and compare a baseline
+CompareScreen name:"PDF",rectangle:["TL","BR"]
+
+
+-------------------------------------------------
+
+CompareScreen "Phone2" --Capture the baseline imageprior //it will then as you run it compare the two screens. It will also give you the differences at the bottom 
+put the result into TSW_results
+log TSW_results
+
+
+CompareScreen "SUT"
+put the result into TSM_results
+log TSM_results
+
+--------------------------------------------------
+//open PDF
+Typetext windowskey, "r"
+Typetext "C:\users\anne\desktop\anne.pdf"
+Typetext return
+
+Click "fitpage"
+Click "Pagedown"
+Typetext "1"
+Typetext return
+
+//compare screen
+Repeat 2 times
+	log comparescreen (rect: (10,20,30,20), name:"AIPaper" & repeatindex())
+	if repeatindex() <7 then click "nextpage"
+End Repeat
+
+Typetext altkey, f4
+Tracescreen on
+--------------------------------------------------
+CompareScreen name: "tutorialSut_menu", rectangle: (22,575,415,640)
+CompareScreen "calcHist", rect:("Calculator_A","Calculator_B")
+--------------------------------------------------
+set areaOfInterest to (100,100,300,300) -- the area of the screen to compare
+captureScreen "/tmp/originalImage", areaOfInterest
+
+-- do some other processing
+
+captureScreen "/tmp/laterImage", areaOfInterest -- capture the same area again
+
+if file "/tmp/originalImage.tiff" as data is equal to file "/tmp/laterImage.tiff" as data then
+	logSuccess "The images are the same"
+else
+	logFailure "The images are different"
+end if
+-----------------------
+// First take your Baseline
+
+put the short seconds into screenshotName
+CompareScreen name: screenshotName //baseline
+
+
+// Then
+if compareScreen (screenshotName) is empty 
+	LogSuccess "PDF didn't change"
+end if
+
+
+put  SuiteInfo().imagesFolder into Path
+Log path
+
+
+
+

@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		1402,
+		197,
+		53,
+		39
+	],
+	"lastmodifieddate": 1675957954.26,
+	"createddate": 1675957954.26,
+	"name": "HourGlass_BottomRightAnchor",
+	"lastfounddate": 1675966196.5339999,
+	"ocrcapturestring": "Q",
+	"lastfoundlocation": [
+		1402,
+		197,
+		53,
+		39
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 3389,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[49,50]",
+					"Tolerance": "_45",
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown RDP"
+				},
+				"name": "HourGlass_BottomRightAnchor.png",
+				"connectionname": "Blandine_RDP",
+				"type": 1,
+				"connectionserverid": "ec2-3-21-207-38.us-east-2.compute.amazonaws.com",
+				"capturerect": [
+					1402,
+					197,
+					53,
+					39
+				],
+				"connectiontype": "RDP",
+				"capturedocrtext": "Q"
+			}
+	]
+}

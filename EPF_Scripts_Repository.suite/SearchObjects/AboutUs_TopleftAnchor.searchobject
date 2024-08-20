@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		453,
+		205,
+		106,
+		39
+	],
+	"lastmodifieddate": 1675957919.27,
+	"createddate": 1675957919.27,
+	"name": "AboutUs_TopleftAnchor",
+	"lastfounddate": 1675969003.158,
+	"ocrcapturestring": "About Us",
+	"lastfoundlocation": [
+		453,
+		205,
+		106,
+		39
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 3389,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[-5,-2]",
+					"Tolerance": "_73",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown RDP"
+				},
+				"name": "AboutUs_TopleftAnchor.png",
+				"connectionname": "Blandine_RDP",
+				"type": 1,
+				"connectionserverid": "ec2-3-21-207-38.us-east-2.compute.amazonaws.com",
+				"capturerect": [
+					453,
+					205,
+					106,
+					39
+				],
+				"connectiontype": "RDP",
+				"capturedocrtext": "About Us"
+			}
+	]
+}

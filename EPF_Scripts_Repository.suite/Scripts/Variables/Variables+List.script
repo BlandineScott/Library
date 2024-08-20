@@ -1,0 +1,44 @@
+﻿(*Variables are named containers. They serve as holders for values, similar to the "memory" function on a calculator. Unlike most simple calculators, which have only a single memory location that holds one number, you can store 
+many values at once in different variables. Also, the value stored in a variable is not limited to a single number, but 
+can be an arbitrarily large amount of data. To keep track of the different variables, each one has a name.
+SenseTalk provides three kinds of variables:
+• local variables
+• global variables
+• universal variables
+Names of local, global, and universal variables must begin with a letter or an underscore character (_). The name 
+can be any length and may contain letters, digits, and underscores. All variable names are case-insensitive (upperand lower-case letters are treated as equivalent).
+
+//var contains 5*)
+set var to 5
+
+//varname contains John
+set varname to "john"
+
+//varlist contains (1,test, plant)
+set varlist to [1,"test","plant"] //numbers and names
+
+//var contains 5
+//logs 5
+set var to 5
+log var
+
+//access values within a list by referring to items in the list
+set cookielist  to ["oatmeal","chocolate","vanilla"]
+Log item 1 of cookielist -- logs oatmeal
+Log item 2 of cookielist -- logs chocolate
+
+//number of items
+Log the number of items of ["a","b","c","d"] -- logs 4
+
+set areacodes to [816,100,405]
+Log the number of items of areacodes
+
+Set carmakes to ["BMW","Jaquar"]
+set numbermakes to the number of items of carmakes
+Log numbermakes
+
+//log random function
+log random(12)
+
+//logs random value from 10 through 20
+Log random(10,20)

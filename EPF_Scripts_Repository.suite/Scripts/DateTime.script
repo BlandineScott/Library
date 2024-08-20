@@ -1,0 +1,246 @@
+﻿--Documentation: https://docs.eggplantsoftware.com/studio/stk-date-formats/
+--Determine the number of days in a month
+put daysInMonth(2023,1) --> 31 days
+put daysInMonth(2023,2) --> 28 days
+put daysInMonth(2023,9) --> 30 days
+put daysInMonth(2024,2) --> 29 days
+
+to handle daysInMonth year, month
+	set firstDate to !"[[year]]-[[month]]-01" as date
+	put firstDate + 1 month into nextMonth
+	return (nextMonth - firstDate) as days
+end daysInMonth
+---------------------------------------
+//Apt for next Friday
+put today + 1 week into nextApt
+
+If WeekdayName(today) = ...
+	... "Monday" :
+		put nextApt + 4 days into nextApt
+	... "Tuesday" :
+		put nextApt + 3 days into nextApt
+	... "Wednesday" :
+		put nextApt + 2 days into nextApt
+	... "Thursday" :
+		put nextApt + 1 days into nextApt
+	... "Friday" :
+		put nextApt + 0 days into nextApt
+	... "Saturday" :
+		put nextApt + 6 days into nextApt
+	... "Sunday" :
+		put nextApt + 5 days into nextApt
+End if
+Log formattedtime("MM/dd/yyyy", nextApt)
+
+
+---------------------------------------
+put now into myvar
+log myvar -- logs 2023-04-18 10:51:54 -0500
+put formattedTime("MM/dd/YYY", myvar) as a string into myvar
+log myvar -- logs 04/18/2023
+---------------------------------------
+
+--Write text in a field with a formated time
+
+Typetext formattedTime("MMM dd,YYY",today + 1 day) -- typetext Jan 11,2023
+----------------------------------
+--In response to your original question: But what about modifying the name parameter passed to EndTestCase, such as appending some value to it? Originally the openTestCases was a global property, which gave complete flexibility for a script to modify any of the properties of any TestCase while it was in progress (or even to add your own custom information). Although changing the name of the TestCase might cause problems when the EndTestCase command is called.
+--Later, the openTestCases was changed to a function so you couldn't change things, but the global property is still available, although undocumented, under a different name: the OpenTestCaseInternalData
+
+Run "TestCases/TC_Contacts_001"
+
+log OpenTestCases().(me.name)
+
+set myResultFolder to (folder of logfile of last item of scriptresults())
+does LogFile.xml contain the timestamp you need?
+
+----------------------------------
+Put formattedTime ("[year] [hr]:[mi]:[se]") into endtime // log time with date, and time with seconds
+Log endtime
+----------------------------------
+Put readtext(1799,1056,1871,1077) into SUTDate
+Log SUTDate
+if SUTDate is not equal to the date then logError "Date on SUT is incorrect"
+
+----------------------------------------------------
+Put imagerectangle("PulseoftheEconomy/Unemployment_Box")+(-5,72,55,125) into UnEmploymentBox
+Put readtext(UnEmploymentBox) into UnEmploymentNumber
+Log UnEmploymentNumber
+Put word 2 of UnEmploymentNumber into Word2
+Put formattedtime("%b",Word2) into Month
+Log Month
+
+------------------------------------------------
+
+log the date &&the time
+
+log the long date
+
+put the long date into something
+
+log something
+TypeText something
+
+
+TypeText the date
+
+
+log the time
+
+
+put "2018-4-7" into DataRead
+
+log formattedTime("%w",DataRead)
+log formattedTime("%Y",DataRead)
+//------------http://docs.testplant.com/ePF/SenseTalk/stk-global-properties-values.htm#clockformat
+//------------http://docs.testplant.com/ePF/SenseTalk/stk-date-time-values.htm?Highlight=weekDayName
+log formattedTime("%A---%d.......%B",DataRead)
+------------------------------------
+
+--Log		10/27/2022 11:15 AM
+Put formattedTime("%m") &"/"& formattedTime("%d") &"/"& formattedTime("%Y")into time
+log time
+
+
+
+//------------http://docs.testplant.com/ePF/SenseTalk/stk-global-properties-values.htm#clockformat
+//------------http://docs.testplant.com/ePF/SenseTalk/stk-date-time-values.htm?Highlight=weekDayName
+log formattedTime("%A---%d.......%B",DataRead)
+-------------
+--change the date format from 00/00/00 to 00/00/0000
+put 10/02/22 into mydate
+log formattedTime("%m",myDate) &"/"& formattedTime("%d",myDate) &"/"& formattedTime("%Y",myDate)
+
+--change the date format from 00/00/00 to 00/00/0000 but for todays date
+log formattedTime("%m",Date) &"/"& formattedTime("%d",Date) &"/"& formattedTime("%Y",Date)
+
+--Log the date but + one day in UK format
+formattedTime("%d/%m/%Y", now + one day)
+-----------------------
+
+Log date ()
+Log time ()
+Log date&&time()
+Log the long date
+Put the long date into something
+Log something
+
+put yesterday
+put today
+put tomorrowLog 
+put 2 days ago
+put 3 days hence
+put now
+put 12 minutes ago
+------------------
+log the date
+Log the date +1 day
+------------------
+//recording https://keysighttech.sharepoint.com/sites/EP-Engineering/Shared%20Documents/Forms/AllItems.aspx?OR=Teams%2DHL&CT=1644963158761&params=%7B%22AppName%22%3A%22Teams%2DDesktop%22%2C%22AppVersion%22%3A%2228%2F22010300409%22%7D&id=%2Fsites%2FEP%2DEngineering%2FShared%20Documents%2FSenseTalk%20Genius%20Bar%20Sessions%2F2022%2D06%2D15%2DTime%2FDateTimeFundamentals%2Emp4&parent=%2Fsites%2FEP%2DEngineering%2FShared%20Documents%2FSenseTalk%20Genius%20Bar%20Sessions%2F2022%2D06%2D15%2DTime
+
+//https://docs.eggplantsoftware.com/ePF/SenseTalk/stk-date-formats.htm
+
+put readtext(174,355,557,416) into nowdate
+put last line of nowdate into read
+log read
+
+put formattedtime("%A, %B %1d, %Y") into calendartime
+log calendartime
+
+if read = calendartime then
+	log"yes"
+else
+	Log"no"
+end if
+
+----------------------
+put "march 13, 2020" into pandemicstart
+put today
+put today - pandemicstart
+put (today -pandemicstart) as days
+-------------
+//change date format
+
+put "112345" into dateString
+put "/" after char 4 of dateString
+put "/" after char 2 of dateString
+
+--------------------------
+put formattedTime("[day]/[month]/[year]", tomorrow)
+
+or, for 2-digit day and month:
+put formattedTime("[da]/[mo]/[year]", tomorrow)
+
+And (this may not be well documented – I'll try to correct that soon) you can also do it this way:
+put tomorrow with format "[day]/[month]/[year]"
+
+
+---------------
+Put "10/22/22" into mydate
+Put formattedTime(("%m") &"/"& formattedTime("%d") &"/"& formattedTime("%Y"),mydate)into date
+
+Log date
+
+-------------------
+put "12/10/22" into myvar
+log myvar
+put formattedTime("MM/dd/YYY", myvar) as a string into myvar
+log myvar
+
+-----------------
+//Compare Dates
+set date1 to "2023-03-01" 
+set date2 to "2023-03-20"
+
+put numberOfBusinessDays(date1, date2)
+put numberOfBusinessDays(date2, date1) -- try in the other order
+
+to handle numberOfBusinessDays given firstDate, lastDate
+	// check that both parameters are valid dates
+	if firstDate is not a date or lastDate is not a date then
+		throw "Invalid Parameters", "NumberOfBusinessDays must be called with 2 dates"
+	end if
+	
+	// make sure we have the dates in the correct order
+	if date(lastDate) is earlier than date(firstDate) then
+		set [lastDate, firstDate] to [firstDate, lastDate] // swap them
+	end if
+	
+	// Adjust to Monday for weekend days at beginning of the range
+	if weekdayName of firstDate is ...
+		"Sunday": add 1 day to firstDate
+		"Saturday": add 2 days to firstDate
+	end if
+	
+	// Adjust to Friday for weekend days at end of the range
+	if weekdayName of lastDate is ...
+		"Saturday": subtract 1 day from lastDate
+		"Sunday": subtract 2 days from lastDate
+	end if
+	
+	set calendarDays to (lastDate - firstDate) rounded to the nearest day
+	
+	// if lastDate is earlier in the week than firstDate, subtract the weekend in between that's part of a partial week
+	if dayOfWeek(lastDate) < dayOfWeek(firstDate) then
+		subtract 2 days from calendarDays
+	end if
+	
+	// get the whole number of weeks and the additional days
+	set wholeWeeks to calendarDays div 7 -- integer division
+	set extraDays to calendarDays rem 7 -- remainder
+	
+	set workDays to wholeWeeks * 5 + extraDays
+	return workDays
+end numberOfBusinessDays
+
+---------------------
+dobGenerator
+to handle dobGenerator
+	// Random BirthDay
+	put ("01/01/2022" - "12/31/1949") as days into numberOfDays
+	put "12/31/1949" + random(numberOfDays) days into randomBirthday
+	log randomBirthday
+	delete all instances of "/" in randomBirthday
+	log randomBirthday
+	return randomBirthday
+end dobGenerator

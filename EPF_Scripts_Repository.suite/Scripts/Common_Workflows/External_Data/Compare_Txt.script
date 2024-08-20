@@ -1,0 +1,24 @@
+﻿
+Set myFile to file resourcePath("APTViewer_AttTable_FieldsList_Order.txt")
+
+repeat with each line of myfile
+	if the first item of it contains "Compressor"
+		put  it & return after file ResourcePath("Compare1Temp.txt") 
+	end if
+end repeat
+
+
+Set myFile to file resourcePath("Viewer_FieldNames_Compressor Station.csv")
+Set myFile2 to file resourcePath("Compare1Temp.txt")
+
+
+repeat with each line of myfile
+	// Option 1
+	//assert that line repeatindex() of myfile is equal to line repeatIndex() of myfile2
+	// Option 2
+	assert that the first item of line repeatindex() of myfile is equal to the first item of line repeatIndex() of myfile2
+	assert that the second item of line repeatindex() of myfile is equal to the second item of line repeatIndex() of myfile2
+end repeat
+
+
+Delete file ResourcePath("Compare1Temp.txt") -- This works it just might not refresh in the Resources Pane... EG. It looks like it's still there but it's not.

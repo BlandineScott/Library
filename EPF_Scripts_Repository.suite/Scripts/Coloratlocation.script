@@ -1,0 +1,77 @@
+﻿Set the colorformat to HTML --Reporting format to change the RGB Code values to HTML
+Log coloratlocation(802,100) --logs #0061B5
+
+---------------------------------------------------------
+
+Moveto (1355,495)
+Log coloratlocation(mouselocation()) -- Logs 66,134,247
+Set the colorformat to HTML
+Log coloratlocation(mouselocation()) -- Logs #4286F7
+
+Assert that ColorAtLocation("puppy") equals "#FFFFFF"
+
+----------------
+put coloratlocation("ColorArea") into myColor // Stores the color of the pixel at the location of the hot spot of the ColorArea image
+assert that mycolor is color(121,244,128)
+set the namedcolors.kindagreen to color(121,244,128)
+assert that mycolor is color("kindagreen")
+
+-------------------
+put "255,255,0" joined by comma into myYellowValue
+put the namedColors into myNamedColors
+
+repeat with each [colorname,colornumber] of myNamedColors
+	if colornumber = myYellowValue then log colorname
+end repeat
+
+put the namedColors into myNamedColors
+
+repeat with each [colorname,colornumber] of myNamedColors
+	if colornumber = "255,255,0" then log colorname
+end repeat
+
+------------------------
+put resourcePath("screenshot.png") into screenshotPath
+connect name: screenshotPath, type: "screenshot"
+
+put [{Color:"#EFDFE7",Text:"Voting Certificates"},{Color:"#E7CBD6",Text:"Wards"},{Color:"#FFFFFF",Text:"Self"},{Color:"#D6D7D6",Text:"Total Votable Shares"}] into backgroundColors
+
+
+put [0,0] into previousLocation
+
+repeat for each item field in backgroundColors
+	put imagelocation(text:field.text) into currentLocation
+	assert currentLocation.y > previousLocation.y with (Field.text && "is below previous entry")
+	assert validateColors (field.text, field.color) with (field.text && "Has the correct background color")
+end repeat
+
+
+to validateColors with text, backgroundColor, colorformat: "HTML"
+	set originalColorFormat to GetOption(colorformat) 
+	set the colorformat to colorformat
+	
+	if ColorAtLocation(Imagelocation(text:text, hotspot:[-2, -2])) = backgroundColor
+		set the colorformat to originalColorFormat
+		return true
+	else
+		set the colorformat to originalColorFormat
+		return false
+	end if
+	
+end validateColors
+-------------------------------
+put everyimagerectangle (text:"Treatment") into locationList
+if number of items in locationList = 0
+	logerror("error")
+end if
+repeat with each item location in locationList
+	log ColorAtLocation(1556, 638)
+	if ColorAtLocation(topleft(location) + [-1,-1]) <> "255,255,255" -- makes sure it's white and not a gray field
+		next repeat
+	else
+		if readtext(topright(location),bottomleft(location)+(100,0)) <> ""
+			next repeat
+		end if
+		log ("Found location" & location)
+	end if
+end repeat

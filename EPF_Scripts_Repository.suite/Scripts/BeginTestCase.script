@@ -1,0 +1,42 @@
+﻿// Using "the result" this way just gets the time for the previous line.
+WaitFor 20, text:"Bob Terwilliger"
+Log the result
+
+//  If we put it into a variable we can then do more with it. LIke put it in a report
+WaitFor 20, text:"Bob Terwilliger"
+Put the result into myDuration
+LogWarning myDuration
+put  myDuration&","&the date&","&the time& return after file ResourcePath("OCR_Report.csv")
+
+// That's fine but we can extract more with BeginTestCase and EndTestCase. Observe the ORANGE line in the logs
+BeginTestCase "TimeToFind"
+Log "me"
+--WaitFor 20, text:"Bob Terwilliger"
+--EndTestCase "TimeToFind"
+LogWarning the result
+
+// Now let's pick out more and make a meaningful report
+set stringToFind to "Bob Terwilliger"
+
+BeginTestCase "TimeToFind"
+WaitFor 20, text:stringToFind
+EndTestCase "TimeToFind"
+
+set myResult to the result
+put myResult's testcase & comma & stringToFind & comma & myResult's duration & comma & the time & CRLF after file ResourcePath ("OCR_Report.csv")
+
+---------------------------------
+//write to a cvs with begin test case and endtestcase
+
+Begintestcase "TimetoFind"
+Wait 2
+Logsuccess  "Time ..."
+
+Endtestcase "TimetoFind"
+
+set myResult to the result
+(*Log myResult.testcase
+Log myResult.successes*)
+
+put myResult.testcase & comma & myResult. duration & comma & myResult.successes & comma & myResult.Exceptions & comma & myResult.Errors & comma & the time & CRLF after file ResourcePath ("Timing.csv")
+

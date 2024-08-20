@@ -1,0 +1,72 @@
+﻿move file "C:\Users\John Spitta\Desktop\test.txt" into folder "C:\Users\John Spitta\Desktop\LastReport\"
+
+move file"N:\Eggplantshare\file.xlsx" into folder"C:\EggplantRoot\MySuite.suite\Resorces\"
+
+move file"N:\Eggplantshare\file2.xlsx" into folder"C:\EggplantRoot\MySuite.suite\Resorces\"
+
+
+//Other
+
+if the hostname is "ANNEFOSTERE5CE"
+	
+	Log "PostScript Copy Results"
+	
+	If file "C:\Users\anne\Documents\Zebra\Results\SuiteStatistics.csv" exists
+		LogWarning "Removing old history"
+		Delete folder "C:\Users\anne\Documents\Zebra\Results"
+		Wait 5
+	else
+		LogSuccess "No History Folder"
+	End If
+	
+	copy folder "C:/Users/anne/Desktop/Playing.suite/Results" into folder "C:\Users\anne\Documents\Zebra" -- TESTING LOCALLY
+	
+end if
+
+// My Tinkering
+
+
+// Shell Version
+repeat 10 times
+	
+	Log "Check for Directory"
+	If file "C:\Zebra\Results\SuiteStatistics.csv" exists
+		//LogWarning "Delete Directory"
+		//shell "c:\windows\system32\cmd.exe", << /c ">>& "rmdir /s /q c:\Zebra" &<<">>
+		LogWarning "Leave Directory and Delete files"
+		shell "c:\windows\system32\cmd.exe", << /c ">>& "cd c:\Zebra\Results && rd . /S /Q" &<<">>
+		Wait 5
+	else
+		LogSuccess "No files to Delete."
+	End If
+	
+	//Log "Make Directory"
+	//shell "c:\windows\system32\cmd.exe", << /c ">>& "mkdir c:\Zebra\Results" &<<">>
+	
+	Log "Copy Files"
+	shell "c:\windows\system32\cmd.exe", << /c ">>& "Xcopy /E /I C:\EggplantRoot\DAICustomReportingMove.suite\Results c:\Zebra\Results" &<<">>
+	
+End repeat
+
+
+Log "Check for Old Files"
+If file "C:\Zebra\Results\SuiteStatistics.csv" exists
+	LogWarning "Leave Directory and Delete files"
+	shell "c:\windows\system32\cmd.exe", << /c ">>& "cd c:\Zebra\Results && rd . /S /Q" &<<">>
+	Wait 5
+else
+	LogSuccess "No files to Delete."
+End If
+
+Log "Copy New Files"
+shell "c:\windows\system32\cmd.exe", << /c ">>& "Xcopy /E /I C:\EggplantRoot\DAICustomReportingMove.suite\Results c:\Zebra\Results" &<<">>
+
+--- To access the file within in a suite resources folder ------------
+
+put file resourcePath("TestData.txt") into Content
+log Content
+
+---- To access a file which is in centralized location ---------------
+
+put file "D:\TestDoc.txt" into FileContent
+log FileContent

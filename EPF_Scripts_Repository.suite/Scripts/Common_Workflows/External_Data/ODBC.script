@@ -1,0 +1,62 @@
+﻿--Open Database Connectivity (ODBC) API in SenseTalk
+--This makes data-driven testing from SenseTalk using a variety of databases possible, including but not limited to Oracle, MySQL, and Microsoft SQL Server.
+
+//1
+--Once you have set up the connection using the information below, test it to ensure the connection is working before trying to define the connection in an Eggplant Functional script. This can be tested using the DSN in your ODBC Administrator or odbc.ini file.
+
+//accessing a database using ODBC requires three things:
+
+--ODBC Driver: This allows Eggplant Functional and the target database to communicate. You must install the appropriate driver for the type of database you want to access. Install this driver on the machine where you run Eggplant Functional, and make sure it is the same version (32-bit or 64-bit) as your installation of Eggplant Functional.
+--OCBC Driver Manager: This manages the ODBC driver and allows Eggplant Functional to load and use the ODBC driver. See Driver Managers below. Not necessary on Linux.
+#The ODBC driver manager on Windows is called the ODBC Data Source Administrator.
+#The 64-bit ODBC Administrator:C:\Windows\system32\odbcad32.exe.
+--Data Source Information: This information specifies the connection information for your specific database, and must include the server name, IP address, port, and credentials. This information is part of your Data Source Name (DSN) definition. The DSN is defined in your ODBC Administrator or odbc.ini file.
+
+set myDB to (type:"odbc", DSN:"DataSource1", user:"root", password:"")
+
+--Many of the details about the connection are stored by the driver manager on the local machine. The DSN or DataSourceName property key identifies which connection to use. The connection details may be managed through a separate ODBC Administrator program and ODBC Driver.
+
+-------------------
+//from Anne
+
+set OpenEMR to (type:"odbc", DSN:"OpenEMR322", user:"root", password:"")
+//set OpenHospital to (type:"odbc", DSN:"OH", user:"isf", password:"isf123", port:3307)
+open database OpenEMR
+//open database OpenHospital
+set OEPTs to table "patient_data" of OpenEMR
+//set OHPTs to table "patient" of OpenHospital
+put the records of OEPTs into members
+//put the records of OHPTs into OHMembers
+repeat for each patient in members
+	put the records of OHPTs where "PAT_ID" is patient.id into sync
+	if sync is equal to ()
+		log "New Patient: " & patient.id && patient.fname
+		if patient.sex equals "Male"
+			put "M" into s
+		else
+			put "F" into s
+		end if
+		set age to the years between today and patient.DOB
+		//Create New Record
+		set newpt to (PAT_ID: patient.id, PAT_FNAME:patient.fname, PAT_SNAME:patient.lname, PAT_BDATE:patient.DOB, PAT_NAME:patient.fname&&patient.lname, PAT_SEX:s, PAT_AGETYPE:"", PAT_TAXCODE:patient.ss,  PAT_FATH_NAME:"", PAT_MOTH_NAME:"", PAT_DELETED:"N", PAT_LOCK:0, PAT_BTYPE:"Unkown", PAT_AGE:"", PAT_CITY:patient.city)
+		add record newpt to OHPTs
+	end if
+	repeat for each OH of sync
+		if patient.fname is not equal to OH.PAT_FNAME
+			put patient.fname into OH.PAT_FNAME
+		end if
+		if patient.lname is not equal to OH.PAT_SNAME
+			put patient.lname into OH.PAT_SNAME
+		end if
+	end repeat
+end repeat
+
+
+
+
+
+--- ==== Adding the fresh data to the column in database ======= ------
+set myDB to {type:"odbc", DSN:"VijayaDSN", user:"root", password:"root",readable:"yes",writable:"yes"} -- Defines the database connection.
+set personTable to table "Persons" of myDB
+set EmpRecord1 to the record of personTable where LastName is "Durgaprasad" -- -- Using the where clause to select a record based on specific values
+add "2023-04-05" to EmpRecord1's JoiningDate

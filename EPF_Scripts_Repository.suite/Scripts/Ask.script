@@ -1,0 +1,51 @@
+﻿Ask "What is the username?"
+Put it into UserName
+Ask Password "What is the password?"
+// Ask Password is a special variety of Ask that hides the string when it is typed into the prompt field
+Put it into Password
+
+Click "UserNameField"
+TypeText UserName
+Click "PasswordField"
+Set the scriptlogging to Silent
+-- Setting scriptlogging to Silent prevents the password from appearing in the log file with the TypeText command
+TypeText Password
+Set the scriptlogging to On
+Log "The password was typed!"
+
+waitfor 30, text:"Welcome",searchrectangle:(271,832,1524,1080)
+------------------------------
+answer "This image was not found." title "Sorry!" icon "AboutCerner"  with "Exit"
+------------------------------
+//Display an image in the ASK Window --  iconName or panelType
+answer "This image was not found." title "Sorry!" icon "C:\Eggplant\Training\EPF_Scripts_Repository.suite\Images\aboutCerner.png" with "Exit"
+
+Answer "In- or Out-of-Network" with "Out-of-Network" or "In-Network" title "Network Choice" -- creates answer buttons
+Put IT into myNetworkSelection
+
+Answer "Which benefit?" from list ("Annual Routine Physical", "Eye Exam", "Routine Dental", "Foot Care - Routine", "Hearing Exam", "Hearing Aids", "Transportation", "Personal Emergency Response System (PERS)") -- creates answer list
+Put IT into myBenefitSelection
+Log  myBenefitSelection
+
+---------------------------------
+Ask "What Row would you like?"
+put it into var
+log var
+
+// Repeat with each line
+
+
+set MyExcelFile to Workbook(ResourcePath("macrocopydevurlPOC.xls"))
+
+//set worksheet1 to MyExcelFile.Worksheet("Tracker") // Sets the worksheet named "Tracker" to worksheet1
+
+repeat with each line of MyExcelFile
+	put it into myLine
+	If the first item of myLine contains "415"
+		
+		put the second item of myLine into var
+		Log var
+		
+		
+	End If
+end repeat

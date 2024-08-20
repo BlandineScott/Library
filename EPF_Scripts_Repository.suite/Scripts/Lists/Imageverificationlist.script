@@ -1,0 +1,15 @@
+﻿Set wikilist to ("puppy","Puppyface_Verification")
+put item 1 of wikilist into searchterm
+put item 2 of wikilist into myverificationimage
+
+uti.LoadURLPage "www.wikipedia.org"
+
+run "Utilities1/search" searchterm
+
+
+If imagefound(myverificationimage) then -- Verify image is seen on the screen
+	Logsuccess "Puppy page loaded." -- success comment
+	CaptureScreen (Name: "Puppyface") -- takes a screen-print
+Else
+	Logwarning "Puppy page did not loaded." -- warning comment
+end if

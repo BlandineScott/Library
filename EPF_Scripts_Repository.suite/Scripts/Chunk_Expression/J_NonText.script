@@ -1,0 +1,15 @@
+﻿// Chunk syntax applies to binary data and lists as well as text
+
+set binaryData to <aabbccdd 00112233>
+put binaryData as data
+
+
+
+put the first 5 bytes of binaryData as data
+put bytes 4 to 7 of binaryData as data
+
+set myList to ["dog",42,"green",$88,"cat"]
+put the last 3 items of myList
+add 24 to item 2 of myList
+put items 2 to 4 of myList
+

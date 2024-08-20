@@ -1,0 +1,103 @@
+﻿//if you want to kill an app on windows might be the best to do it via command line e.g. use the shell command and run the following line
+
+killapp "chrome.exe"
+
+to killapp appToKill
+	typetext windowskey,"r"
+	typetext "taskkill /IM"&&appToKill
+	Typetext Return
+	wait 2 // waitfor xyz
+end killapp
+
+TypeText "TASKKILL /F /IM Chrome.exe", return
+TypeText "TASKKILL /F /IM Chromedriver.exe", return
+TypeText "taskkill /IM cmd.exe" , return
+
+
+// close all applications
+to closeApps
+	Repeat while ImageFound("btn_close")
+		click FoundImageLocation()
+	End repeat
+end closeApps
+
+(*@rem Clear Google Chrome cache
+erase "%LOCALAPPDATA%\Google\Chrome\User Data\*.*" /f /s /q
+for /D %%i in ("%LOCALAPPDATA%\Google\Chrome\User Data\*") do RD /S /Q "%%i"*)
+
+to closeApplications
+	// repeat until close icons are no longer found
+	repeat while ImageFound("close_icon")
+		click FoundImageLocation()
+		// TODO check to see if there is a warning popup
+		if ImageFound("btn_DontSave") then click FoundImageLocation()
+	end repeat
+end closeApplications
+
+-------------------------
+//Handler for using the TaskKill command to kill anty existing/running Excel Processes
+to killExcel
+	--Open Run Window
+	typetext WindowsKey, "r"
+	--Type Command
+	typetext "cmd" & returnkey
+	--Enter the below code in the command line to terminate any running instances of Excel
+	typetext "taskkill /F /IM Excel.exe"
+	--Click Enter
+	typetext returnkey
+	--Type exit to close the command window
+	typetext exit
+	typetext returnkey
+	
+end killExcel
+-----------------------------
+//Handler for using the TaskKill command to kill any existing/running Word Processes
+to killWord
+	--Open Run Window
+	typetext WindowsKey, "r"
+	--Type Command
+	typetext "cmd" & returnkey
+	--Enter the below code in the command line to terminate any running instances of Word
+	typetext "taskkill /F /IM WINWORD.exe"
+	--Click Enter
+	typetext returnkey
+	--Type exit to close the command window
+	typetext exit
+	typetext returnkey
+end killWord
+-----------------------------------
+to launchWord fileName
+	--Set the variable to file name by specifying the path of the word document
+	Set document_path to fileName
+	--Set the doument path with winword
+	Set document_name to "winword " & quote & document_path  & quote 
+	--Open the Run window
+	TypeText windowskey, "r"
+	--Use the Remote clipboard command to enter the file name
+	Set the remoteClipboard to document_name
+	typetext document_name & return
+	--Handle the pop up to update links 
+	if ImageFound(text:"Yes", waitfor:VA_Config().General.MaxWait,searchrectangle:"VA_Common".ScreenPart("Center")) 
+		Click foundimagelocation()
+	end if
+	
+	WordObjectspopup
+end launchWord
+
+----------------------------
+to killAllBrowserProcesses
+
+	repeat for each processName of ("chrome.exe","msedge.exe","iexplore.exe")
+		put commandLine.runCommand(!"taskkill /F /IM [[processName]] /T")
+	end repeat
+	
+end killAllBrowserProcesses
+
+-------------------
+to killAllCommandWindows
+
+
+	
+	put commandLine.runCommand(!"taskkill /F /IM cmd.exe /T")
+	
+end killAllCommandWindows

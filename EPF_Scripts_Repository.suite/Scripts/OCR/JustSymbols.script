@@ -1,0 +1,12 @@
+﻿//This may be the simplest way if you want to test every character in a string:
+
+put not one character of "_$£" is an alphanumeric
+
+//If you're just testing one character at a time, you can do:
+
+put "_" is not an alphanumeric
+
+//You can also do some things with patterns, like:
+put "_$£" matches <one or more nonalphanumeric>
+
+Begin Test

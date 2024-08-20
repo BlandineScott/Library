@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		921,
+		235,
+		96,
+		34
+	],
+	"lastmodifieddate": 1662732198.461,
+	"createddate": 1662732198.461,
+	"name": "TopLeft",
+	"lastfounddate": 1662732214.8109999,
+	"ocrcapturestring": "Puppy",
+	"lastfoundlocation": [
+		921,
+		235,
+		96,
+		34
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 3389,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[1,33]",
+					"Tolerance": "_73",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown RDP"
+				},
+				"name": "TopLeft.png",
+				"connectionname": "Blandine_RDP",
+				"type": 1,
+				"connectionserverid": "ec2-18-117-120-219.us-east-2.compute.amazonaws.com",
+				"capturerect": [
+					921,
+					235,
+					96,
+					34
+				],
+				"connectiontype": "RDP",
+				"capturedocrtext": "Puppy"
+			}
+	]
+}

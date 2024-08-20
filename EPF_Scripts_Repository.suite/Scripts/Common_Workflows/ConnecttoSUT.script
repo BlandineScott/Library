@@ -1,0 +1,186 @@
+﻿-- see all connection
+AllConnectionInfo()
+
+--get just the SUTs that are currently connected
+put each item of allConnectionInfo() whose status is "Connected"
+
+--If you need to change the resolution of the SUT during a run
+Connect "Demo_SUT" --First Resolution set in connection center
+Wait 3
+Disconnect "Demo_SUT"
+Wait 3
+Connect {serverID: "Demo_SUT", Width: 900, Height: 1080} -- add the resolution you want
+Log Connectioninfo().ScreenSize -- check if wanted resolution is set.
+
+--if they use VNC. you can change the resolution on the machine and VNC should adopt. as you cannot define a resolution.
+
+//Handler to Connect to SUT
+to connectSUT sutName
+	Try
+		if sutName is not empty then
+			Connect sutName
+			
+		else 
+			LogError "Provide sutName"
+			Throw theException
+		end if
+	Catch theException
+		"ErrorMessageHandler".userFriendlymessage theException
+	End try
+end connectSUT
+
+-----------------------------------------------------------
+
+
+--Connect to a screenshot
+
+put resourcePath("screenshot.png") into screenshotPath
+connect name: screenshotPath, type: "screenshot"
+-----------------------------------------------------------
+
+repeat for 5 minutes
+	connect name:"WIN SUT"
+	log connectioninfo()
+	if connectioninfo() is not empty
+		If imagefound(text:"hostname")
+			exit repeat
+		End If
+	end if
+end repeat
+------------------------------------------------------
+
+on connectTo
+	// only connect if not already connected
+To ConnectVM
+	Put ConnectionInfo().name into MySUT
+	Connect MySUT
+End ConnectVM
+
+assert that imagefound(image:"Windowsicon",waitfor:8)
+end connectTo
+//Verify Connection is 'connected' else try to connect with a hard wait
+--------------------------------------------------------------------------------------------------------
+ConnectSUT "Demo_SUT"
+To ConnectSUT SUTName
+	repeat until the status of connectioninfo(SUTName) is connected
+		try 
+			connect SUTName
+		catch
+			
+			LogWarning "SUT Not Available. Waiting 30 seconds before trying again"&&SUTName
+			Wait 30 seconds
+		end try
+		
+		if the repeatindex is greater than 3 then throw "Unable to connect to SUT"
+	end repeat
+	
+	If the status of connectioninfo(SUTName) is connected 
+		LogSuccess SUTName&&"is connected."
+		
+	End If 
+end ConnectSUT
+
+
+log connectioninfo()
+--------------------------------------------------------------------------------------------------------
+params SUTID, SUTPassword, SUTUsername // Parameterizes the connect command so it can connect to any desired RDP SUT using a screen resolution of 1920x1080. Example parameter values: "10.1.10.130", "password123", "Administrator".
+Connect {serverID: SUTID, portNum: 3389, password: SUTPassword, username: SUTUsername, Type:"RDP", Width: 1920, Height: 1080}
+
+on connectTo
+	// only connect if not already connected
+	if ConnectionInfo() is empty then connect "NameOfSUT"
+end connectTo
+
+//Verify Connection is 'connected' else try to connect with a hard wait
+
+
+------------------------------------------
+set connectionList to ( \
+		"192.168.1.100", \
+		"192.168.1.102", \
+		"192.168.1.111", \
+		"offsite.mycompany.com")
+
+repeat for each item connection in connectionList
+	connect (ServerID: connection)
+	
+	runWithNewResults "MyTestScript" -- Run this generating independent results
+end repeat
+----------------------
+
+on connectTo
+	// only connect if not already connected
+	if ConnectionInfo() is empty then	connect "ec2-18-117-120-219.us-east-2.compute.amazonaws.com"
+end connectTo
+
+---------------------------------------------
+
+
+(*To connectSUT rownum
+	Log "connecting to the SUT"
+	getglobal "SUT", rownum
+	Connect ServerID: Globalsutdata.SUT,portn:3389, password:sutdata.password,type:"RDP"
+	//connect (serverID:global sutdata.SUT,portnum:3389,type:"RDP)"
+End connectSUT*)
+
+Connect "Demo_SUT"
+assert that ImageFound(text:"This is a private faciility protected by a security system,", waitFor:10)
+Click (image:"Kellan RDP")
+
+On ConnectSut ServerID, TypeVar, SUTUsername, SUTPassword
+	if TypeVar = "RDP" then put "3389" into ConnectionTypeVar
+	if TypeVar = "VNC" then put "5900" into ConnectionTypeVar
+	connect serverID:ServerID,PortNum:ConnectionTypeVar,type:TypeVar,Username:SUTUsername,Password:SUTPassword
+	Log "User: "&SUTUsername&&"connected to: "&ServerID
+end ConnectSut
+
+On SUT2
+	connect serverID:"18.253.36.232",PortNum:"3389",type:"RDP",Username:"Eggplant2",Password:"Pickles1!"
+	Log "User: Eggplant2 connected to: 18.253.36.232"
+End SUT2
+
+On SUT1
+	connect serverID:"18.252.46.96",PortNum:"3389",type:"RDP",Username:"Eggplant2",Password:"Pickles1!"
+	Log "User: Eggplant2 connected to: 18.252.46.96"
+End SUT1
+
+
+---------------------------------------------------
+
+
+Waitfor 30, "image" //wait for the username and password SUT login
+typetext "eggplantuser",tabKey //username of the SUT
+typeencodedtext "" -- password of the SUT
+Typetext enterkey -- click enter key
+assert that imagefound(imagename:"WindowsIcon",waitfor:45)
+Log "successfully logged into Windows" 
+
+//Password: https://docs.eggplantsoftware.com/studio/stk-encrypting-text/#encode-text
+
+log encodetext("texttoencode")
+Log encodetext("encodeme") //enter that in the last run "to do"
+
+
+--------------------------------
+on connectTo
+	// only connect if not already connected
+	if ConnectionInfo() is empty then	connect "Kellan RDP"
+end connectTo
+--------------------------------
+
+Connect {serverID: "Demo_SUT", portNum: 3389, password: "Kd&&F%7VqO?Yq?WOObSi=z6-ILVOVklU", username: "administrator", Type:"RDP", Width: 1900, Height: 100}
+
+Connect "Demo_SUT" --First Resolution set in connection center
+Wait 3
+Disconnect "Demo_SUT"
+Wait 3
+Connect {serverID: "Demo_SUT", Width: 1920, Height: 1080} -- add the resolution you want
+Log Connectioninfo().ScreenSize
+
+--------------------------------
+//AutoTurn on the auto update
+Set ImageUpdate to AutoImageUpdateDiagnostics
+Click "image0020"
+Click "image0021"
+Click "image0022"
+

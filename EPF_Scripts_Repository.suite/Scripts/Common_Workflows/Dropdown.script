@@ -1,0 +1,63 @@
+﻿
+common_workflows.dropdown "Sort By", (300,0), "position"
+
+
+to dropdown label,offset,input
+	put ImageLocation(text:label) into labelLocation
+	click labelLocation + offset
+	wait 0.5
+	typetext input,return
+end dropdown
+
+-------------------------
+to dropDown label,input, offset:(config().dataEntry.DropBoxOffset),PosMove:(bottomCenter of the SearchRectangle)
+	click the Center of scrollTo(label) + offset
+	wait 0.5
+	click the Center of scrollTo(input)
+	wait 0.3
+	moveto PosMove
+	wait 0.5
+end dropDown
+--------------------------
+to typeDropDown label,input, offset:(config().dataEntry.DropBoxOffset)
+	click the Center of scrollTo(label) + offset
+	wait 0.5
+	typetext input,returnkey
+	wait 0.3
+	moveto (bottomCenter of the SearchRectangle)
+	wait 0.5
+end typeDropDown
+
+------------
+to dropDown label,input, offset:(config().dataEntry.DropBoxOffset)
+	click the Center of scrollTo(label) + offset
+	wait 0.5
+	click the Center of scrollTo(input)
+	wait 0.3
+end dropDown
+
+---------------------
+to selectDropdownList strFieldValue, varLabelValue, intLabelType, listXYValue
+	If intLabelType = 0 Then
+		If ImageFound(120, image: varLabelValue) Then
+			Click FoundImageLocation()
+			Set the SearchRectangle to [FoundImageLocation()+[-50,5], FoundImageLocation()+[200,300]]
+			wait 3
+			
+			Click text:strFieldValue, waitFor:10
+	End If
+	Else If intLabelType = 1 Then
+		If "Common".validateCellText (varLabelValue) Then
+			Click FoundImageLocation()+ listXYValue
+			Set the SearchRectangle to [FoundImageLocation()+[0,5], FoundImageLocation()+[200,300]]
+			wait 3
+			
+			Click text:strFieldValue, waitFor:10
+		End If
+		Else
+		Throw {reason: "selectDropdownList: invalid intLabelType" && intLabelType && " found. Only 0 and 1 accepted."}
+	End If
+	
+	Set the SearchRectangle 
+	
+	

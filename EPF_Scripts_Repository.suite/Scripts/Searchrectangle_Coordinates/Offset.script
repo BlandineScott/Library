@@ -1,0 +1,43 @@
+﻿
+//using offset
+put ImageLocation("Referrals_0001/PwrChrt_Ord_VistAIFCOrdNum") into VistAOrdIDLoc --topleft
+Put readtext(VistAOrdIDLoc,VistAOrdIDLoc+(78,14))
+
+
+put ImageLocation(text:"View") into reftext
+set the SearchRectangle to [[reftext.x+200,reftext.y],[reftext.x+10,reftext.x+100]]
+put ReadText(the SearchRectangle) into ParamValue
+log ParamValue
+
+--offset
+//If searchrectangle needs to be at the bottom of anchor image
+put imagerectangle ("Anchor1") into echolocation
+Set topright to [echolocation.right,echolocation.bottom]
+Set bottomright to [echolocation.left-20,echolocation.bottom+200]
+set the searchrectangle to [topright,bottomright]
+wait 10
+
+//If searchrectangle needs to be on the right side of the anchor image
+put imagerectangle ("Anchor1") into echolocation
+Set topright to [echolocation.right,echolocation.top]
+Set bottomright to [echolocation.right+200,echolocation.bottom+10]
+set the searchrectangle to [topright,bottomright]
+wait 10
+
+
+-------------------
+Log the top of imagerectangle(Image:"")
+Log the bottom of imagerectangle(Image:"")
+Log the left of imagerectangle(Image:"")
+Log the right  of imagerectangle(Image:"")
+
+-------------------
+put imagerectangle ("CalculatorLogo") into MyAnchorLocation
+
+
+Set topright to [MyAnchorLocation.right+200,MyAnchorLocation.bottom] --Right moves to toprightcorner to the right
+Set bottomright to [MyAnchorLocation.left+10,MyAnchorLocation.bottom+100]
+set the searchrectangle to [topright,bottomright]
+wait 10
+
+

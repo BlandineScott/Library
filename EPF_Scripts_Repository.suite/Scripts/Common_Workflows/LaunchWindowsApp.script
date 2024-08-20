@@ -1,0 +1,14 @@
+﻿to LaunchWinApp path,app,logos
+	set global app to app
+	typetext windowskey,"r"
+	typetext controlkey,"a",deletekey
+	typetext path,returnkey
+	assert that ImageFound(20,image:logos,searchRectangle:(config().SUT.(global app)))
+	typetext windowskey, upArrow // maximize window on windows
+end LaunchWinApp
+
+to AppSwitcher varlogos:logos,app:global app
+	set global app to app
+	typetext altkey, tabkey
+	assert that ImageFound(10,image:varlogos,searchRectangle:(config().SUT.(global app)))
+end AppSwitcher

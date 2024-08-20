@@ -1,0 +1,10 @@
+﻿Set the SearchRectangle to ("TopLeftFieldBorder", "BottomRightFieldBorder") //Limits the search area to only where the flashing element appears. This can make increasing the scan frequency possible, as scanning a smaller portion of the screen takes less time.
+Set the imageSearchDelay to 0.1 // Increases the frequency of the scans to ensure detection of transient elements. Eggplant will attempt to search the area at this frequency, but if the area is large or you are searching for an image collection, etc., Eggplant will automatically adjust the frequency to allow enough time for each scan to complete.
+repeat 2 times // Checks for each state of the element twice to ensure the state has changed more than once.
+	WaitFor 1, "GreyElement" // The imageSearchTime of 1 second for the WaitFor, combined with the imageSearchDelay of .1 second, will accommodate up to 10 scans for the image.
+	WaitFor 1, "RedElement"
+end repeat
+set the SearchRectangle to empty //Sets the searchRectangle back to full screen
+set the ImageSearchDelay to 0.3
+
+Click "Googleagain"

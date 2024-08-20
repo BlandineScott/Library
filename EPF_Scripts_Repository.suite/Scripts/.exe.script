@@ -1,0 +1,30 @@
+﻿to loginExe username, password, exe
+	Log "Searching for " & exe
+	
+	Click Image:"Common/icon_ThisPC",waitFor:2
+	DoubleClick imageName:"Common/icon_Root(C)",waitFor:30
+	TypeText "Program Files", returnKey
+	waitFor 10, Image:"Common/Text_FileFolder"
+	TypeText "Cerner"
+	waitFor 10, Image:"Common/Text_FileFolder"
+	TypeText returnKey
+	TypeText exe & returnKey
+	
+	If exe = "CapMgmt.exe" then
+		TypeText exe & returnKey           
+	End If
+	
+	If exe = "RevenueCycle.exe" then
+		TypeText exe & returnKey           
+	End If
+	
+	Log "Logging in " & exe & " with " & username 
+	Click imageName:"Common/Username", waitFor:20
+	TypeText controlKey & "a" 
+	TypeText username, tabkey
+	TypeText password, returnKey
+	
+	If ImageFound(5,Image: "Common/Button_Acknowledge")
+		Click FoundImageLocation()
+	End If
+end loginExe

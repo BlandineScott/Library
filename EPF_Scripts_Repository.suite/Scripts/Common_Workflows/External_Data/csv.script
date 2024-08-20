@@ -1,0 +1,17 @@
+﻿params resourceFileName:"Users.csv"
+global myPropNames
+set myList to {:}
+set filenameParts to resourceFileName split by "."
+put trim(the last item of filenameParts) into fileSuffix
+if fileSuffix is "csv" then
+	put the first line of File ResourcePath(resourceFileName) into myPropNames
+	put CSVValue(File ResourcePath(resourceFileName), columnNames:myPropNames, trimValues:"yes") into myList
+	pull the first item of myList into myPropNames
+else if fileSuffix is in ["xls","xlsx"] then
+	set myExcelDb to {file:ResourcePath(resourceFileName), type:"Excel", writable: "No"}
+	put the records of myExcelDb into myList
+	put the keys of the first item of myList into myPropNames
+else
+	LogError resourceFileName&&"could not be loaded: File type"&&fileSuffix&&"is not supported"
+end if
+return myList

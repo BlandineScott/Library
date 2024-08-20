@@ -1,0 +1,53 @@
+﻿// Calculated coordinates issue
+// manually creating the search rectangle works as advertised
+set the SearchRectangle to [431,98,681,708]
+
+// calculate the search rectangle coordinates
+ZZ_Rectangle.SetRectCoord  [531,158]
+log "global RetVal: "&&global RetVal
+
+// set the rectangle using the calculated coordinates doesn't work
+set the SearchRectangle to global RetVal
+
+exit all
+
+------------------------MyHandlers
+
+to handle SetRectCoord SRARG_1
+	
+	ZZ_Rectangle.GenRect SRARG_1, 100, 60, 150, 550
+	
+end SetRectCoord
+
+to handle GenRect with ARG_1, ARG_2, ARG_3, ARG_4, ARG_5
+	// ARG_1 is coordinates of image
+	// ARG_2 is Upper Right X adjustment
+	// ARG_3 is Upper Right Y adjustment
+	// ARG_4 is Lower Left X adjustment
+	// ARG_5 is Lower Left Y adjustment
+	// RetVal is rectangle coordinates
+	global RetVal
+	put the x of ARG_1 into LocX
+	put the y of ARG_1 into LocY
+	set LocURX = LocX - ARG_2
+	set LocURY = LocY - ARG_3
+	set LocLLX = LocX + ARG_4
+	set LocLLy = LocY + ARG_5
+	
+	log "ARG_1: "&ARG_1
+	log "ARG_2 :"&ARG_2
+	log "ARG_3 :"&ARG_3
+	log "ARG_4 :"&ARG_4
+	log "ARG_5 :"&ARG_5
+	
+	log "LocURX :"&LocURX
+	log "LocURY :"&LocURY
+	log "LocLLX :"&LocLLX
+	log "LocLLY :"&LocLLY     
+	
+	set global RetVal = [LocURX,LocURY,LocLLX,LocLLY]           
+	//Make sure it is set as a list and not as a string.
+end GenRect
+
+
+

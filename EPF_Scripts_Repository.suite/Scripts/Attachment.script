@@ -1,0 +1,103 @@
+﻿Set testlist to ("Script1","Script2","Script3")
+
+repeat with each item TestScript of TestList
+	RunWithNewResults TestScript -- run each script in the test, creating a new set of results for each 
+	Put the result into thisResult
+	put thisResult & ", TCName: " & TestScript & ";" after Outcome 
+	if thisResult.status is not "Success" then set bolSendMail to "true"
+	if thisResult.status is "Success" then set bolSendMail to "false"
+	put MailTitle && the long date into title
+	
+	if thisResult's status is "Failure" then
+		
+		put thisResult's logfile into screenError
+		replace "logfile.txt" with "Screen_Error.png" in screenError
+		insert screenError into logFileList
+		SendMail {To:"Kellan.fromontscott@gmail.com" ,\
+					Subject: MailTitle,\
+					body: stablere,\
+					attachment: (thisResult's logfile, screenError)}
+		
+		insert thisResult's logfile into logFileList
+		insert thisResult's status into theResultList
+		
+		log logFileList
+		log screenError
+		
+	else
+		
+		
+		if thisResult's status is "Success" then
+			SendMail {To:"Kellan.fromontscott@gmail.com" ,\
+						Subject: MailTitle,\
+						body: stablere,\
+						attachment: thisResult's logfile}
+		end if
+	end if
+	
+end repeat
+
+
+
+
+(*--Send a screenshot and the logs as an attachement.
+
+
+RunWithNewResults "Test2" -- TestScript is a variable containing the name of the script to run
+put the result into Outcome
+put the long name of each of the files of the folder of Outcome's logfile where each ends with ".png" into myfiles // Creates a list containing the file paths to all of the screenshots in the results
+
+--sendmail (to:"Kellan.fromontscott@gmail.com", from:"Kellan.fromontscott@gmail.com", subject:"attachment test", body:"This is the body.", attachment:MyLogFile)
+
+SendMail (To:"Kellan.fromontscott@gmail.com",Subject:title & "---Test results" ,body:TestScript & "Results"& Outcome,attachment:Outcome's Logfile &&& myFiles)*)
+
+---------------------------
+(*
+set TestList to ("script1","script2","script3") -- create a list of the scripts you want to run, in the order in which you'd like to run them
+set TestList to ("Test2") -- create a list of the scripts you want to run, in the order in which you'd like to run them
+//repeat this process with each script in the list
+repeat with each item TestScript of TestList
+	RunWithNewResults ("Test2") -- run each script in the test, creating a new set of results for each
+	put the result into Outcome -- get the result of the script execution and store it in a variable
+	put TestScript & the long date into title -- create the title for the email
+	put Outcome's logfile into screenError -- store the file path of the log file
+	replace "logfile.txt" with "screen_error.tiff" in screenError -- store the file path of the screen error, if there is one
+	// Use a conditional statement to send the email based on whether or not the script failed
+	if Outcome's status is "failure"
+	then
+		SendMail(To: "Kellan.fromontscott@gmail.com",\
+				subject:title,\
+				body:"the test script generated an error.",\
+				attachment:(screenError, Outcome's Logfile)) -- Indicate the attachments. Note, this will log a warning in your master script log file if there is no screen error to attach.
+	else
+		
+		// send an email with the log file attached
+		SendMail(to: "Kellan.fromontscott@gmail.com",\
+				subject: title,\
+				body: "the test script ran successfully.",\
+				attachment: Outcome's logfile)
+	end if
+end repeat
+*)
+
+--Sends the error files and log files with it.
+RunWithNewResults ("Test2") -- run each script in the test, creating a new set of results for each
+put the result into Outcome -- get the result of the script execution and store it in a variable
+put TestScript & the long date into title -- create the title for the email
+put Outcome's logfile into screenError -- store the file path of the log file
+replace "logfile.txt" with "Screen_Error.png" in screenError -- store the file path of the screen error, if there is one
+// Use a conditional statement to send the email based on whether or not the script failed
+if Outcome's status is "failure"
+then
+	SendMail(To: "Kellan.fromontscott@gmail.com",\
+			subject:title,\
+			body:"the test script generated an error.",\
+			attachment:(screenError, Outcome's Logfile)) -- Indicate the attachments. Note, this will log a warning in your master script log file if there is no screen error to attach.
+else
+	
+	// send an email with the log file attached
+	SendMail(to: "Kellan.fromontscott@gmail.com",\
+			subject: title,\
+			body: "the test script ran successfully.",\
+			attachment: Outcome's logfile)
+end if

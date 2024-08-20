@@ -1,0 +1,131 @@
+﻿//Simple move from the text location to a offset
+--If you want to know the location of an image, you can call the ImageLocation() function to return the coordinates of its hot spot relative to the upper-left corner of the screen. 
+
+Click ImageLocation(text:"Something") + (0, 40) -- counts from the center of found text
+Click Imagelocation(text:"username")+[10,10] -- offset of the text
+Click ImageLocation(text:"Something", hotspot:(0, 40)) -- counts from top left corner of found text
+Click text:"Puppy",hotspot:(-200,4) -- in line clicking to the right
+Click text:"Username",hotspot:(60,40)
+Click text:"Username",hotspot:(0,50) -- Clicking below text
+Click (Text:"MyTexct", ValidCharacters:"*", SearchRectangle:("UpperLeftImage","LowerRightImage"))
+Log Readtext ("TLimage","BRimage")
+Click text:"kitchen",SearchRectangle:[228,409,563,828]
+click (image:"Mybutton",searchrectangle:((0,0),(20,500)))
+
+//Between two images
+set the searchrectangle to ("TL1","BR1")
+Click text:"Admin"
+Set the searchrectangle to () 
+
+-----------------------------
+
+--EXAMPLE 1 with ReadText
+Put ImageLocation("Price") into myreadul
+Put ImageLocation(image:"price",hotspot:(40,70)) into myreadbr
+Put readtext(myreadul,myreadbr)
+
+Put ImageLocation("Prenataldevelopment") into myreadul
+Put ImageLocation(image:"Prenataldevelopment",hotspot:(766,168)) into myreadbr
+Put readtext(myreadul,myreadbr)
+wait 10
+
+Put ImageLocation("Prenataldevelopment") into myreadul
+--Put ImageLocation(image:"Prenataldevelopment",hotspot:(766,168)) into myreadbr
+Put readtext(myreadul,myreadul+(766,168))
+wait 10
+
+Put ImageLocation(image:"Price",hotspot:(-33,43)) into myreadul
+Put ImageLocation(image:"price",hotspot:(40,70)) into myreadbr
+Put readtext(myreadul,myreadbr) into price
+wait 1
+
+If price is less than 10 dollars 
+	Log "I can afford it"
+Else
+	Log "I cannot afford it"
+End If
+
+---
+
+Put ImageRectangle(text:"Price", waitFor:1) + (-28,31,11,50) into pricereadarea --[1553,362,1580,371]
+Put readtext(pricereadarea) into price
+Delete "$" from price
+
+if price is less than 100 then
+	Logsuccess"Afford"
+Else
+	Logwarning "Cannot"
+end if
+--
+
+--EXAMPLE 2 with ReadText
+put readText(foundImageLocation() + (0, 20)) into acctBal // the actual adjustment may be a bit different, but you get the idea
+
+--EXAMPLE 3 with ReadText
+to readingprice
+	put ImageLocation("Buttons/ADDTOCART") into refText
+	set the SearchRectangle to [[refText.X-110,refText.Y-70],[refText.X-20,refText.Y-30]]
+	wait 5
+	put ReadText(the SearchRectangle) into price
+end readingprice
+
+--EXAMPLE 4 with ReadText
+Put imagelocation(image:"price",hotspot:(-45,27)) into TopLeftsearcharea
+Put imagelocation(image:"price",hotspot:(45,67)) into Bottomrightsearcharea
+Put readtext(TopLeftsearcharea,Bottomrightsearcharea) into price
+
+--EXAMPLE 5 with ReadText
+Put ImageRectangle(text:"Price", waitFor:1) + (-28,31,11,50) into pricereadarea --[1553,362,1580,371]
+Put readtext(pricereadarea) into price
+Log Price
+-----------------------------
+
+//Click to the Right of the text using OCR
+on clickToTheRight myTxt
+	put ImageRectangle(text:"Name") into bounds
+	MoveTo(item 3 of bounds + 250, average (item 4 of bounds, item 2 of bounds))
+end clickToTheRight
+
+on clickToTheRight myTxt 
+	put ImageRectangle(text:50404) into bounds 
+	Click topleft of bounds + (-100,0)
+end clickToTheRight
+
+on clickToTheRight text:"france"
+	put ImageRectangle(text:"france") into bounds 
+	Click rightCenter of bounds + (0,10)
+end clickToTheRight
+
+put ImageRectangle("title") into rec
+Put rec+(-10,-3,303,3) into search
+Log readtext(search,dpi:"144", TextDifference:"1")
+Log bounds+-10,-3,303,3
+log readtext (topleft of bounds + (10,10))
+wait 1
+
+put imagerectangle(text:"france") into bounds
+click rightcenter of bounds + [0,10]
+
+
+------------------
+//When nothing is there for topleft. Use an Image for topleft
+Put imagelocation("HEBBOSQUEDELASLOMAS") into TopLeft -- take the topleft of the rectangle - Pick one ancho image
+Click text:"Nuevos",searchrectangle:(TopLeft,TopLeft +(1223,195))
+--(1637,345) BOTTOMRIGHT get the coordinate of the bottomright of the rectangle area you want
+--((414, 150) TOPLEFT get the coordinate of the topleft above, but just running Put imagelocation("HEBBOSQUEDELASLOMAS") 
+--BOTTOMRIGHT MINUS TOPLEFT - that gives you the coordinate 1223,195
+
+-----------------
+//Building  a rectangle to readtext between two images
+Put imagelocation("TLimage") into Point1
+log point1
+Put imagelocation("BRimage") into Point2
+log point2
+
+Put [point1,point2] into search
+Log search
+
+click text:"newsi",searchrectangle:search
+
+
+

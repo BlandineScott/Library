@@ -1,0 +1,25 @@
+﻿set the RemoteWorkInterval to .1 // Shortens the RemoteWorkInterval (default=.7) to decrease the pause between actions that Eggplant Functional sends to your SUT. This change allows the series of clicks to execute much faster.
+
+repeat with EveryImageLocation("RadioButton") // Iterates through each occurrence of the image found with everyImageLocation().
+
+	click it // Using the it variable, clicks the current occurrence the repeat loop is operating on.
+	
+end repeat
+
+set the RemoteWorkInterval to .7
+
+---------------
+Click "Yes_1"
+-------
+repeat with EveryImageLocation("radiobutton")
+	Click it
+end repeat
+-----------
+Click item 1 of EveryImageLocation("radiobutton")
+--------------------
+--for Checkboxes and radio buttons
+to radioButtons label, offset
+	put ImageLocation(text:label) into labelLocation
+	click labelLocation + offset
+	wait 0.5
+end radioButtons

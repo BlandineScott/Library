@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		388,
+		663,
+		19,
+		19
+	],
+	"lastmodifieddate": 1713286163.727,
+	"createddate": 1713286163.727,
+	"name": "checkpoint",
+	"lastfounddate": 1713286325.5840001,
+	"ocrcapturestring": "Q",
+	"lastfoundlocation": [
+		388,
+		539,
+		19,
+		19
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 3389,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[10,14]",
+					"Tolerance": "_45",
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown RDP"
+				},
+				"name": "checkpoint.png",
+				"connectionname": "Demo_SUT",
+				"type": 1,
+				"connectionserverid": "ec2-3-21-207-38.us-east-2.compute.amazonaws.com",
+				"capturerect": [
+					388,
+					663,
+					19,
+					19
+				],
+				"connectiontype": "RDP",
+				"capturedocrtext": "Q"
+			}
+	]
+}

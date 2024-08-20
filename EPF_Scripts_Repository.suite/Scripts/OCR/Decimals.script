@@ -1,0 +1,7 @@
+﻿put "31977" into mynum
+log characters 1 to ( the character number of "." within mynum)+2 of mynum --Logs Log		123.45
+
+Put "31234" into mynumber
+Put "," before character -3 of mynumber
+
+log mynumber

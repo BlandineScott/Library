@@ -1,0 +1,15 @@
+﻿to handle clickImage image,area,waitTime,properties --handler to click a text by passing OCR properties, search area, text and wait time.
+	try
+		if properties is not empty then do"set the TextStyle to"&&properties
+		if image is not empty and area is empty and waitTime is empty then
+			Click image:image
+		else if text is not empty and area is not empty then
+			Click image:image,SearchRectangle:"CommonUtilities/CommonHandlers".screenpart(area)
+		else if text is not empty and area is not empty and waitTime is not empty then
+			Click image:image,SearchRectangle:"CommonUtilities/CommonHandlers".screenpart(area),waitfor:waitTime	
+		end if
+		if properties is not empty then set the TextStyle to default
+	Catch theException
+		"CommonUtilities/ErrorMessageHandler".userFriendlymessage theException
+	End try
+end clickImage

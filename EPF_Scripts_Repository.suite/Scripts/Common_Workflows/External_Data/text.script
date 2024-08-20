@@ -1,0 +1,164 @@
+﻿---- To read the data from .txt file within in suite line by line ----------------
+put file resourcePath("TestData.txt") into Content
+repeat with each line of Content
+	wait 1
+	log it
+end repeat
+
+
+---- To read the data from .txt file outside the suite/ centralized location -----------------
+
+put file "D:\TestDoc.txt" into FileContent
+
+repeat with each line of FileContent
+	log it
+end repeat
+
+
+
+
+--- To read data from .csv file within the suite line by line ------------------
+
+put file ResourcePath("addresses.csv") into FileData
+
+repeat with each line of FileData
+	put it into eachLine
+	repeat with each item of eachLine
+		log it
+	end repeat
+end repeat
+
+
+--- To read the data from .csv file outside the suite/ from centralized location -------------------
+
+put file "C:\Users\admin\Downloads\taxables.csv" into FileContent
+
+repeat with each line of FileContent
+	log it
+end repeat
+
+
+
+
+---- Setting itemdelimiter to other then default delimiter -----------------
+
+put file resourcePath("TestData.txt") into Content
+log the number of items of Content
+#set the itemDelimiter to "#"  --- In the .txt file item separator is "#"
+log the number of items of second line of Content
+Log "========================"
+log the first item of second line of Content
+log the second item of second line of Content
+Log "**********************************"
+repeat with each line of Content
+	log it
+end repeat
+
+
+
+
+put file resourcePath("TestData.txt") into TestData -- Storing the content of the text file which is located within the suite into TestData Variable
+#log TestData
+set the itemDelimiter to "#"
+put the first line of TestData into Headers
+#log Headers
+log the first item of Headers
+log the second item of Headers
+
+log the number of items of Headers
+repeat with each line of second line of TestData
+	log it
+end repeat
+
+
+
+put "Data added at eof" after file ResourcePath("TestData.txt") --- After the file it wil add the data
+log file ResourcePath("TestData.txt") 
+
+
+put "Data added at the beginning" before file ResourcePath("TestData.txt") -- before keyword is used to prepend the data into file
+log file ResourcePath("TestData.txt")
+
+--- Write data to the text file ------
+put "Recently the last line is added" into MyWrite
+open file ResourcePath("TestData.txt")
+if file ResourcePath("TestData.txt") is empty     
+	write return to file ResourcePath("TestData.txt") at eof
+	seek in file ResourcePath("TestData.txt") at beginning
+	write MyWrite to file ResourcePath("TestData.txt")
+else
+	write return to file ResourcePath("TestData.txt") at eof
+	write MyWrite  to file ResourcePath("TestData.txt")
+end if
+close file ResourcePath("TestData.txt")
+
+log file resourcePath("TestData.txt")
+
+
+
+put suiteInfo().resultsFolder into FilePath
+log FilePath
+
+
+put "LogMssage" into file "&suiteInfo().resultsFolder&slash&Results.txt"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--What is the easiest way to write a list as separate lines within a text file?
+put ("apples", "bananas", "oranges") into myList
+
+Repeat with each item of myList
+	put it & newline after file ("C:\EggplantData\myList.txt")
+End repeat
+
+-------------------------
+
+
+
+set mySSN to file ResourcePath("test.txt")
+Click "SSN"
+Typetext "123456"
+typetext controlkey,"a"
+typetext controlkey,"c"
+put RemoteClipboard() into MRNfile
+log MRNfile
+add MRNfile to file ResourcePath("test.txt")
+-------------------------
+
+
+Set Names to file ResourcePath("names.txt") -- The data file is stored in the Resources of the suite
+log resourcepath()
+add "test" to file ResourcePath("names.txt")
+-------------
+
+Set Names to line 3 of file ResourcePath("names.txt")
+log names
+
+-------------
+
+Set Files to file ResourcePath("test.txt")
+Set Names to file ResourcePath("names.txt") 
+//Put 123 into test
+add 13 to names
+
+-----------------
+put "some text" into file "/path/to/the/new/file.txt"

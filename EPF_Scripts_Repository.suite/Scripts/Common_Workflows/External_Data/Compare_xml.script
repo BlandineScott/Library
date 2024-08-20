@@ -1,0 +1,21 @@
+﻿set myFileName1 to "xml1.xml"
+
+set myFileName2 to "xml2.xml"
+
+open file ResourcePath(myFileName1) for reading
+
+open file ResourcePath(myFileName2) for reading
+
+read from file ResourcePath(myFileName1) into myFileContents1
+
+read from file ResourcePath(myFileName2) into myFileContents2
+
+If myFileContents1 equals myFileContents2 then
+	LogSuccess "The files match."
+Else
+	LogWarning "The files do not match."
+End If
+
+close file ResourcePath(myFileName1)
+
+close file ResourcePath(myFileName2)

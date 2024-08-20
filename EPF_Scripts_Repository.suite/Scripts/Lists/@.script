@@ -1,0 +1,46 @@
+﻿(*"The \n reflect new line breaks and the @ reflect individual cells."
+
+@":", @"colon",
+@",", @"comma",
+@"\r", @"carriageReturn",
+@"\n", @"newline",
+@"\"", @"quote",
+@" ", @"space",
+@"\t", @"tab",
+@"/", @"slash",
+@"\\", @"backslash",
+@".", @"period",
+@";", @"semicolon",
+@"?", @"questionMark",
+@"!", @"exclamationMark",
+@"@", @"atSign",
+@"#", @"numberSign",
+@"$", @"dollarSign",
+@"%", @"percentSign",
+@"^", @"circumflexAccent",
+@"&", @"ampersand",
+@"*", @"asterisk",
+@"+", @"plusSign",
+@"=", @"equalSign",
+@"<", @"lessThanSign",
+@">", @"greaterThanSign",
+@"(", @"leftParenthesis",
+@")", @"rightParenthesis",
+@"[", @"leftSquareBracket",
+@"]", @"rightSquareBracket",
+@"{", @"leftCurlyBracket",
+@"}", @"rightCurlyBracket",
+@"_", @"underscore",
+@"'", @"singleQuote",
+@"~", @"tilde",
+@"`", @"graveAccent",
+@"…", @"ellipsis",
+@"-", @"dash",
+@"|", @"verticalBar",*)
+
+Put Readtext(Carritto) into MyReadArea2
+Replace every occurrence of newline in myreadarea2 with space -- replace newline with a space, in case its read with additional lines
+
+Log "My Read Text is"&&MyReadArea2 
+Insert MyReadArea2 split by newline into MyList2 -- Put into a list
+Log "My List is"&&MyList2

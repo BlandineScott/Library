@@ -1,0 +1,25 @@
+﻿function ReadTextFromBelowImageLocation image1, rowheight, columnwidth,contrastYN
+
+	if rowheight = "" then
+		set rowheight = 2
+	end if
+	
+	put ImageRectangle(Image:image1,WaitFor:5) into ImageRectangle1
+	set StartLeftSearch = left(ImageRectangle1)
+	set StartTopSearch = bottom(ImageRectangle1) +2
+	set EndRightSearch = right(ImageRectangle1) + columnwidth
+	set EndBottomSearch = bottom(ImageRectangle1) + rowheight
+	set UL_Search=(StartLeftSearch,StartTopSearch)
+	set BR_Search=(EndRightSearch,EndBottomSearch)
+	
+	If contrastYN = No then
+		Log ReadText(UL_Search,BR_Search)
+		set thevalue to trimAll(ReadText(UL_Search,BR_Search))
+	Else
+		set thevalue to trimAll(ReadText(UL_Search,BR_Search),contrast:on)
+	End If
+	
+	log "The read text is"&&thevalue
+	return thevalue
+	
+end ReadTextFromBelowImageLocation

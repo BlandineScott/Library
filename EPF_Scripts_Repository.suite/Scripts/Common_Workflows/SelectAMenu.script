@@ -1,0 +1,34 @@
+﻿//Select a Menu
+
+To MenuSelect MenuOption, SubMenu,Subval
+	Put foundimage
+End MenuSelect
+
+-------------------
+to toolBarOption strMenu, strOption, strSubOption
+	Log "Looking for option: " & strMenu
+	
+	//locate Menu in the toolbar 
+	Put [0,0,500,100] into rectTopLeft
+	if ImageFound(text:strMenu, SearchRectangle:rectTopLeft, waitFor:10)
+		click FoundImageLocation()
+		(*                         set the SearchRectangle to [FoundImageLocation()+[-35,0], FoundImageLocation()+[225, RemoteScreenSize().x]]*)  //With full screen for y, 'Exit' is sometimes missed, GW, 6/21/23
+		set the SearchRectangle to [FoundImageLocation()+[-35,0], FoundImageLocation()+[225, 700]]
+		
+		//locate option 
+		click text:strOption
+		
+		If strSubOption is empty //skip if no strSubOption given 
+		log "No strSubOption"
+			else //select strSubOption
+			set the SearchRectangle to [FoundImageLocation()+[100,-10], FoundImageLocation()+[500, RemoteScreenSize().x]]
+			click text:strSubOption
+		end if 
+		
+		else
+		Log "Can not find strMenu: " & strMenu 
+	
+	end if
+	
+	set the SearchRectangle to []
+end toolBarOption

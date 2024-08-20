@@ -1,0 +1,8 @@
+﻿
+--if the handler is in a different script and different folder
+Log "Play/Untitled1".userName
+
+to userName
+	put {Name:"Bob", Age:"17"} into userName
+	return userName
+end userName

@@ -1,0 +1,41 @@
+{
+	"lastmodifieddate": 1684412635.8080001,
+	"ocrcapturestring": "License Key:",
+	"originalcapturelocation": [
+		766,
+		515,
+		79,
+		17
+	],
+	"createddate": 1684412635.8080001,
+	"testlocationdata": [
+		{
+				"connectionportnum": 3389,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Tolerance": "_71",
+					"HotSpot": "[104,9]",
+					"Scale": "    1",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown RDP"
+				},
+				"name": "LicenseKey.png",
+				"connectionname": "Demo_SUT",
+				"type": 1,
+				"connectionserverid": "ec2-3-21-207-38.us-east-2.compute.amazonaws.com",
+				"capturerect": [
+					766,
+					515,
+					79,
+					17
+				],
+				"connectiontype": "RDP",
+				"capturedocrtext": "License Key:"
+			}
+	],
+	"name": "LicenseKey"
+}

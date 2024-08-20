@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		522,
+		578,
+		51,
+		13
+	],
+	"lastmodifieddate": 1705684436.6700001,
+	"createddate": 1693345674.9520001,
+	"name": "Austr",
+	"lastfounddate": 1694104567.7449999,
+	"ocrcapturestring": "\" Ai ic",
+	"lastfoundlocation": [
+		522,
+		510,
+		51,
+		13
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 3389,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[25,6]",
+					"Tolerance": "_45",
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown RDP"
+				},
+				"name": "Austr.png",
+				"connectionname": "Demo_SUT",
+				"type": 1,
+				"connectionserverid": "ec2-3-21-207-38.us-east-2.compute.amazonaws.com",
+				"capturerect": [
+					522,
+					578,
+					51,
+					13
+				],
+				"connectiontype": "RDP",
+				"capturedocrtext": "Aiic"
+			}
+	]
+}

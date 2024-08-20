@@ -1,0 +1,1 @@
+﻿assert imagefound(text:"mytext",waitfor:5)

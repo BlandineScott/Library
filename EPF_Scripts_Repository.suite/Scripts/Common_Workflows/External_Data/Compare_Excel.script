@@ -1,0 +1,28 @@
+﻿set myexcelDB to (file:ResourcePath("compare_data.xlsx"), type:"excel", writeable:"Yes")
+Put the records of myexcelDB into mydata
+
+Put each item of the records of myexcelDB where each."verified" ="no" into activelist
+Set the searchrectangle to ()
+
+Set the searchrectangle to ("Rec1_Anchor_TopLeft","Rec1_Anchor_Bottomright")
+
+Put imagerectangle("Rec2_Anchor_Title_Vertical") + (0,1,0,221) into NumColumn
+
+repeat with each item item of activelist by reference
+	
+	if ImageFound(text:item.number, waitFor:1,searchrectangle:numcolumn)
+		put foundimagelocation() into myloc
+		log myloc
+	end if
+	
+	put myloc+(1150,0) into read
+	
+	if readtext(read) contains item.comments
+		logsuccess "Correct"
+		Put "matched"  into item.results
+	else
+		logwarning "Nope"
+		Put "not matched"  into item.results
+	end if
+	put "yes" into item.verified
+end repeat

@@ -1,0 +1,10 @@
+﻿(*
+- ZeroStateCloseAllApps
+
+- logoutWindows
+
+- killTask 
+
+*)
+log 0
+

@@ -1,0 +1,6 @@
+﻿--Put "Staging" into MyWordToFind
+Put item 1 of  each item of Enhanced_Domains_New into Enhanced_Domains_New2
+Log Enhanced_Domains_New2
+Put each item of Enhanced_Domains_New2 where each contains "Staging" into Final_Newlist
+Log Final_Newlist
+//log Staging_Enhanced_Domains

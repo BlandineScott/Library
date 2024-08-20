@@ -1,0 +1,92 @@
+﻿//Shell and Put
+--Anything you can do in a command line , we can do
+
+Shell("CommandToExecute")
+
+Log "Make Directory"
+Shell "c:\windows\system32\cmd.exe",<</c">>& "mkdir c:\Zebra\results" &<<">> -- command after cmd.exe
+
+Log "Copy Files"
+Shell "c:\windows\system32\cmd.exe",<</c">>& "Xcopy /E /I C:\Eggplant\Root\DAI\CustumReportingmove.suite\results c:\Zebra\results" & <<">>
+
+-------------------------------------
+// Shell and Put
+
+//Full Docs. http://docs.eggplantsoftware.com/ePF/SenseTalk/stk-system-interaction.htm#sts=Shell%20Command%20and%20Function
+
+// I was going to write comments here but the notes above are really good. Here are some real world samples
+
+// Mac and Probably Linux
+put shell (includeErrors:YES, command:<<curl --form "fredfile=@>>&global PathToGroovies&global SGroovyFileName&<<" --form handlerfile_fiCodes=">>&global fiName&<<" ">>&global FredUploadURL&<<">>)
+
+put Shell("/Applications/eggplant.app/Contents/Resources/"&global ADBVersion& "/adb -s "&global emulatorID&" emu finger touch 1")
+
+shell "mkdir -p" && PathToAttachments -- creates path to attachments if it does not exist
+
+put shell("cd /; ls -l") into rootDirectoryList
+
+Put shell("cd " & global PathToAdminHelper&"\Resources\Gizmos","pwd",global pythonPath &&"Parse.py "& toolUrl &" "& outputFilePath) into var
+
+
+//  Shell on PC
+put "C:\Users\anne\Documents\Eggplant\Demo\Anne-Demo\" into gitdir
+put "C:\Users\anne\Documents\Eggplant\Demo\test.txt" into output
+put "git -C " & gitdir & " pull" into command
+put command &" > " & output & " 2>&1" into CommandExecute
+log CommandExecute
+shell "c:\windows\system32\cmd.exe",<< /c “>>& CommandExecute &<<“>>
+
+BeginTestCase "Test ShellCommand"
+put osinfo() into currentConn
+If currentConn contains "windows"
+	Log "Testing the ShellCommand on Windows"
+	set the ShellCommand to empty
+	put directory() & "outputfile" into outputFile
+	put outputFile
+	put shell("c:/windows/system32/cmd.exe /c echo Hello World!!!") into file outputFile
+	put file outputFile
+	assert that file outputFile contains "Hello World!"
+	delete file outputFile
+else 
+	Log "Testing the ShellCommand on Mac or Linux"
+	put shell("pwd") into currentDirectory
+	assert that currentDirectory contains "Documents"
+End If
+EndTestCase "Test ShellCommand"
+
+//Just run something. For instance your Non HTTP API 
+put "-i<filename.in>" into CommandExecute
+shell "c:\windows\system32\netpb.exe"&&CommandExecute
+
+// Output the result to a file
+put "ping 127.0.0.1" into CommandExecute
+shell "c:\windows\system32\cmd.exe",<< /c “>>&CommandExecute&<<” > c:\output\out.txt>>
+
+// Run a .bat file
+shell "c:\test.bat"
+
+// More Shell on PC - I have tested these. They work. 
+
+// Remove Directory
+shell "c:\windows\system32\cmd.exe", << /c ">>& "rmdir /s /q c:\Zebra" &<<">>
+
+Log "Check for Directory"
+If file "C:\Zebra\Results\SuiteStatistics.csv" exists
+	//LogWarning "Delete Directory"
+	//shell "c:\windows\system32\cmd.exe", << /c ">>& "rmdir /s /q c:\Zebra" &<<">>
+	LogWarning "Leave Directory and Delete files"
+	shell "c:\windows\system32\cmd.exe", << /c ">>& "cd c:\Zebra\Results && rd . /S /Q" &<<">>
+	Wait 5
+else
+	LogSuccess "No files to Delete."
+End If
+
+Log "Make Directory"
+shell "c:\windows\system32\cmd.exe", << /c ">>& "mkdir c:\Zebra\Results" &<<">>
+
+Log "Copy Files"
+shell "c:\windows\system32\cmd.exe", << /c ">>& "Xcopy /E /I C:\EggplantRoot\DAICustomReportingMove.suite\Results c:\Zebra\Results" &<<">>
+
+
+
+

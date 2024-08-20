@@ -1,0 +1,27 @@
+﻿(*I typically add Log me.name && "has started" at the beginning of the script and Log me.name && "has finished" at the end of the script.*)
+
+//LJF_WhereAmI_2023-10-26_12-47-1.TXT
+
+Put me.name into myscriptname
+put the short seconds into screenshotName
+
+Click text:"Contacts"
+capturescreen(imagename:myscriptname&screenshotName,increment:yes)
+
+capturescreen(imagename:myscriptname&the date&the time,increment:yes)
+
+Log me.name
+
+
+
+To MyHandler
+	Log "log_me.name/myhandler".name
+	put "Script: " & the long name of me
+	put "Handler: " & param(0)
+End MyHandler
+
+(*For the script you can also use my name or my short name if you don't want the full path. And there are ways to extract this information from the callStack but that's more work.*)
+
+-----------------
+log the folder of me
+

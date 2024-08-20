@@ -1,0 +1,16 @@
+﻿//Local variables cannot be accessed outside of the handler (or script) where they are used.
+
+
+put "Hello" into greeting
+
+put greeting
+
+put generateGreeting()
+
+put greeting
+
+
+to generateGreeting
+	put "Hey there" into greeting
+	return greeting & "!"
+end generateGreeting

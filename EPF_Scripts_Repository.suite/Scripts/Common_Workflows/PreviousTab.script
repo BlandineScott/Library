@@ -1,0 +1,7 @@
+﻿to PreviousTab expectation
+	typetext Controlkey,pageDown
+	if expectation is not empty
+		navigate[],(expectation)
+	end if 
+	wait 1
+end PreviousTab

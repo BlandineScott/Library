@@ -1,0 +1,24 @@
+﻿
+set textWithNumbers to {{
+Oh me! Oh my! Oh me! oh my!
+What a lot of funny things go by.
+Some have 2 feet and some have 4
+Some have 6 feet and some have more.
+}}
+
+add 1 to word 3 of line 3 of textWithNumbers
+subtract 9 from the last word of line 3 of textWithNumbers
+multiply word 3 of line 4 of textWithNumbers by 11
+
+sort the words of line 2 of textWithNumbers
+shuffle the words of line 1 of textWithNumbers
+
+put textWithNu
+
+validPattern:"[0-9]+"
+
+
+
+
+
+

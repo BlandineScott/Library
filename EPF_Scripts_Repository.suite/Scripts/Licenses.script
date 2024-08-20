@@ -1,0 +1,24 @@
+﻿Answer "Which Host ID Tye" with "EPF" or "DAI" title "Generate Fake Host"
+put it into type
+
+if type = epf
+	put "0x" into hostID
+	repeat 12 times
+		put any item of (0..9 &&& "a".."f") after hostID
+	end repeat
+	log hostID
+else
+	repeat 6 times
+		put any item of (0..9 &&& "a".."f") & any item of (0..9 &&& "a".."f") after hostID 
+		put "-" after HostID
+	end repeat
+	delete the last character of hostID
+end if
+log hostID
+
+
+Ask "Fake Host ID" with hostID title "Fake HostID" message "Here is a fake Host ID"
+
+Typetext "Z@*)oBBP2*X7hw7Q-8n*7i4*e8g5frIs"
+
+"Log_me.name".Myhandler

@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		19,
+		531,
+		129,
+		23
+	],
+	"lastmodifieddate": 1671031958.6830001,
+	"createddate": 1671031958.6830001,
+	"name": "StableNameField",
+	"lastfounddate": 1671033374.3829999,
+	"ocrcapturestring": "Scott, Blandine",
+	"lastfoundlocation": [
+		19,
+		531,
+		129,
+		23
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 3389,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[64,11]",
+					"Tolerance": "_73",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown RDP"
+				},
+				"name": "StableNameField.png",
+				"connectionname": "Blandine_RDP",
+				"type": 1,
+				"connectionserverid": "ec2-3-21-207-38.us-east-2.compute.amazonaws.com",
+				"capturerect": [
+					19,
+					531,
+					129,
+					23
+				],
+				"connectiontype": "RDP",
+				"capturedocrtext": "Scott, Blandine"
+			}
+	]
+}

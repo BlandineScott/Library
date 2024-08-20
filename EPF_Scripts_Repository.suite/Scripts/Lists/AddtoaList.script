@@ -1,0 +1,9 @@
+﻿put [{firstname:"F1",lastname:"L1",gender:"M",age:""},{firstname:"F2",lastname:"L2",gender:"F",age:""},{firstname:"F1",lastname:"L2",gender:"M",age:""},{firstname:"F3",lastname:"L3",gender:"M",age:""}] into studentlist
+
+repeat for each item of studentlist 
+	if it's lastname is "L2" and it's gender is "M" then
+		put 12 into age of item the counter of studentlist
+	end if
+end repeat
+
+log each item of studentlist 

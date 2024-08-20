@@ -1,0 +1,166 @@
+﻿to FourThirtyAM
+	Log "HTimer.FourThirtyAM"
+	Log "------------------- BEGIN HTimer. Currently set to 4:30 AM Run. -------------------"
+	put the date + 1 day into tomorrowNoon 
+	put tomorrowNoon - 7.5 hours into tomorrowAM 
+	put tomorrowAM - the time into timeToWait 
+	wait timeToWait
+	Log "------------------- END HTimer.  -------------------"
+end FourThirtyAM
+
+to FiveAM
+	Log "HTimer.FiveAM"
+	Log "------------------- BEGIN HTimer. Currently set to 5:00 AM Run. -------------------"
+	put the date + 1 day into tomorrowNoon 
+	put tomorrowNoon - 7 hours into tomorrowAM 
+	put tomorrowAM - the time into timeToWait 
+	wait timeToWait
+	Log "------------------- END HTimer.  -------------------"
+end FiveAM
+
+to SixAM
+	Log "HTimer.SixAM"
+	Log "------------------- BEGIN HTimer. Currently set to 6:00 AM Run. -------------------"
+	put the date + 1 day into tomorrowNoon 
+	put tomorrowNoon - 6 hours into tomorrowAM 
+	put tomorrowAM - the time into timeToWait 
+	wait timeToWait
+	Log "------------------- END HTimer.  -------------------"
+end SixAM
+
+to SevenAM
+	Log "HTimer.SevenAM"
+	Log "------------------- BEGIN HTimer. Currently set to 7:00 AM Run. -------------------"
+	put the date + 1 day into tomorrowNoon 
+	put tomorrowNoon - 5 hours into tomorrowAM 
+	put tomorrowAM - the time into timeToWait 
+	wait timeToWait
+	Log "------------------- END HTimer.  -------------------"
+end SevenAM
+
+to EightAM
+	Log "HTimer.SevenAM"
+	Log "------------------- BEGIN HTimer. Currently set to 7:00 AM Run. -------------------"
+	put the date + 1 day into tomorrowNoon 
+	put tomorrowNoon - 4 hours into tomorrowAM 
+	put tomorrowAM - the time into timeToWait 
+	wait timeToWait
+	Log "------------------- END HTimer.  -------------------"
+end EightAM
+
+to NineAM
+	Log "HTimer.SevenAM"
+	Log "------------------- BEGIN HTimer. Currently set to 7:00 AM Run. -------------------"
+	put the date + 1 day into tomorrowNoon 
+	put tomorrowNoon - 3 hours into tomorrowAM 
+	put tomorrowAM - the time into timeToWait 
+	wait timeToWait
+	Log "------------------- END HTimer.  -------------------"
+end NineAM
+
+
+to NinePM
+	Log "HTimer.NinePM"
+	
+	Log "------------------- BEGIN HTimer. Currently set to 9:00 PM Run. -------------------"
+	put the date + 1 day into tomorrowNoon 
+	put tomorrowNoon - 15 hours into tomorrowAM 
+	put tomorrowAM - the time into timeToWait 
+	wait timeToWait
+	Log "------------------- END HTimer.  -------------------"
+	
+end NinePM
+
+to NineThirtyPM
+	Log "HTimer.NineThirtyPM"
+	
+	Log "------------------- BEGIN HTimer. Currently set to 9:30 PM Run. -------------------"
+	put the date + 1 day into tomorrowNoon 
+	put tomorrowNoon - 14.5 hours into tomorrowAM 
+	put tomorrowAM - the time into timeToWait 
+	wait timeToWait
+	Log "------------------- END HTimer.  -------------------"
+	
+end NineThirtyPM
+
+to TenPM
+	Log "HTimer.TenPM"
+	
+	Log "------------------- BEGIN HTimer. Currently set to 10 PM Run. -------------------"
+	put the date + 1 day into tomorrowNoon 
+	put tomorrowNoon - 14 hours into tomorrowAM 
+	put tomorrowAM - the time into timeToWait 
+	wait timeToWait
+	Log "------------------- END HTimer.  -------------------"
+	
+end TenPM
+
+to Midnight
+	Log "HTimer.Midnight"
+	
+	Log "------------------- BEGIN HTimer. Currently set to Midnight Run. -------------------"
+	put the date + 1 day into tomorrowNoon 
+	put tomorrowNoon - 12 hours into tomorrowAM 
+	put tomorrowAM - the time into timeToWait 
+	wait timeToWait
+	Log "------------------- END HTimer.  -------------------"
+	
+end Midnight
+
+to SundayTenPM
+	Log "HTimer.SundayTenPM"
+	
+	Log "------------------- BEGIN HTimer. Currently set to 9 PM Run. SUNDAY NIGHT -------------------"
+	
+	repeat until dayOfWeek() equals "0"
+		put dayOfWeek()
+		Wait 28800 -- 8 hours
+	End repeat
+	
+	put the date + 1 day into tomorrowNoon 
+	put tomorrowNoon - 14 hours into tomorrowAM 
+	put tomorrowAM - the time into timeToWait 
+	wait timeToWait
+	Log "------------------- END HTimer.  -------------------"
+	
+End undayTenPM
+
+to SundayNineThirtyPM
+	Log "HTimer.SundayNineThirtyPM"
+	
+	Log "------------------- BEGIN HTimer. Currently set to 9:30 PM Run. SUNDAY NIGHT -------------------"
+	
+	repeat until dayOfWeek() equals "0"
+		put dayOfWeek()
+		Wait 28800 -- 8 hours
+	End repeat
+	
+	put the date + 1 day into tomorrowNoon 
+	put tomorrowNoon - 14.5 hours into tomorrowAM 
+	put tomorrowAM - the time into timeToWait 
+	wait timeToWait
+	Log "------------------- END HTimer.  -------------------"
+	
+End SundaytNineThirtyPM
+
+
+(*Log "------------------- BEGIN HTimer. Currently set to MiDNIGHT Run. -------------------"
+put the date + 1 day into tomorrowNoon 
+put tomorrowNoon - 12 hours into tomorrowAM 
+put tomorrowAM - the time into timeToWait 
+wait timeToWait
+Log "------------------- END HTimer.  -------------------"*)
+
+(*Log "------------------- BEGIN HTimer. Currently set to 2:00 AM Run. -------------------"
+put the date + 1 day into tomorrowNoon 
+put tomorrowNoon - 10 hours into tomorrowAM 
+put tomorrowAM - the time into timeToWait 
+wait timeToWait
+Log "------------------- END HTimer.  -------------------"*)
+
+(*Log "------------------- BEGIN HTimer. Currently set to 4:00 AM Run. -------------------"
+put the date + 1 day into tomorrowNoon 
+put tomorrowNoon - 8 hours into tomorrowAM 
+put tomorrowAM - the time into timeToWait 
+wait timeToWait
+Log "------------------- END HTimer.  -------------------"*)

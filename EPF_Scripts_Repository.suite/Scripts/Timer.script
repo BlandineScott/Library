@@ -1,0 +1,7 @@
+﻿BeginTimer()
+--Put hello
+wait 10
+put EndTimer() into myduration
+put "The duration of"&&me.name&&"is: "&&myduration
+
+--https://docs.eggplantsoftware.com/studio/epf-tables-pane-and-keyword-driven-testing/#responsiveness-testing-with-tables

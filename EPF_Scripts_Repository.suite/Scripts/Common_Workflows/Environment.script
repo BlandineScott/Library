@@ -1,0 +1,13 @@
+﻿If EM_ENvironmentname ="" then
+	ask " in which environement are you testing?"
+	Put it into EM_ENvironmentname
+	ask " waht is your script number?"
+	put it into EM_ScriptID
+	ask "What is your scriptname?"
+	put it into EM_Scriptname
+	Put it into Global startrecord //allows manual runs of this script via EPF to being with any record number from the excel spreadsheet
+End If
+-----------------------------------
+If EM_ENvironmentname contains "play" or EM_ENvironmentname contains "ACE0" then
+	set global traininngenvironment to "yes"
+End If

@@ -1,0 +1,23 @@
+﻿
+//excel example
+set Variables to Workbook(ResourcePath("setGlobalVariables.xlsx"))
+set myVariables to Variables.Worksheet("InitialVariables")
+
+put myVariables.Cell("B1") into global Build
+put myVariables.Cell("B2") into global SUT
+put myVariables.Cell("B3") into global AccountName
+put myVariables.Cell("B4") into global Password
+put myVariables.Cell("B5") into global Lab
+put myVariables.Cell("B6") into global phoneNumber
+put myVariables.Cell("B7") into global newVariable
+put myVariables.Cell("B8") into global newVariable2
+put myVariables.Cell("B9") into global newVariable3
+
+log global Build
+log global Password
+log global newVariable
+
+
+
+log build
+log variable

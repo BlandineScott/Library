@@ -1,0 +1,14 @@
+﻿Typetext Windowskey, "r" //open run
+Typetext "chrome.exe", returnkey
+Waitfor 10,"refresh" 
+typetext controlkey,"l" // highlights the adress bar
+typetext "www.amazon.com",returnkey
+
+Waitfor 10, "amazon"
+waitfor 10, "refresh"
+Click "Amazonsearch"
+Typetext "exploding kitten",returnkey
+Waitfor 10, "resultsfor"
+Click "Exploding Kittens"
+Waitfor 10, "title"
+Typetext controlkey, F4 //closes browser

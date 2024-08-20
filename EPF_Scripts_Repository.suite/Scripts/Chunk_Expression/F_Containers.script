@@ -1,0 +1,33 @@
+﻿// Chunks are Containers
+
+set SeussNoMore to {{
+Some are thin, and some are fat.
+The fat one has a yellow hat.
+From there to here,
+From here to there,
+Funny things are everywhere.
+}}
+
+put "ny" after word 3 delimited by ",. " of SeussNoMore
+put "ty" after word 7 delimited by ",. " of SeussNoMore
+put line 1 of SeussNoMore
+
+put "green" into word 2 of line 2 of SeussNoMore
+put "very large purple" into word 6 of line 2 of SeussNoMore
+put line 2 of SeussNoMore
+
+put "Kansas" into words 2 to 4 of line 3 of SeussNoMore
+put line 3 of SeussNoMore
+
+put "To Rome" into line 4 of SeussNoMore
+put "silly " before the last word of SeussNoMore
+put "Even at home." into line 6 of SeussNoMore
+put 
+put SeussNoMore
+
+
+Put "I would like to eat this." into try
+Put try is a list
+split try by newline
+log try
+Put try is a list

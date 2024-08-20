@@ -1,0 +1,15 @@
+﻿-- Go from another application to copy text - It will do Alt until you find you want to have
+
+
+Typetext altkey,tabkey
+
+Keydown Altkey
+repeat until imagefound("The little icon for whatever application you want to select")
+	Typetext Tabkey
+end repeat
+Keyup All
+
+Typetext controlkey, "c"
+Typetext windowskey,"d"
+Click "TaskBarIconForTheApplication"
+

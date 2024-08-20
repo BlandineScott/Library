@@ -1,0 +1,125 @@
+﻿To Screenshot
+	CaptureScreen (Increment: On)	
+End Screenshot
+
+--------------------
+
+--Direct way to click image
+click  file (suiteinfo().imagesFolder&"/"&"RDP/window_search"&".png")
+
+
+Capturescreen (Name:CSNM)
+Put the result into Global Pathlocation
+Log Global Pathlocation
+put the short seconds into screenshotName
+Log screenshotName
+
+--Returns the fill path for the screenshot that was captures on the previous line using CaptureScreen
+
+-------------------------
+
+
+
+
+--Taking Capturescreen after each step - https://docs.eggplantsoftware.com/studio/stk-results-reporting/index.html#tracescreen-on-off-command
+-------------------------
+
+Doubleclick text:"number", waitfor:5, hotspot:(150,0)
+Typetext controlkey, "c"
+put RemoteClipboard(1) into mytext
+log mytext
+//Capturescreen (name:"image"&mytext)
+Capturescreen(name:ResourcePath("image"&mytext)) -- adding to the resourcepath of the suite 
+
+---------------------------
+Put me.name into myscriptname
+
+Click text:"Contacts"
+put the short seconds into screenshotName
+capturescreen(imagename:screenshotName,increment:yes)
+capturescreen(imagename:myscriptname,increment:yes)
+--------------------------
+CaptureScreen
+put the result -- Returns the full path for the screenshot that was captured on the previous line using CaptureScreen.
+
+--------------------------
+Put "1234" into MRN
+Capturescreen name:"test"&&MRN,increment:yes
+
+--------------------------
+CaptureScreen {name: "RegressionTest" & today, rectangle: ["TLImage","BRImage"], imageFormat: JPG, scaleFactor: .75, JPGCompressionQuality: 85}
+--------------------------
+
+CaptureScreen name:"LoginScreen", increment:Yes
+--------------------------
+
+CaptureScreen {name:"PrescriptionNumber", Rectangle:[RxLocation, RxLocation + [140,100]]} -- Captures a screenshot of the unique number displayed to the right of the RxLocation.
+--------------------------
+
+Capturescreen(name:ResourcePath("image"&mytext)) -- adding to the resourcepath of the suite 
+--------------------------
+
+set CaptureArea to  (166,54,1008,927)
+captureScreen "originalImage", CaptureArea 
+put the result into original
+wait 5
+captureScreen "afterImage", CaptureArea
+put the result into after
+
+if file original as data is not equal to file after as data then 
+	logSuccess "The Image updated/changed" 
+Else 
+	logError "The Image did not updated/changed" 
+End If 
+
+-----------------
+set CaptureArea to  (331,154, 892, 505) 
+captureScreen rectangle:CaptureArea 
+put the result into original
+wait 30
+if not imageFound(original) 
+	logSuccess "The Image updated/changed" 
+Else 
+	logError "The Image did not updated/changed" 
+End If 
+-------------------
+set areaOfInterest to (100,100,300,300) -- the area of the screen to compare
+captureScreen "/tmp/originalImage", areaOfInterest
+
+-- do some other processing
+
+captureScreen "/tmp/laterImage", areaOfInterest -- capture the same area again
+
+if file "/tmp/originalImage.tiff" as data is equal to file "/tmp/laterImage.tiff" as data then
+	logSuccess "The images are the same"
+else
+	logFailure "The images are different"
+end if
+
+------------------------
+//Get path of a screenshot 
+
+CaptureScreen ( image:"MyImage")
+Put the result into PathLocation
+log PathLocation-- Returns the full path for the screenshot that was captured on the previous line using CaptureScreen.
+
+----------------------
+captureScreen ("/Users/john/Desktop/screen/"&"poo") 
+-- capture screen
+
+
+CaptureScreen (Name: "MyName")
+
+
+captureScreen ("/Users/johnspitta/Desktop/screen/hiya.jpg") -- capture screen to a certain place
+
+
+
+set PathToAttachments to "/Users/john/Desktop/screen/"
+captureScreen (PathToAttachments&"HB1FAIL") -- capture screen
+
+
+
+CaptureScreen {name:SuiteInfo().Images & slash & "CurrentLogo"}
+
+

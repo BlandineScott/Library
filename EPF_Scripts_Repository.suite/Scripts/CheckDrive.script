@@ -1,0 +1,26 @@
+﻿//Check Drive
+
+
+log the files of "C:/"
+
+//Check if a drive is working
+log the files of "Z:/whatever"
+
+
+//Moving Drive from Resources Section to Shared Drive.
+set global reportExcelName to "MovedReport1.xlsx" -- That is the name of the new report that will be moved to shared drive
+copy file ResourcePath("MyNewreport.xlsx") to ResourcePath(global reportExcelName) -- Make sure you have a report already created to copy in the resourcepath
+
+
+set myExternalStoragePath to "C:\Users\blanscot\OneDrive - Keysight Technologies\Documents"
+copy folder ResourcePath(global reportExcelName) into myExternalStoragePath
+
+Log connectioninfo()
+
+//https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/robocopy
+//MOVING DRIVES From one side to to the other using Robocopy
+Shell "c:\windows\system32\cmd.exe","/c"&&"robocopy"&&"/MIR"&&quote&"\\TESTING-SRV\Users\Testing-SRV\Documents\Surath Durgaprasad"&quote&&quote&"C:\Users\DurgaPrasad S\Desktop\Temp"
+
+
+
+copy file "C:\TestExcelFile.xlsx" as "C:\TestExcelFileCopy.xlsx"

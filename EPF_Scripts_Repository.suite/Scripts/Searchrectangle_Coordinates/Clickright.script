@@ -1,0 +1,4 @@
+﻿on clickToTheRight text:"france"
+	put ImageRectangle(text:"france") into bounds 
+	Click rightCenter of bounds + (0,10)
+end clickToTheRight

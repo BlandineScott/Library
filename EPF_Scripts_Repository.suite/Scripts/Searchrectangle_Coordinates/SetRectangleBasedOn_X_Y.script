@@ -1,0 +1,26 @@
+﻿--https://docs.eggplantsoftware.com/studio/stk-points-and-rectangles/
+
+Set SpecificCoordinate = [300,400]
+Set UpperLeft = [-100,-50]
+Set LowerRight = [200,150]
+
+Set UL = SpecificCoordinate + UpperLeft
+Set LR = SpecificCoordinate + LowerRight
+
+Set the searchrectangle to [UL.x,UL.y,LR.x,LR.y]
+
+------------------------------------
+put ImageLocation(text:"View") into reftext
+set the SearchRectangle to [[reftext.x+200,reftext.y],[reftext.x+10,reftext.x+100]]
+put ReadText(the SearchRectangle) into ParamValue
+log ParamValue
+
+----------------------------------
+Set SpecificCoordinate = [300,400]
+Set UpperLeft = [-100,-50]
+Set LowerRight = [200,150]
+
+Set UL = SpecificCoordinate + UpperLeft
+Set LR = SpecificCoordinate + LowerRight
+
+Set the searchrectangle to [UL.x,UL.y,LR.x,LR.y]

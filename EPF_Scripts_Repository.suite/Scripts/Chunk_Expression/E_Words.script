@@ -1,0 +1,24 @@
+﻿// Word Chunks
+
+set moreFish to {{
+Yes. Some are red, and some are blue.
+Some are old and some are new.
+Some are sad, and some are glad,
+And some are very, very bad.
+Why are they sad and glad and bad?
+I do not know, go ask your dad.
+}}
+
+put word 4 of moreFish
+
+put the last 3 words of moreFish
+
+put words [11,5,15] of moreFish
+
+put each word of line 1 of moreFish
+
+put ".,?!" after the wordDelimiter
+
+put each word of line 1 of moreFish
+
+put each word delimited by ". ,a" of line 1 of moreFish

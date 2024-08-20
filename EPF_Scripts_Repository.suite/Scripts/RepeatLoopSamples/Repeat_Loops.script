@@ -1,0 +1,308 @@
+﻿--Repeat 5 times within 1 minute
+repeat 5 times
+	wait 1 minute/5
+	waitfor 0, image:"special"
+end repeat
+-----------------------------------
+assert that the counter is not greater than 10
+----------------------------------
+
+put ["Apple","Banana", "Grapes","Organge","Strawberry","Peach"] into Fruits
+
+
+put the number of items of Fruits into max
+Log max
+repeat max times
+	
+	
+	put item repeatindex() of fruits into FruitName
+	
+	if (FruitName = "Strawberry") then
+		Log "Something"	
+	else
+		log FruitName
+	end if
+	
+end repeat
+
+-----------------------------------------
+put ("Apple","Banana", "Grapes","Organge","Strawberry","Peach") into Fruits
+
+repeat with each item of Fruits
+	
+	log it
+	
+end repeat
+--------------------------------------------
+
+put ("Apple","Banana", "Grapes","Organge","Strawberry","Peach") into Fruits
+
+
+put 6 into max
+
+repeat 6 times
+	log item 1 of fruits
+	
+	
+end repeat
+
+--------------------------------------------
+Put everyimagelocation("checkbox") into boxlist
+Log the number of items in boxlist
+
+Repeat with each item box of boxlist
+	log box 
+	click box
+End Repeat
+--------------------------------------------
+
+repeat while not imagefound("FieldtoFind") //will continue to scroll down if it cannot find the field on the screen
+	Typetext downArrow
+	//or
+	ScrollWheelDown 10
+	
+	
+	if repeatIndex() > 10 // we want an exit clause in case it is not on the screen
+		LogError "unable to find field"
+		exit repeat
+	end if
+end repeat
+
+//Do what you want with the field
+Click "FieldtoFind"
+Typetext "Something"
+
+TypeText pageDown, pageDown, pageDown
+Click "FieldtoFind"
+
+--------------------------------------------
+//count of the image on the screen
+
+Put everyimagerectangle("ReservNumber") into ReservatioNumberImageLocation
+Put the number of items of ReservatioNumberImageLocation into ReservationnumberCount
+Repeat ReservationnumberCount times
+	Log item repeatindex() of ReservatioNumberImageLocation
+End Repeat
+
+--------------------------------------------
+
+
+repeat until imagefound("someimage")
+	typetext pagedown
+end repeat
+
+--OR
+
+repeat until imagefound("someimage")
+	
+	if imagefound("bottom of the pageimage") then
+		Logerror "Unable to find image"
+		exit repeat
+	end if
+	
+	typetext pagedown
+end repeat
+
+
+---------------------------------------------
+repeat 10 times
+	log the repeatindex
+	log the counter
+end repeat
+
+-----------------------------------------------
+Put [1,2,3,4,5] into numberlist
+
+Repeat 3 times
+	put item repeatIndex() of numberlist into Count // add interaction information to it
+	log "number" && Count
+End Repeat
+-------------------
+
+set Numberlist to [1,2,3,4]
+
+Repeat with each item Number of Numberlist
+	Log number
+	Capturescreen (name:"number_"&repeatIndex()) -- OR COUNTER - information about interactio your are on. 
+End repeat
+
+-----
+Repeat Until ImageFound(Image:"CheckoutButton", WaitFor:1)
+	ScrollWheelDown(3)
+	if the repeatIndex is greater than 30 
+		throw error, "Image on not screen"
+		exit repeat
+	end if
+end repeat
+-----------------------
+
+Repeat with each item url of listofurls
+	click "edge_url"
+	typetext controlkey, "a"
+End repeat 
+
+---------------
+repeat with EveryImageLocation("arrow")
+	Click it
+end repeat
+
+Repeat until ImageFound(ImageName:"CatToy", waitfor:5) // This repeat loop iterates until the ImageFound() function returns true.
+	TypeText PageDown // Sends a Page Down keyboard action to scroll down the page.
+	if the repeatindex is greater than 5 then throw "Image Not Found:", "Item not found when scrolling." // This conditional statement checks to see whether the repeat loop has iterated more than 5 times, and if so, throws an exception to stop the execution in order to avoid an endless loop if the image isn't on the page
+end repeat
+
+if ImageFound(ImageName:"CatToy") // Checks whether the image is found
+then
+	// Perform some actions if the image is found
+	Log "Image found!"
+else
+	// Perform a different set of actions if the image wasn't found
+	Log "Image not found."
+end if
+---------------
+repeat 6 times
+	
+	click "Arrow"
+	
+end repeat
+
+------------
+repeat 1 minute
+	
+	If imagefound(imageName:"Notification", waitFor:0) then
+		
+		Logwarning "The warning is still present."
+		
+		wait 2
+		
+	else
+		
+		Log "The warning is gone."
+		
+		Exit Repeat
+		
+	end if
+	
+end repeat
+-------------------
+repeat until list is empty
+	
+	put the last item of list
+	
+	delete the last item of list
+	
+end repeat
+-----------------
+on ScrollUntilFound ImageName, myTime
+
+	Repeat until imagefound(image:imageName,waitfor:mytime)
+		
+		if the repeatindex is greater than 10 // Read more about the repeatIndex below
+			
+			throw "image not found", imageName&&"not found when scrolling."
+			
+		end if
+		
+		Typetext PageDown
+		
+		Wait 1
+		
+	end repeat
+	
+end ScrollUntilFound
+--------------------
+repeat until "3:17 pm" // Repeats until the local system (eggPlant machine) clock hits 3:17 pm"
+
+	log "counting the seconds"
+	
+	wait 1
+	
+end repeat
+------------
+repeat until imagefound(imagename:"NextButton",waitFor:0)
+	if repeatindex() = 2 then throw "Image not found", "Image not found while scrolling."
+	SwipeUp
+	wait 2
+end repeat
+------------------
+Repeat until ImageFound(ImageName:"CatToy", waitfor:5) // This repeat loop iterates until the ImageFound() function returns true.
+
+	TypeText PageDown // Sends a Page Down keyboard action to scroll down the page.
+	
+	if the repeatindex is greater than 5 then throw "Image Not Found:", "Item not found when scrolling." // This conditional statement checks to see whether the repeat loop has iterated more than 5 times, and if so, throws an exception to stop the execution in order to avoid an endless loop if the image isn't on the page
+	
+end repeat
+--------------------------
+//Logs "Icon Chrome"
+put ("Icon_Chrome", "Icon_Edge", "Icon_Firefox", "Icon_IE") into BrowserList
+
+put item 1 of browserlist into list1 
+
+repeat 3 times
+	log "browser" & List1 // logs Icon Chrome X3
+end repeat
+
+//WILL pick each item in the repeat loop from the browser list
+put ("Icon_Chrome", "Icon_Edge", "Icon_Firefox", "Icon_IE") into BrowserList
+
+repeat 3 times
+	put item repeatindex() of BrowserList into List1 // logs chrome, edge, then last firefox 
+	log "browser" && List1
+end repeat
+
+//WILL pick 1 item to repeat 3 times
+put ("Icon_Chrome", "Icon_Edge", "Icon_Firefox", "Icon_IE") into BrowserList
+
+Put any item of browserlist into list1
+
+repeat 3 times
+	log "browser" && List1 //random logs firefox 3 times because it was set outside of the loop
+end repeat
+
+//WILL pick 1 item to repeat 3 times
+put ("Icon_Chrome", "Icon_Edge", "Icon_Firefox", "Icon_IE") into BrowserList
+
+repeat 3 times
+	put item repeatindex() of BrowserList into List1
+	repeat 3 times
+		put item repeatindex() of BrowserList into List1
+		log "browser" && List1 //random logs firefox 3 times because it was set outside of the loop
+	end repeat
+end repeat
+----------------------
+//Repeat with each Browser and adress URL
+
+put ("Icon_Chrome", "Icon_Edge", "Icon_Firefox", "Icon_IE") into BrowserList
+Put ("www.wikipedia.org","www.amazon.com") into adresslist
+
+Repeat with each item MyBrowser of Browserlist
+	Typetext windowskey, "r"
+	Typetext mybroser & "wikipedia.org"
+	Typetext return
+	Typetext windowskey, uparrow
+	Waitfor 15, "wikipedia"
+	Click Foundimagelocation()
+	Typetext altkey, f4
+	Waitfor 8, "desktopbackground"
+	
+End Repeat
+------------------------
+--Random
+put 1 to 1000 into available_list
+put [] into unique_random_number_list
+repeat 5 times
+	insert any item of (items of available_list excluding those in unique_random_number_list) into unique_random_number_list
+end repeat
+log unique_random_number_list
+
+-----------------------------
+--Random
+put ["Test 10","Test 100","Test 102","Test 104","Test 105","Test 106","Test 107","Test 112","Test 116","Test 117","Test 118","Test 119","Test 121","Test 122","Test 124","Test 125","Test 13","Test 130","Test 139"] into avaliable_Test_list
+
+repeat 3 times
+	set Test_name_list to ""
+	insert any items of avaliable_Test_list into Test_name_list
+	insert any items of avaliable_Test_list into Test_name_list
+	insert any items of avaliable_Test_list into Test_name_list
+end repeat
+log Test_name_list

@@ -1,0 +1,136 @@
+﻿
+set the SearchRectangle to config().SUT.(global browser)
+set the searchRectangle to config().SUT.(global app)
+
+to textEntry label, input, offset:(config().dataEntry.textBoxOffset)
+	click CenterLeft of scrollTo(label) + offset
+	wait 0.5
+	typetext controlkey,"a"
+	typetext input
+	wait 0.3
+end textEntry
+
+
+to hiddenTextEntry label,input:global user,offset:(config().dataEntry.textBoxOffset)
+	click CenterLeft of scrollTo(label) + offset
+	wait 0.5
+	typetext controlkey,"a"
+	typehiddentext GetVaultValue(input)
+	wait 0.3
+end hiddenTextEntry
+
+to checkBox label, offset:(config().dataEntry.checkBoxOffset)
+	click the CenterLeft of scrollTo(label) + offset
+	wait 0.5
+end checkBox
+----------------
+
+return { 
+
+	SUT:{
+		chrome:[0,73,1919,1035],
+		DeskotpClient:[540,118,1371,796]
+	},
+	dataEntry:{
+		textBoxOffset:[0,25],
+		checkBoxOffset:[-20,0],
+		DropBoxOffset:[0,80],
+	}
+}
+
+
+-------------
+return { 
+	SUT:{
+		Windows:{
+			chrome:[0,73,1919,1035],
+			fullscreen:RemoteScreenRectangle()
+		},
+		Android:{
+			fullscreen:RemoteScreenRectangle(),
+			bottomhalf:[[0,remotescreensize().y*0.5], remotescreensize()]
+		},
+		IOS:{
+			fullscreen:RemoteScreenRectangle()
+		},
+
+	},
+	dataEntry:{
+		Windows:{
+			textBoxOffset:[0,25],
+			AbbrechenOffset:[120,0],
+			checkBoxOffset:[-20,0],
+			DropBoxOffset:[0,80],
+			InstallOffset:[-80,0]
+		},
+	},
+}
+
+-------------
+return { 
+
+	SUT:{
+		chrome:[0,73,1919,1035],
+		DeskotpClient:[540,118,1371,796]
+	},
+	dataEntry:{
+		textBoxOffset:[0,25],
+		checkBoxOffset:[-20,0],
+		DropBoxOffset:[0,80],
+	}
+}
+
+------------------------
+
+
+return {
+	SUT:{
+		chrome:[0,73,1919,1035],
+		firefox:[0,88,1920,1040],
+		microsoftedge:[0,74,1919,1039]
+
+
+	}
+}
+------------------------------
+
+Assert Imagefound(Text:("BALANCE SHEET"),waitfor:VA_Config().General.MaxWait,SearchRectangle:(VA_Common().ScreenPart("TopHalf"))) with Exception "Validating that the Top of page is visible"
+
+If Imagefound(Image:"WordIssues/SaveAs_win",waitfor:VA_Config().General.MaxWait,searchrectangle:"VA_Common".ScreenPart("TopLeftQuadrant"))
+	
+	If Imagefound(Image:"WordIssues/SaveAs_win",waitfor:VA_Config().General.MaxWait,searchrectangle:"VA_Common".ScreenPart("TopLeftQuadrant"))
+		TypeText escapeKey
+		CaptureScreen {Name: "Word Update Failure"}
+		LogError"Could not validate that the Word is updated successfully."
+		Next Repeat
+		
+	End if
+	
+End Try
+End Repeat
+----
+Put ReadText((VA_config().ValidateLink.(VerifyLinkRectangle))) into TallyLinks
+If TallyLinks does not contain Link.LinksPresent
+	--Close Find and Replace window
+	Typetext escapeKey
+	--Close the MS Word Pop Up Result Windoq
+	Typetext escapeKey
+	LogError "Unable to validate that all the Links are updated for the Report"
+	set Link.Status to "Not Matched"
+	Exit Repeat
+	
+End If
+End If
+return {
+	General:{
+	(**Set maxWait based upon performance of SUT. 30 is appropriate for Keysight SUT, however this may need to be modified based upon SUT utilization by VA**)
+		MinWait:2,
+		MaxWait:10,
+		LongMaxWait:120
+	},
+	ValidateLink:{
+	(**Using to readtext from the Pop up window to copy the message to resource file to validate links**)
+		VerifyLinkRectangle:[899,522,1097,562]
+	}
+
+}

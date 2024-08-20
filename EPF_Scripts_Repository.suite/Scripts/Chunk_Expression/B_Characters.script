@@ -1,0 +1,20 @@
+﻿// Specifying chunks of text
+
+set quote to "I like nonsense; it wakes up the brain cells."
+
+put character 9 of quote
+
+put chars 11 to 24 of quote
+
+put the first 7 chars of quote & last 12 chars of quote
+
+put chars -6 to -4 of quote
+
+put the sixth character of quote
+
+put the thirty-fifth to 38th chars of quote
+
+put the middle character of quote
+
+put any char of quote && any char of quote && any char of quote
+

@@ -1,0 +1,36 @@
+﻿//Universal variables are created and used in exactly the same manner as global variables. The difference between global variables and universal variables is defined by the host application in which SenseTalk is running. Typically, universal variables have a broader scope than globals. For example, globals can exist within a single project while universals can allow information to be shared in common between different projects. The case in Eggplant Functional, globals can have their values reset following each script execution while universals retain their values between runs during an entire session.
+
+repeat with each item of the universalNames
+	put "Universal " & it & " is " & value("universal " & it)
+end repeat
+----------------
+universal userName
+
+ask "What is your name?"
+put it into userName
+
+put generateGreeting()
+
+put "Welcome to Universal Land, " & userName
+
+
+to generateGreeting
+	universal userName
+	put "Hey there" && userName into greeting
+	return greeting & "!"
+end generateGreeting
+
+---------
+
+ask "What is your name?"
+put it into universal userName
+
+put generateGreeting()
+
+put "Welcome to Universal Land, " & universal userName
+
+
+to generateGreeting
+	put "Hey there" && universal userName into greeting
+	return greeting & "!"
+end generateGreeting

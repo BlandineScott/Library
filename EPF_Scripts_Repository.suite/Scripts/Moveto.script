@@ -1,0 +1,10 @@
+﻿MoveTo "Kellan/google"
+Moveto [1,1]
+
+Log RemoteScreenSize()
+
+-----------------
+Put ImageRectangle("Help") into newpatientlist 
+Put newpatientlist+(-7,-9,38,865) into patienttodelete 
+
+MoveTo (the  center of patienttodelete)

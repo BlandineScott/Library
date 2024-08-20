@@ -1,0 +1,4 @@
+﻿set defaultstyle to the TextStyle
+set the TextStyle to {dpi:144}
+Common.ClickEvent "v1.10","Iphone4"
+set the TextStyle to defaultstyle 

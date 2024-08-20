@@ -1,0 +1,24 @@
+﻿// Item Chunks
+
+set readBook to "You're never too old, too wacky, too wild, to pick up a book and read to a child."
+
+put item 1 of readBook
+
+put items [2,3] of readBook
+
+set travels to "home -> office -> coffee shop -> store -> gym"
+
+set the itemDelimiter to " -> "
+
+put item 2 of travels
+
+put items [5,3] of travels
+
+put item 2 delimited by "-" of travels
+
+put the number of items in travels
+
+put the number of items in readBook
+
+put the number of items delimited by "," in readBook
+

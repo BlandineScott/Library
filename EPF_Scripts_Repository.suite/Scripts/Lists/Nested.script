@@ -1,0 +1,5 @@
+﻿//Use nested after to append the list as a list 
+
+set mylist to ["hello", 123, "goodbye"]
+insert ImageRectangle(text:"Text") nested after mylist
+log mylist // this gives > ["hello",123,"goodbye",[18,202,53,220]]

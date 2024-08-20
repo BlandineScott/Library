@@ -1,0 +1,172 @@
+﻿----------------------------------------------ReadText
+
+--with coordinates
+Log Readtext(10,10,20,25)
+-----------------------------------------
+--readtext into 2 images
+Log Readtext("TableUpperLeft","TableLowerRight")
+-----------------------------------------
+Log readtext (image:"Desjardins") //Use Any website. Logs readtext from an image
+
+----------------------------------------
+Put readtext((716,295,806,312)) into Mytext
+replace first character of Mytext with "I"
+---------------------------
+//Use Notepad - write words with spaces
+--Capture the searchrectangle
+
+Log readtext (imagerectangleimage(image:"Myimage"))
+
+Log trimAll(ReadText(["UpperLeft","LowerRight"], ValidPattern: "[A-Za-z]+\.py")) // Enforces that readText use a regular expression to read from the screen, and trims all white space, such as tabs and carriage returns, from the output.
+
+Put "CH 1606 A" into MyValue
+Put ("CH 1606 A"),ValidPattern: "0..9"
+
+log readText(imagelocation("ReadingAssignmentHeader").x, imagelocation (text:"Introduction").y,singlecolumnmode:true) // Reads around a single point based on the x coordinate of the column and y coordinate of the row
+
+----------------------------------------------Remoteclipboard
+Typetext controlkey,"a" //select
+typetext controlkey,"c" //copy
+log RemoteClipboard() //paste clipboard
+Put remoteclipboard() into Billingnote //add to variable
+log billingnote //log variable
+
+//remoteclipboard(5) to rescrict the value to items captures in the last few seconds
+
+----------------------------------------------with diffierent setting
+
+Log Readtext(10,10,20,25, multilines:yes, Contrast:on)
+
+--readtext into 2 images
+Log ReadText("Contents_TL", "Development_Bottomright")
+
+
+Put ReadText("NotePadUpLeft", "NotePadLowRt", contrast: "on") into textVar // Puts any text recognized in the specified rectangle into the variable
+
+-------------------------
+log ReadText("HeaderTop", "HeaderBottom") // Logs any text read in the specified rectangle
+
+If ReadText("NotePadUpLeft", "NotePadLowRt") is empty then // Checks to see whether ReadText() finds any text in the specified rectangle
+	log "No text found." // Logs a comment if no text is found
+End If
+--------------------------
+If ImageFound(text:"Showing all stores near", caseSensitive:yes,WaitFor:10) then
+	Put ReadText(FoundImageLocation()) into mySearchString
+	If mySearchString contains "28269" then
+		LogSuccess "You are searching in the correct zip code"
+	Else
+		LogWarning "You have searched in the wrong zip code"
+	End If
+	Else
+	LogWarning "You have not triggered any search."
+End If
+
+-----------------------
+log readText(imagelocation("ReadingAssignmentHeader").x, imagelocation (text:"Introduction").y,singlecolumnmode:true) // Reads around a single point based on the x coordinate of the column and y coordinate of the row
+-------------------------
+put the last character of readtext("UpperLeft","LowerRight",contrast:on, contrastColor:[0,0,128],contrastTolerance:25) // Prints only the last character returned by the readText function
+--------------------
+log ReadText("HeaderTop", "HeaderBottom") // Logs any text read in the specified rectangle
+
+If ReadText("NotePadUpLeft", "NotePadLowRt") is empty then // Checks to see whether ReadText() finds any text in the specified rectangle
+	log "No text found." // Logs a comment if no text is found
+End If
+-----------------READ TEXT TO THE RIGHT AT ONE POINT---------
+Put readtext(imagelocation("Myimage")+(50,0)) into Myreadarea
+--------------------------
+
+Put readtext(50,50) into readapoint
+Put readtext ("image") into readatpoint2
+
+Put readtext (0,0,100,100) into readrect
+Put readtext ("image1","image2") into readrec2
+--------------------------
+Put readtext (198,159,286,196) into var
+if var contains "90Ro"
+	Logsuccess "ok"
+else
+	Logerror "FAIL"
+	Capturescreen
+end if
+--------------------------
+
+Put readtext ((198,159,286,196),validpattern:"[0-9][A-Z][PIR][a-z]")
+------------------------
+set myPattern to "^$\d{4}"
+log ReadText((585,358,646,386), ValidPattern: myPattern)
+log ReadText((585,358,646,386))
+------------------------
+Log ReadText((343,199,575,236),Contrast:On,ContrastColor:"#ef0029",ContrastTolerance:45,EnableAggressiveTextExtraction:True,EnhanceLocalContrast:True,Language:"ChinesePRC",saveImageFile:"myButton.png")
+---------------------------
+If ImageFound(text:"Showing all stores near", caseSensitive:yes,WaitFor:10) then
+	Put ReadText(FoundImageLocation()) into mySearchString
+	If mySearchString contains "28269" then
+		LogSuccess "You are searching in the correct zip code"
+Else
+		LogWarning "You have searched in the wrong zip code"
+	End If
+Else
+	LogWarning "You have not triggered any search."
+End If
+
+----------------------------------
+--readtext into 2 images
+Log Readtext("TableUpperLeft","TableLowerRight")
+-----------------------------------------
+Log readtext (image:"Desjardins") //Use Any website. Logs readtext from an image
+
+---------------------------
+//Use Notepad - write words with spaces
+--Capture the searchrectangle
+
+Log readtext (imagerectangleimage(image:"Myimage"))
+
+Log trimAll(ReadText(["UpperLeft","LowerRight"], ValidPattern: "[A-Za-z]+\.py")) // Enforces that readText use a regular expression to read from the screen, and trims all white space, such as tabs and carriage returns, from the output.
+
+log readText(imagelocation("ReadingAssignmentHeader").x, imagelocation (text:"Introduction").y,singlecolumnmode:true) // Reads around a single point based on the x coordinate of the column and y coordinate of the row
+
+-----------------------------------
+//The actual message is 67859808I45
+Log ReadText(text:"Interface Message",validPattern:"[a-zA-Z0-9]+") -- This fails. Reads the "I" as a "1"
+Log ReadText(image:"InterfaceMessage",validPattern:"[0-9]+") -- This passes. Reads the "I" as a "1"
+Log ReadText(text:"Interface Message",validPattern:"[0-9]+") -- This fails because it applies the pattern to the anchor text of "Interface Message"
+--------------------------
+If ImageFound(text:"Showing all stores near", caseSensitive:yes,WaitFor:10) then
+	Put ReadText(FoundImageLocation()) into mySearchString
+	If mySearchString contains "28269" then
+		LogSuccess "You are searching in the correct zip code"
+	Else
+		LogWarning "You have searched in the wrong zip code"
+	End If
+Else
+	LogWarning "You have not triggered any search."
+End If
+--------------------
+ValidPattern
+log readtext([TL,BR], ValidPattern: "[A-Z][A-Z][0-9][0-9][A-Z 0-9][A-Z 0-9]
+-------------------------------------------
+(* OCR is mixing letters and numbers. You can try the following.
+
+You can try different things. Please try one suggestion at a time, and see if that works:
+
+Make sure your rectangle has enough room in the front of the i, on the top and bottom. Adjust your rectangle.
+Try to add textdifference: 1  -> If the purpose of your OCR search is to Click on text instead of ReadText, and your OCR is struggling to interpret one or two letters, you may choose to set TextDifference: to '1' or '2' to allow the OCR to be "close enough" to find the search text
+Try to add ValidPattern: validPattern:"[0-9]+"
+Try to add ValidCharacters: "0123456789"  -> A list of characters that you would expect to see within your search area. As with ValidWords, you can use the wildcard to restrict the OCR to only the characters used in the string you are looking for. For example, if you have an MRN that never contains alpha characters, you could set ValidCharacters to "0123456789" to prevent your '8' as being read as a 'B'. 
+Try to add ValidWords:"*"  ->  A list of words that you would expect to see within your search area. If you use the ValidWords property in code like the Click below, the wildcard character "*" will restrict the OCR dictionary to only the words you are looking for.
+Try using replace:
+Put readtext(716,295,806,312) into Mytext
+Replace first occurrence of "1" in Mytext with "K"
+Log Mytext
+
+You can also add DPI and see if that helps.
+
+When all else fails, and you are trying to read text from the UI, consider using the RemoteClipboard() function to read the text from your system clipboard.  Reasoning: The OCR Engine can sometimes substitute periods for commas or numbers for letters or struggle with character spacing. While most of those issues can be handled by enforcing patterns, not all can or not all can be done easily.
+
+click "SomeTextField"
+TypeText CommandKey, "a" // Selects All in the text field.
+TypeText CommandKey, "c" // Copies text to the clipboard.
+put RemoteClipboard(5) // Waits up to 5 seconds to return the clipboard content generated by previous remote command; shows that content.
+put remoteclipboard() into targettext
+Log targettext*)
+

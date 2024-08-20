@@ -1,0 +1,12 @@
+﻿to launchPrivateURL browser,url,varlogos:logos
+	set global app to browser
+	typetext windowskey,"r"
+	if browser contains "edge" 
+		typetext "msedge"&& "-inprivate"&&url,returnkey
+	else
+		typetext browser&&"--incognito"&&url,returnkey
+	end if
+	typetext windowskey, upArrow // maximize window on windows
+	
+	assert that ImageFound(20,varlogos)
+end launchPrivateURL

@@ -1,0 +1,7 @@
+﻿to NextTab expectation
+	typetext Controlkey,pageUp
+	if expectation is not empty
+		navigate[],(expectation)
+	end if 
+	wait 1
+end NextTab
